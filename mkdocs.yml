@@ -1,0 +1,32 @@
+site_name: RPG FGA
+
+
+theme:
+  name: material
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+
+    
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      toggle:
+        icon: material/brightness-4
+        name: Switch to system preference
+
+
+nav:
+  - Home: index.md
+  - Entrga 1: 
+      - MER: 
+          - V1: entrega1/merv1.md
+      - Modelo de relacionamentos: 
+          - V1: entrega1/relacionamentov1.md
+      - Dicionário: 
+          - V1: entrega1/dicionariov1.md
+  
+extra_css:
+  - stylesheets/extra.css
