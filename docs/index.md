@@ -60,6 +60,6 @@ O principal objetivo deste projeto é integrar os conceitos estudados na discipl
 | Versão |Descrição     |Autor                                       |Data    |
 |:-:     | :-:          | :-:                                        | :-:        |
 |1.0     |Criação do MKDocs|[Isaque Camargos](https://github.com/isaqzin)| 29/04/2025 | 
-|1.1     |Criação da index|[Ludmila Nunes](https://github.com/ludmilaaysha)| 29/04/2025 | 
+|1.1     |Criação da index| [Ludmila Nunes](https://github.com/ludmilaaysha) e [Isaque Camargos](https://github.com/isaqzin)| 29/04/2025 | 
 
 
