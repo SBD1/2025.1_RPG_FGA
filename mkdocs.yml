@@ -21,12 +21,10 @@ theme:
 nav:
   - Home: index.md
   - Entrga 1: 
-      - MER: 
-          - V1: entrega1/merv1.md
-      - Modelo de relacionamentos: 
-          - V1: entrega1/relacionamentov1.md
-      - Dicionário: 
-          - V1: entrega1/dicionariov1.md
+      - Vídeo: entrega1/video1.md
+      - Modelo Entidade Relacionamento: entrega1/merv1.md
+      - Modelo Relacional: entrega1/relacionamentov1.md
+      - Dicionário de Dados: entrega1/dicionariov1.md
   
 extra_css:
   - stylesheets/extra.css

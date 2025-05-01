@@ -31,5 +31,5 @@ O diagrama de entidade e relacionamento (DER ou ERD) é uma representação visu
 | :----: | :--------: | ---------------------------------- | -------------------------------------------------------------------------------- |
 | `1.0` | 29/04/2025 | Criação do documento DER      | [Isaque Camargos](https://github.com/isaqzin)|
 | `1.1` | 29/04/2025 | Criação da primeira versão | [Rafael welz](https://github.com/rafaelschadt)|
-| `1.1` | 29/04/2025 | Criação da segunta versão      |    TODOS  |
-| `1.2` | 29/04/2025 | Criação da terceira versão      |    [Rafael welz](https://github.com/rafaelschadt) e [Othavio Bolzan](https://github.com/bolzanMGB)|
+| `1.2` | 29/04/2025 | Criação da segunta versão      |    TODOS  |
+| `1.3` | 29/04/2025 | Criação da terceira versão      |    [Rafael welz](https://github.com/rafaelschadt) e [Othavio Bolzan](https://github.com/bolzanMGB)|
