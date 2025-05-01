@@ -1,4 +1,4 @@
-# Modelo Entidade-Relacionamento
+# Diagrama Entidade-Relacionamento
 
 MER, ou Modelo Entidade-Relacionamento, é uma representação gráfica usada para projetar e estruturar bancos de dados de forma lógica. Ele descreve os elementos principais de um sistema, como entidades (objetos ou conceitos), seus atributos (características) e os relacionamentos entre essas entidades. O MER é fundamental na etapa de modelagem de dados, pois ajuda a entender e organizar as informações antes de implementá-las em um banco de dados relacional.
 
