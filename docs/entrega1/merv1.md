@@ -15,7 +15,13 @@ MER, ou Modelo Entidade-Relacionamento, é uma representação gráfica usada pa
 
 # V2
 
-![mer versão 1](../assets/merv2.png) 
+![mer versão 2](../assets/merv2.png) 
+
+---
+
+# V3
+
+![mer versão 3](../assets/merv3.png) 
 
 ---
 
@@ -26,3 +32,4 @@ MER, ou Modelo Entidade-Relacionamento, é uma representação gráfica usada pa
 | `1.0` | 29/04/2025 | Criação do documento DER      | [Isaque Camargos](https://github.com/isaqzin)|
 | `1.1` | 29/04/2025 | Criação da primeira versão | [Rafael welz](https://github.com/rafaelschadt)|
 | `1.1` | 29/04/2025 | Criação da segunta versão      |    TODOS  |
+| `1.2` | 29/04/2025 | Criação da terceira versão      |    [Rafael welz](https://github.com/rafaelschadt) e [Othavio Bolzan](https://github.com/bolzanMGB)|
