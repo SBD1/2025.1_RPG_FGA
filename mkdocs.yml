@@ -32,7 +32,8 @@ nav:
   - Home: index.md
   - Entrga 1: 
       - Vídeo: entrega1/video1.md
-      - Modelo Entidade Relacionamento: entrega1/derv1.md
+      - Diagrama Entidade Relacionamento: entrega1/derv1.md
+      - Modelo Entidade Relacionamento: entrega1/mer.md
       - Modelo Relacional: entrega1/relacionamentov1.md
       - Dicionário de Dados: entrega1/dicionariov1.md
   
