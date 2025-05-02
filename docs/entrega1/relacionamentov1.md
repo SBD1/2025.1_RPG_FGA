@@ -19,8 +19,16 @@ O Modelo Relacional (MREL) representa logicamente como as entidades e seus relac
 
 ![mr versão 2](../assets/mrv2.png)
 
+---
+
+
+# V3
+
+
+![mr versão 3](../assets/mrv3.png)
 
 | Versão |  Data  | Descrição| Autor                 |
 | :----: | :--------: | ---------------------------------- | -------------------------------------------------------------------------------- |
 | `1.0` | 01/05/2025 | Criação do documento MR      | [Rodrigo Amaral](https://github.com/rodrigoFAmaral) & [Milena Marques](https://github.com/milenamso)|
 | `1.1` | 02/05/2025 | Adicionando v2 do MR      | [Rodrigo Amaral](https://github.com/rodrigoFAmaral) & [Milena Marques](https://github.com/milenamso)|
+| `1.2` | 02/05/2025 | Adicionando v3 do MR      | [Rodrigo Amaral](https://github.com/rodrigoFAmaral) & [Milena Marques](https://github.com/milenamso)|
