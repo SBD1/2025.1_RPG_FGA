@@ -3,6 +3,16 @@ site_name: RPG FGA
 
 theme:
   name: material
+  language: pt-BR
+
+  features:
+    - content.code.annotate
+    - content.tabs.link
+    - header.autohide
+    - navigation.instant
+    - navigation.top
+    - navigation.tracking
+  
   palette:
     - media: "(prefers-color-scheme: light)"
       scheme: default
