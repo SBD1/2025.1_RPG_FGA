@@ -1,5 +1,11 @@
 # 2025.1_RPG_FGA
-Desenvolvimento de Game para a disciplina de Banco de Dados 1 
+Desenvolvimento de Game para a disciplina de Banco de Dados 1
+
+## Entregas
+
+Para acessar nossas entregas, clique no link abaixo 
+
+https://sbd1.github.io/2025.1_RPG_FGA/
 
 
 ## Integrantes
