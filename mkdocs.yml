@@ -30,7 +30,7 @@ theme:
 
 nav:
   - Home: index.md
-  - Entrga 1: 
+  - Entrega 1: 
       - Vídeo: entrega1/video1.md
       - Diagrama Entidade Relacionamento: entrega1/derv1.md
       - Modelo Entidade Relacionamento: entrega1/mer.md
