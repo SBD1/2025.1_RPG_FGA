@@ -138,7 +138,7 @@ Observação: Essa tabela é chave estrangeira de `Setor`.
 | descricao | Descreve o item       | varchar      | 255     |                                                                    |
 | item_tipo | Indica o tipo do item | varchar      | 100     | - Not Null                                                         |
 
-## Entidade: Relíquia
+## Entidade: Reliquia
 
 **Descrição**: A entidade `Relíquia` descreve uma relíquia, que é um tipo de item. Se relaciona a um duelo sendo chave estrangeira dele. Herda todos os atributos de Item.
 
@@ -149,7 +149,7 @@ Observação: Essa tabela é chave estrangeira da entidade `Duelo`.
 | id_reliquia   | Identificador da relíquia   | varchar      | 8       | - PK<br>- Not Null                                                 |
 | tipo_reliquia | Descreve o tipo da relíquia | varchar      | 100     | - Not Null                                                         |
 
-## Entidade: Consumível
+## Entidade: Consumivel
 
 **Descrição:** A entidade `Consumível` descreve um item consumível. Herda todos os atributos de Item e possui informações como efeito e preço.
 
@@ -160,7 +160,7 @@ Observação: Essa tabela é chave estrangeira da entidade `Duelo`.
 | efeito | Efeito causado por um item consumível | int          |         | - Not Null                                                         |
 | preco  | Preço do item consumível              | float        |         | - Not Null                                                         |
 
-## Entidade: Equipável
+## Entidade: Equipavel
 
 **Descrição:** A entidade `Equipavel` descreve um item equipável. Herda todos os atributos de Item e possui informações como efeito, preço e se está equipado ou não.
 
@@ -172,7 +172,7 @@ Observação: Essa tabela é chave estrangeira da entidade `Duelo`.
 |preco|O valor do item equipavel|int||-Not Null|
 |equipado|indica se o item equipavel está equipado ou não |boolean||-Not Null|
 
-## Entidade: Sala comum
+## Entidade: Sala_comum
 
 **Descrição:** É a entidade que representa as salas em que o estudante irá andar.
 
@@ -186,7 +186,7 @@ Observação: Essa tabela é chave estrangeira da entidade `Duelo`.
 |descrição|Descrição do que tem/contem na sala|varchar|255|-Not Null|
 |nome | nome da sala|varchar|100|- Not Null|
 
-## Entidade: Inventário
+## Entidade: Inventario
 
 **Descrição:** Entidade que contem as instâncias de item que o estudante carrega com si.
 
@@ -198,7 +198,7 @@ Observação: Essa tabela é chave estrangeira da entidade `Duelo`.
 |id_instanciaitem|Identificador da instância do item que o inventário armazena|varchar|8|- FK<br>- Not Null<br>|
 
 
-## Entidade: Instância de item
+## Entidade: Instancia_de_item
 
 **Descrição:** É a instância do item.
 
@@ -271,7 +271,7 @@ Observação: Essa tabela é chave estrangeira da entidade `Duelo`.
 |tipo_setor|Tipo do setor em que o monstro está presente |varchar|100|-Not Null|
 |nome|Nome do monstro|varchar|100|-Not Null|
 
-## Entidade: Instância de Monstro
+## Entidade: Instancia_de_Monstro
 
 **Descrição:** É a instância do monstro.
 
