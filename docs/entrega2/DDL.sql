@@ -1,1 +1,13 @@
 
+-- --------------------------------------------------------------------------------------
+-- Data Criacao ...........: xx/xx/xxxx                                                --
+-- Autor(es) ..............:                                                           --
+-- Versao ..............: 1.0                                                          --
+-- Banco de Dados .........: PostgreSQL                                                --
+-- Descricao .........: Inclusão de CREATE TABLE de todas as tabelas do banco de dados.--
+-- --------------------------------------------------------------------------------------
+-- | Atualizacao : xx/xx/xxxx | Autor(es):                                      |      --
+--                            | Descricao: Inclusão das linhas de CREATE TABLE  |      --
+-- | Atualizacao : xx/xx/xxxx | Autor(es):                                      |      --
+--                            | Descricao: Correção das linhas de CREATE TABLE  |      --
+-- --------------------------------------------------------------------------------------
