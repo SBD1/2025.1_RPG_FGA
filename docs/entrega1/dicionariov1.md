@@ -42,7 +42,7 @@ Observação: Essa tabela é chave estrangeira de `Setor`.
 | id_gabinete_boss | Identificador do gabinete em que o Boss fica        | varchar      | 8       | - FK<br>- Not Null                                                 |
 | nome             | Nome do Boss                                        | varchar      | 100     | - Not Null                                                         |
 | id_habilidade    | Identificador da(s) habilidade(s) que o boss possui | varchar      | 8       | - FK<br>- Not Null                                                 |
-| id_habilidade    | Identificador da(s) habilidade(s) que o boss possui | varchar      | 8       | - Not Null                                                         |
+
 
 ## Entidade: Gabinete_Boss
 
