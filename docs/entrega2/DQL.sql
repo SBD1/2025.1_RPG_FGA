@@ -1,6 +1,6 @@
 -- --------------------------------------------------------------------------------------
--- Data Criacao ...........: 31/05/2025                                                --
--- Autor(es) ..............: Milena Marques                                            --
+-- Data Criacao ...........: xx/xx/xxxx                                                --
+-- Autor(es) ..............:                                                           --
 -- Versao ..............: 1.0                                                          --
 -- Banco de Dados .........: PostgreSQL                                                --
 -- Descricao .........: Consulta das tabelas do banco de dados.                        --
