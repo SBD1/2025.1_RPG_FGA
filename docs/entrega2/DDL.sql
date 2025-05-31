@@ -1,12 +1,12 @@
 
 -- --------------------------------------------------------------------------------------
--- Data Criacao ...........: xx/xx/xxxx                                                --
--- Autor(es) ..............:                                                           --
+-- Data Criacao ...........: 31/05/2025                                                --
+-- Autor(es) ..............: Milena Marques                                            --
 -- Versao ..............: 1.0                                                          --
 -- Banco de Dados .........: PostgreSQL                                                --
 -- Descricao .........: Inclusão de CREATE TABLE de todas as tabelas do banco de dados.--
 -- --------------------------------------------------------------------------------------
--- | Atualizacao : xx/xx/xxxx | Autor(es):                                      |      --
+-- | Atualizacao : 31/05/2025 | Autor(es): Milena Marques                       |      --
 --                            | Descricao: Inclusão das linhas de CREATE TABLE  |      --
 -- | Atualizacao : xx/xx/xxxx | Autor(es):                                      |      --
 --                            | Descricao: Correção das linhas de CREATE TABLE  |      --
