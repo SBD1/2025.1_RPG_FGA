@@ -7,14 +7,14 @@ De acordo com a *UC Merced Library*,
 
 **Descrição:** A entidade Campus descreve os campus presentes no jogo e outras informações, como: seu número de identificação e nome.
 
-Observação: Essa tabela é chave estrangeira de `Setor`.
-
 | Nome      | Descrição                         | Tipo de dado | Tamanho | Restrições de domínio (PK, FK, Not Null, Check, Default, Identity) |
 | --------- | --------------------------------- | ------------ | ------- | ------------------------------------------------------------------ |
-| id_campus | Identificador da instância Campus | varchar      | 8       | - PK<br>- Not Null<br>                                             |
+| id_Campus | Identificador único do campus | Inteiro      | 8       | - PK<br>- Not Null<br>                                             |
 | nome      | Nome do campus                    | varchar      | 100     | - Not Null                                                         |
 | descricao | Descrição do campus               | varchar      | 255     | - Not Null                                                         |
-
+Observações:
+ - Cada campus contem um ou mais setores (relação 1:N com Setor).
+ - Um campus deve existir (participação total – (1,1)).
 
 ## Entidade: Dungeon\_Academica
 
@@ -103,13 +103,15 @@ Observação: Essa tabela é chave estrangeira de `Setor`.
 
 | Nome         | Descrição                                  | Tipo de dado | Tamanho | Restrições de domínio (PK, FK, Not Null, Check, Default, Identity) |
 | ------------ | ------------------------------------------ | ------------ | ------- | ------------------------------------------------------------------ |
-| id_setor     | Identificador do Setor                     | varchar      | 8       | - PK<br>- Not Null                                                 |
+| id_setor     | Identificador do Setor                     | inteiro      | 8       | - PK<br>- Not Null                                                 |
 | nome         | Nome do Setor                              | varchar      | 100     | - Not Null                                                         |
 | descricao    | Descrição do Setor                         | varchar      | 255     | - Not Null                                                         |
-| id_proxSetor | Identificador do próximo setor             | varchar      | 8       | - PK<br>- FK         <br>- Not Null                                              |
-| id_prevSetor | Identificador do setor anterior            | varchar      | 8       | - PK<br>- FK<br>- Not Null                                                       |
-| id_campus    | Identificador do campus em que se encontra | varchar      | 8       | - FK<br>- Not Null                                                 |
+| id_proxSetor | Identificador do próximo setor(auto-relacion.)             | Inteiro      | 8       | - PK<br>- FK         <br>- Not Null                                              |
+| id_prevSetor | Identificador do setor anterior            | varchar      | 8       | - PK<br>- FK<br>- Not Null                                                                         |
 
+Observações:
+- Cada setor pertence a um único campus (relação N:1 com Campus).
+- A relação "Conecta" é um auto-relacionamento 1:1 entre setores, criando uma espécie de lista duplamente ligada entre setores (id_prevSetor ↔ id_proxSetor).
 
 ## Entidade: Loja
 
