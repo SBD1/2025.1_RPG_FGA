@@ -9,10 +9,11 @@ De acordo com a *UC Merced Library*,
 
 | Nome      | Descrição                         | Tipo de dado | Tamanho | Restrições de domínio (PK, FK, Not Null, Check, Default, Identity) |
 | --------- | --------------------------------- | ------------ | ------- | ------------------------------------------------------------------ |
-| id_Campus | Identificador único do campus | Inteiro      | 8       | - PK<br>- Not Null<br>                                             |
+| id_Campus | Identificador único do campus | Inteiro      |      | - PK<br>- Not Null<br>                                             |
 | nome      | Nome do campus                    | varchar      | 100     | - Not Null                                                         |
 | descricao | Descrição do campus               | varchar      | 255     | - Not Null                                                         |
-Observações:
+
+**Observações**
  - Cada campus contem um ou mais setores (relação 1:N com Setor).
  - Um campus deve existir (participação total – (1,1)).
 
@@ -99,33 +100,26 @@ Observações:
 
 **Descrição:** A entidade `Setor` descreve um setor que está dentro do campus. Possui informação de nome, descrição, identificador do campus em que está e possui um auto-relacionamento em que a partir de um setor pode se chegar a outro.
 
-**Observação**: Essa tabela possui chaves estrangeiras das entidades `Setor` e `Campus`.
-
 | Nome         | Descrição                                  | Tipo de dado | Tamanho | Restrições de domínio (PK, FK, Not Null, Check, Default, Identity) |
 | ------------ | ------------------------------------------ | ------------ | ------- | ------------------------------------------------------------------ |
-| id_setor     | Identificador do Setor                     | inteiro      | 8       | - PK<br>- Not Null                                                 |
+| id_setor     | Identificador do Setor                     | inteiro      |        | - PK<br>- Not Null                                                 |
 | nome         | Nome do Setor                              | varchar      | 100     | - Not Null                                                         |
 | descricao    | Descrição do Setor                         | varchar      | 255     | - Not Null                                                         |
-| id_proxSetor | Identificador do próximo setor(auto-relacion.)             | Inteiro      | 8       | - PK<br>- FK         <br>- Not Null                                              |
-| id_prevSetor | Identificador do setor anterior            | varchar      | 8       | - PK<br>- FK<br>- Not Null                                                                         |
+| id_proxSetor | Identificador do próximo setor(auto-relacion.) | inteiro      |        | - FK<br>- Not Null                                             |
+| id_prevSetor | Identificador do setor anterior            | varchar      | 8       | - FK<br>- Not Null                                                 |
 
-Observações:
+**Observações**
 - Cada setor pertence a um único campus (relação N:1 com Campus).
 - A relação "Conecta" é um auto-relacionamento 1:1 entre setores, criando uma espécie de lista duplamente ligada entre setores (id_prevSetor ↔ id_proxSetor).
 
 ## Entidade: Loja
 
 **Descrição**: A entidade `Loja` descreve uma loja, que está dentro de uma sala, e por meio da qual podem ser compradas habilidades e instâncias de itens.
-
-**Observação**: Essa tabela possui chaves estrangeiras das entidades `Habilidade`, `Instancia_de_item` e `Sala_Comum`.
-
-| Nome             | Descrição                                                   | Tipo de dado | Tamanho | Restrições de domínio (PK, FK, Not Null, Check, Default, Identity) |
-| ---------------- | ----------------------------------------------------------- | ------------ | ------- | ------------------------------------------------------------------ |
-| id_loja          | Identificador da Loja                                       | varchar      | 8       | - PK<br>- Not Null                                                 |
-| nome             | Nome da loja                                                | varchar      | 255     | - Not Null                                                         |
-| id_habilidade    | Identificador da habilidade que está à venda na loja        | varchar      | 8       | - FK                                                               |
-| id_instanciaItem | Identificador da instância de item que está à venda na loja | varchar      | 8       | - FK<br>- Not Null                                                 |
-| id_sala          | Identificador da sala em que a loja está                    | varchar      | 8       | - FK<br>- Not Null                                                 |
+**Observação** 
+- A loja é uma entidade fraca, ou seja, completamente dependente de Sala Comum
+- Uma sala pode conter nenhuma ou várias lojas, mas uma loja precisa estar contida em uma sala
+- Uma loja vende várias habilidades, porém, nenhuma habilidade precisa de uma ou várias lojas para ser vendida
+- Uma loja pode vender nenhum, um ou vários itens, mas um item pode ser vendido por nenhuma, uma ou várias lojas
 
 ## Entidade: Item
 
@@ -178,15 +172,17 @@ Observação: Essa tabela é chave estrangeira da entidade `Duelo`.
 
 **Descrição:** É a entidade que representa as salas em que o estudante irá andar.
 
-**Observação:** Essa tabela possui chave estrangeira da entidade `setor` e `instancia_de_item` e as entidades `setor`, `loja`, `estudante` e `Dungeon_Academica` possuem chave estrangeira dessa entidade.
-
 | Nome | Descrição | Tipo de dado | Tamanho | Restrições de domínio (PK, FK, Not Null, Check, Default, Identity) |
 | ---- | --------- | ------------ | ------- | ------------------------------------------------------------------ |
-|id_sala|Identificador da sala|varchar|8|- PK<br>- Not Null<br>|
-|id_instanciaitem|Identificador da instância do item que a sala contem|varchar|8|- FK<br>- Not Null<br>|
-|id_setor|Identificador do setor em que a sala está|varchar|8|- FK<br>- Not Null<br>|
+|id_sala|Identificador único da sala|inteiro|  |- PK<br>- Not Null<br>|
+|id_prevSala|Identificador da sala anterior|inteiro||- FK<br>- Not Null<br>|
+|id_proxSala|Identificador da próxima sala|inteiro||- FK<br>- Not Null<br>|
 |descrição|Descrição do que tem/contem na sala|varchar|255|-Not Null|
 |nome | nome da sala|varchar|100|- Not Null|
+
+**Observação** 
+- Um setor pode conter nenhuma ou várias salas comuns, mas cada sala comum deve pertencer exatamente a um setor.
+- Cada sala comum pode apontar para uma próxima e uma anterior (representando uma estrutura sequencial ou lista duplamente ligada).
 
 ## Entidade: Inventario
 
@@ -303,19 +299,22 @@ Observação: Essa tabela é chave estrangeira da entidade `Duelo`.
 
 ## Entidade: Habilidade
 
-**Descrição:** Esta entidade contém os dados das habilidades que um monstro, boss ou estudante podem ter.
-
-**Observação:** Essa entidade tem relação com outras três entidades as habilidades de ataque, defesa e cura, as entidades `loja`, `monstro`, `boss` e `estudante` tem chave estrangeira dessa entidade .
+**Descrição:** Esta entidade contém os dados das habilidades que uma criatura, estudante, tema e loja podem ter.
 
 | Nome | Descrição | Tipo de dado | Tamanho | Restrições de domínio (PK, FK, Not Null, Check, Default, Identity) |
 | ---- | --------- | ------------ | ------- | ------------------------------------------------------------------ |
 |id_habilidade | Identificador Da habilidade|varchar|8|- PK<br>- Not Null<br> |
 |nome | nome da habilidade|varchar|100|- Not Null|
 |tipo_habilidade|Qual o tipo da habilidade|varchar|6|- Not Null|
-|nivel|Qual o nível da habilidade|int||- Not Null|
-|afinidadeTipo|Qual a afinidade da habilidade|varchar|15|- Not Null|
-|coolDown|tempo de recarga da habilidade|int||- Not Null|
-|desbloqueado|indica se a habilidade está desbloqueada ou não |boolean||- Not Null|
+|nivel|Qual o nível da habilidade|inteiro||- Not Null|
+|coolDown|tempo de recarga da habilidade|inteiro||- Not Null|
+
+**Observações**
+- A criatura pode dominar no mínimo uma habilidade e no máximo várias. A habilidade pode ser dominada por nenhuma criatura e no máximo várias.
+- Uma loja vende várias habilidades, porém, nenhuma habilidade precisa de uma ou várias lojas para ser vendida
+- Uma habilidade contém somente um tema e nenhum tema pode conter várias habilidades
+- Nenhuma habilidade ou várias podem ser dominadas pelo estudante e, um estudante pode dominar várias habilidades
+- Habilidade pode ser de três tipos: ataque, cura e defesa. 
 
 
 
