@@ -1,0 +1,1970 @@
+
+<!doctype html>
+<html lang="pt" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../relacionamentov1/">
+      
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.14">
+    
+    
+      
+        <title>Dicionário de Dados - RPG FGA</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.342714a4.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#dd-dicionario-de-dados" class="md-skip">
+          Pular para conteúdo
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Cabeçalho">
+    <a href="../.." title="RPG FGA" class="md-header__button md-logo" aria-label="RPG FGA" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            RPG FGA
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Dicionário de Dados
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to system preference"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to system preference" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Buscar" placeholder="Buscar" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Pesquisar">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Limpar" aria-label="Limpar" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Inicializando busca
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navegação" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="RPG FGA" class="md-nav__button md-logo" aria-label="RPG FGA" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    RPG FGA
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Entrega 1
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Entrega 1
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../video1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Vídeo
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../derv1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Diagrama Entidade Relacionamento
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../mer/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Modelo Entidade Relacionamento
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../relacionamentov1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Modelo Relacional
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Dicionário de Dados
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    Dicionário de Dados
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Índice">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Índice
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#entidade-campus" class="md-nav__link">
+    <span class="md-ellipsis">
+      Entidade: Campus
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#entidade-dungeon_academica" class="md-nav__link">
+    <span class="md-ellipsis">
+      Entidade: Dungeon_Academica
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#entidade-boss" class="md-nav__link">
+    <span class="md-ellipsis">
+      Entidade: Boss
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#entidade-gabinete_boss" class="md-nav__link">
+    <span class="md-ellipsis">
+      Entidade: Gabinete_Boss
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#entidade-ataque" class="md-nav__link">
+    <span class="md-ellipsis">
+      Entidade: Ataque
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#entidade-cura" class="md-nav__link">
+    <span class="md-ellipsis">
+      Entidade: Cura
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#entidade-defesa" class="md-nav__link">
+    <span class="md-ellipsis">
+      Entidade: Defesa
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#entidade-setor" class="md-nav__link">
+    <span class="md-ellipsis">
+      Entidade: Setor
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#entidade-loja" class="md-nav__link">
+    <span class="md-ellipsis">
+      Entidade: Loja
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#entidade-item" class="md-nav__link">
+    <span class="md-ellipsis">
+      Entidade: Item
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#entidade-reliquia" class="md-nav__link">
+    <span class="md-ellipsis">
+      Entidade: Reliquia
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#entidade-consumivel" class="md-nav__link">
+    <span class="md-ellipsis">
+      Entidade: Consumivel
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#entidade-equipavel" class="md-nav__link">
+    <span class="md-ellipsis">
+      Entidade: Equipavel
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#entidade-sala_comum" class="md-nav__link">
+    <span class="md-ellipsis">
+      Entidade: Sala_comum
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#entidade-inventario" class="md-nav__link">
+    <span class="md-ellipsis">
+      Entidade: Inventario
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#entidade-instancia_de_item" class="md-nav__link">
+    <span class="md-ellipsis">
+      Entidade: Instancia_de_item
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#entidade-batalha" class="md-nav__link">
+    <span class="md-ellipsis">
+      Entidade: Batalha
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#entidade-duelo" class="md-nav__link">
+    <span class="md-ellipsis">
+      Entidade: Duelo
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#entidade-estudante" class="md-nav__link">
+    <span class="md-ellipsis">
+      Entidade: Estudante
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#entidade-monstro" class="md-nav__link">
+    <span class="md-ellipsis">
+      Entidade: Monstro
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#entidade-instancia_de_monstro" class="md-nav__link">
+    <span class="md-ellipsis">
+      Entidade: Instancia_de_Monstro
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#entidade-afinidade" class="md-nav__link">
+    <span class="md-ellipsis">
+      Entidade: Afinidade
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#entidade-habilidade" class="md-nav__link">
+    <span class="md-ellipsis">
+      Entidade: Habilidade
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#historico-de-versoes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Histórico de Versões
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Índice">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Índice
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#entidade-campus" class="md-nav__link">
+    <span class="md-ellipsis">
+      Entidade: Campus
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#entidade-dungeon_academica" class="md-nav__link">
+    <span class="md-ellipsis">
+      Entidade: Dungeon_Academica
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#entidade-boss" class="md-nav__link">
+    <span class="md-ellipsis">
+      Entidade: Boss
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#entidade-gabinete_boss" class="md-nav__link">
+    <span class="md-ellipsis">
+      Entidade: Gabinete_Boss
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#entidade-ataque" class="md-nav__link">
+    <span class="md-ellipsis">
+      Entidade: Ataque
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#entidade-cura" class="md-nav__link">
+    <span class="md-ellipsis">
+      Entidade: Cura
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#entidade-defesa" class="md-nav__link">
+    <span class="md-ellipsis">
+      Entidade: Defesa
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#entidade-setor" class="md-nav__link">
+    <span class="md-ellipsis">
+      Entidade: Setor
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#entidade-loja" class="md-nav__link">
+    <span class="md-ellipsis">
+      Entidade: Loja
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#entidade-item" class="md-nav__link">
+    <span class="md-ellipsis">
+      Entidade: Item
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#entidade-reliquia" class="md-nav__link">
+    <span class="md-ellipsis">
+      Entidade: Reliquia
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#entidade-consumivel" class="md-nav__link">
+    <span class="md-ellipsis">
+      Entidade: Consumivel
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#entidade-equipavel" class="md-nav__link">
+    <span class="md-ellipsis">
+      Entidade: Equipavel
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#entidade-sala_comum" class="md-nav__link">
+    <span class="md-ellipsis">
+      Entidade: Sala_comum
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#entidade-inventario" class="md-nav__link">
+    <span class="md-ellipsis">
+      Entidade: Inventario
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#entidade-instancia_de_item" class="md-nav__link">
+    <span class="md-ellipsis">
+      Entidade: Instancia_de_item
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#entidade-batalha" class="md-nav__link">
+    <span class="md-ellipsis">
+      Entidade: Batalha
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#entidade-duelo" class="md-nav__link">
+    <span class="md-ellipsis">
+      Entidade: Duelo
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#entidade-estudante" class="md-nav__link">
+    <span class="md-ellipsis">
+      Entidade: Estudante
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#entidade-monstro" class="md-nav__link">
+    <span class="md-ellipsis">
+      Entidade: Monstro
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#entidade-instancia_de_monstro" class="md-nav__link">
+    <span class="md-ellipsis">
+      Entidade: Instancia_de_Monstro
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#entidade-afinidade" class="md-nav__link">
+    <span class="md-ellipsis">
+      Entidade: Afinidade
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#entidade-habilidade" class="md-nav__link">
+    <span class="md-ellipsis">
+      Entidade: Habilidade
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#historico-de-versoes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Histórico de Versões
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="dd-dicionario-de-dados">DD - Dicionário de Dados</h1>
+<p>De acordo com a <em>UC Merced Library</em>,</p>
+<blockquote>
+<p>"Um Dicionário de Dados é uma coleção de nomes, definições e atributos sobre elementos de dados que estão sendo usados ​​ou capturados em um banco de dados, sistema de informação ou parte de um projeto de pesquisa. Ele descreve os significados e propósitos dos elementos de dados dentro do contexto de um projeto e fornece orientações sobre interpretação, significados aceitos e representação. [...]. Os metadados incluídos em um Dicionário de Dados podem auxiliar na definição do escopo e das características dos elementos de dados, bem como nas regras para seu uso e aplicação. "</p>
+</blockquote>
+<h2 id="entidade-campus">Entidade: Campus</h2>
+<p><strong>Descrição:</strong> A entidade Campus descreve os campus presentes no jogo e outras informações, como: seu número de identificação e nome.</p>
+<table>
+<thead>
+<tr>
+<th>Nome</th>
+<th>Descrição</th>
+<th>Tipo de dado</th>
+<th>Tamanho</th>
+<th>Restrições de domínio (PK, FK, Not Null, Check, Default, Identity)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id_Campus</td>
+<td>Identificador único do campus</td>
+<td>Inteiro</td>
+<td></td>
+<td>- PK<br>- Not Null<br></td>
+</tr>
+<tr>
+<td>nome</td>
+<td>Nome do campus</td>
+<td>varchar</td>
+<td>100</td>
+<td>- Not Null</td>
+</tr>
+<tr>
+<td>descricao</td>
+<td>Descrição do campus</td>
+<td>varchar</td>
+<td>255</td>
+<td>- Not Null</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Observações</strong>
+ - Cada campus contem um ou mais setores (relação 1:N com Setor).
+ - Um campus deve existir (participação total – (1,1)).</p>
+<h2 id="entidade-dungeon_academica">Entidade: Dungeon_Academica</h2>
+<p><strong>Descrição:</strong> A entidade <code>Dungeon_Academica</code> descreve Dungeons que se relacionam a salas comuns no jogo e outras informações, como: seu número de identificação, id da sala a que se relaciona, nome, descrição e tipo de afinidade.</p>
+<p><strong>Observação:</strong> Essa tabela possui chave estrangeira da entidade <code>Sala_Comum</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Nome</th>
+<th>Descrição</th>
+<th>Tipo de dado</th>
+<th>Tamanho</th>
+<th>Restrições de domínio (PK, FK, Not Null, Check, Default, Identity)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id_dungeon</td>
+<td>Identificador da Dungeon</td>
+<td>varchar</td>
+<td>8</td>
+<td>- PK<br>- Not Null</td>
+</tr>
+<tr>
+<td>id_sala</td>
+<td>Identificador da sala em que a Dungeon está presente</td>
+<td>varchar</td>
+<td>8</td>
+<td>- FK<br>- Not Null</td>
+</tr>
+<tr>
+<td>nome</td>
+<td>Nome da Dungeon Acadêmica</td>
+<td>varchar</td>
+<td>100</td>
+<td>- Not Null</td>
+</tr>
+<tr>
+<td>descricao</td>
+<td>Descrição da Dungeon Acadêmica</td>
+<td>varchar</td>
+<td>255</td>
+<td>- Not Null</td>
+</tr>
+</tbody>
+</table>
+<h2 id="entidade-boss">Entidade: Boss</h2>
+<p><strong>Descrição</strong>: A entidade <code>Boss</code> descreve o Boss de um Gabinete, que está presente em uma Sala_Comum no jogo, e outras informações, como: seu número de identificação, id do gabinete a que se relaciona, nome, descrição e tipo de afinidade.</p>
+<p><strong>Observação</strong>: Essa tabela possui chaves estrangeiras das entidades <code>Gabinete_Boss</code> e <code>Habilidades</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Nome</th>
+<th>Descrição</th>
+<th>Tipo de dado</th>
+<th>Tamanho</th>
+<th>Restrições de domínio (PK, FK, Not Null, Check, Default, Identity)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id_boss</td>
+<td>Identificador do Boss</td>
+<td>varchar</td>
+<td>8</td>
+<td>- PK<br>- Not Null</td>
+</tr>
+<tr>
+<td>vida</td>
+<td>Quantidade de vida que o boss possui no momento</td>
+<td>int</td>
+<td></td>
+<td>- Not Null</td>
+</tr>
+<tr>
+<td>id_gabinete_boss</td>
+<td>Identificador do gabinete em que o Boss fica</td>
+<td>varchar</td>
+<td>8</td>
+<td>- FK<br>- Not Null</td>
+</tr>
+<tr>
+<td>nome</td>
+<td>Nome do Boss</td>
+<td>varchar</td>
+<td>100</td>
+<td>- Not Null</td>
+</tr>
+<tr>
+<td>id_habilidade</td>
+<td>Identificador da(s) habilidade(s) que o boss possui</td>
+<td>varchar</td>
+<td>8</td>
+<td>- FK<br>- Not Null</td>
+</tr>
+</tbody>
+</table>
+<h2 id="entidade-gabinete_boss">Entidade: Gabinete_Boss</h2>
+<p><strong>Descrição</strong>: A entidade <code>Gabinete_Boss</code> descreve o Gabinete de um Boss, presente em alguma Dungeon no jogo. Possui informações, como: seu número de identificação e identificação da Dungeon em que está.</p>
+<p><strong>Observação</strong>: Essa tabela possui chave estrangeira da entidade <code>Dungeon_Academica</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Nome</th>
+<th>Descrição</th>
+<th>Tipo de dado</th>
+<th>Tamanho</th>
+<th>Restrições de domínio (PK, FK, Not Null, Check, Default, Identity)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id_gabinete_boss</td>
+<td>Identificador do gabinete do Boss</td>
+<td>varchar</td>
+<td>8</td>
+<td>- PK<br>- Not Null</td>
+</tr>
+<tr>
+<td>id_dungeon</td>
+<td>Identificador da Dungeon em que o gabinete está</td>
+<td>varchar</td>
+<td>8</td>
+<td>- FK<br>- Not Null</td>
+</tr>
+</tbody>
+</table>
+<h2 id="entidade-ataque">Entidade: Ataque</h2>
+<p><strong>Descrição:</strong> A entidade <code>Ataque</code> descreve o tipo de ataque, que está ligado a uma habilidade. Possui informações, como dano causado e porcentagem de acerto e herda todos os atributos de habilidade.</p>
+<p><strong>Observação:</strong>** Essa tabela não possui chave estrangeira.</p>
+<!-- 🔔 **Nota:** Verificar se esse é realmente o relacionamento correto. -->
+
+<table>
+<thead>
+<tr>
+<th>Nome</th>
+<th>Descrição</th>
+<th>Tipo de dado</th>
+<th>Tamanho</th>
+<th>Restrições de domínio (PK, FK, Not Null, Check, Default, Identity)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>danoCausado</td>
+<td>Indica o dano causado pelo ataque</td>
+<td>int</td>
+<td></td>
+<td>- Not Null</td>
+</tr>
+<tr>
+<td>porcentagemAcerto</td>
+<td>Indica a porcentagem de acerto do ataque</td>
+<td>float</td>
+<td></td>
+<td>- Not Null</td>
+</tr>
+</tbody>
+</table>
+<h2 id="entidade-cura">Entidade: Cura</h2>
+<p><strong>Descrição:</strong> A entidade <code>Cura</code> descreve o tipo de cura, que está ligado a uma habilidade. Possui informação de vida recuperada e herda todos os atributos de habilidade.</p>
+<p><strong>Observação:</strong>** Essa tabela não possui chave estrangeira.</p>
+<!-- 🔔 **Nota:** Verificar se esse é realmente o relacionamento correto. -->
+
+<table>
+<thead>
+<tr>
+<th>Nome</th>
+<th>Descrição</th>
+<th>Tipo de dado</th>
+<th>Tamanho</th>
+<th>Restrições de domínio (PK, FK, Not Null, Check, Default, Identity)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>vidaRecuperada</td>
+<td>Indica o tanto de vida recuperada possibilitado pela habilidade de cura</td>
+<td>int</td>
+<td></td>
+<td>- Not Null</td>
+</tr>
+</tbody>
+</table>
+<h2 id="entidade-defesa">Entidade: Defesa</h2>
+<p><strong>Descrição:</strong> A entidade <code>Defesa</code> descreve o tipo de defesa, que está ligado a uma habilidade. Possui informação de dano mitigado e herda todos os atributos de habilidade.</p>
+<p><strong>Observação:</strong>** Essa tabela não possui chave estrangeira.</p>
+<!-- 🔔 **Nota:** Verificar se esse é realmente o relacionamento correto. -->
+
+<table>
+<thead>
+<tr>
+<th>Nome</th>
+<th>Descrição</th>
+<th>Tipo de dado</th>
+<th>Tamanho</th>
+<th>Restrições de domínio (PK, FK, Not Null, Check, Default, Identity)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>danoMitigado</td>
+<td>Indica o tanto de dano mitigado possibilitado pela defesa</td>
+<td>int</td>
+<td></td>
+<td>- Not Null</td>
+</tr>
+</tbody>
+</table>
+<h2 id="entidade-setor">Entidade: Setor</h2>
+<p><strong>Descrição:</strong> A entidade <code>Setor</code> descreve um setor que está dentro do campus. Possui informação de nome, descrição, identificador do campus em que está e possui um auto-relacionamento em que a partir de um setor pode se chegar a outro.</p>
+<table>
+<thead>
+<tr>
+<th>Nome</th>
+<th>Descrição</th>
+<th>Tipo de dado</th>
+<th>Tamanho</th>
+<th>Restrições de domínio (PK, FK, Not Null, Check, Default, Identity)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id_setor</td>
+<td>Identificador do Setor</td>
+<td>inteiro</td>
+<td></td>
+<td>- PK<br>- Not Null</td>
+</tr>
+<tr>
+<td>nome</td>
+<td>Nome do Setor</td>
+<td>varchar</td>
+<td>100</td>
+<td>- Not Null</td>
+</tr>
+<tr>
+<td>descricao</td>
+<td>Descrição do Setor</td>
+<td>varchar</td>
+<td>255</td>
+<td>- Not Null</td>
+</tr>
+<tr>
+<td>id_proxSetor</td>
+<td>Identificador do próximo setor(auto-relacion.)</td>
+<td>inteiro</td>
+<td></td>
+<td>- FK<br>- Not Null</td>
+</tr>
+<tr>
+<td>id_prevSetor</td>
+<td>Identificador do setor anterior</td>
+<td>varchar</td>
+<td>8</td>
+<td>- FK<br>- Not Null</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Observações</strong>
+- Cada setor pertence a um único campus (relação N:1 com Campus).
+- A relação "Conecta" é um auto-relacionamento 1:1 entre setores, criando uma espécie de lista duplamente ligada entre setores (id_prevSetor ↔ id_proxSetor).</p>
+<h2 id="entidade-loja">Entidade: Loja</h2>
+<p><strong>Descrição</strong>: A entidade <code>Loja</code> descreve uma loja, que está dentro de uma sala, e por meio da qual podem ser compradas habilidades e instâncias de itens.
+<strong>Observação</strong> 
+- A loja é uma entidade fraca, ou seja, completamente dependente de Sala Comum
+- Uma sala pode conter nenhuma ou várias lojas, mas uma loja precisa estar contida em uma sala
+- Uma loja vende várias habilidades, porém, nenhuma habilidade precisa de uma ou várias lojas para ser vendida
+- Uma loja pode vender nenhum, um ou vários itens, mas um item pode ser vendido por nenhuma, uma ou várias lojas</p>
+<h2 id="entidade-item">Entidade: Item</h2>
+<p><strong>Descrição</strong>: A entidade <code>Item</code> descreve um tipo de item, que possui informações de tipo, descrição, nome e identificador.</p>
+<p><strong>Observação</strong>: Essa tabela não possui chave estrangeira, mas é chave estrangeira da entidade <code>Instância_de_item</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Nome</th>
+<th>Descrição</th>
+<th>Tipo de dado</th>
+<th>Tamanho</th>
+<th>Restrições de domínio (PK, FK, Not Null, Check, Default, Identity)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id_item</td>
+<td>Identificador do item</td>
+<td>varchar</td>
+<td>8</td>
+<td>- PK<br>- Not Null</td>
+</tr>
+<tr>
+<td>nome</td>
+<td>Nome do item</td>
+<td>varchar</td>
+<td>100</td>
+<td>- Not Null</td>
+</tr>
+<tr>
+<td>descricao</td>
+<td>Descreve o item</td>
+<td>varchar</td>
+<td>255</td>
+<td></td>
+</tr>
+<tr>
+<td>item_tipo</td>
+<td>Indica o tipo do item</td>
+<td>varchar</td>
+<td>100</td>
+<td>- Not Null</td>
+</tr>
+</tbody>
+</table>
+<h2 id="entidade-reliquia">Entidade: Reliquia</h2>
+<p><strong>Descrição</strong>: A entidade <code>Relíquia</code> descreve uma relíquia, que é um tipo de item. Se relaciona a um duelo sendo chave estrangeira dele. Herda todos os atributos de Item.</p>
+<p>Observação: Essa tabela é chave estrangeira da entidade <code>Duelo</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Nome</th>
+<th>Descrição</th>
+<th>Tipo de dado</th>
+<th>Tamanho</th>
+<th>Restrições de domínio (PK, FK, Not Null, Check, Default, Identity)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id_reliquia</td>
+<td>Identificador da relíquia</td>
+<td>varchar</td>
+<td>8</td>
+<td>- PK<br>- Not Null</td>
+</tr>
+<tr>
+<td>tipo_reliquia</td>
+<td>Descreve o tipo da relíquia</td>
+<td>varchar</td>
+<td>100</td>
+<td>- Not Null</td>
+</tr>
+</tbody>
+</table>
+<h2 id="entidade-consumivel">Entidade: Consumivel</h2>
+<p><strong>Descrição:</strong> A entidade <code>Consumível</code> descreve um item consumível. Herda todos os atributos de Item e possui informações como efeito e preço.</p>
+<p><strong>Observação:</strong> Essa tabela não possui chave estrangeira da entidade.</p>
+<table>
+<thead>
+<tr>
+<th>Nome</th>
+<th>Descrição</th>
+<th>Tipo de dado</th>
+<th>Tamanho</th>
+<th>Restrições de domínio (PK, FK, Not Null, Check, Default, Identity)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>efeito</td>
+<td>Efeito causado por um item consumível</td>
+<td>int</td>
+<td></td>
+<td>- Not Null</td>
+</tr>
+<tr>
+<td>preco</td>
+<td>Preço do item consumível</td>
+<td>float</td>
+<td></td>
+<td>- Not Null</td>
+</tr>
+</tbody>
+</table>
+<h2 id="entidade-equipavel">Entidade: Equipavel</h2>
+<p><strong>Descrição:</strong> A entidade <code>Equipavel</code> descreve um item equipável. Herda todos os atributos de Item e possui informações como efeito, preço e se está equipado ou não.</p>
+<p><strong>Observação:</strong> Essa tabela não possui chave estrangeira.</p>
+<table>
+<thead>
+<tr>
+<th>Nome</th>
+<th>Descrição</th>
+<th>Tipo de dado</th>
+<th>Tamanho</th>
+<th>Restrições de domínio (PK, FK, Not Null, Check, Default, Identity)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>efeito</td>
+<td>Efeito causado por um item consumível</td>
+<td>int</td>
+<td></td>
+<td>-Not Null</td>
+</tr>
+<tr>
+<td>preco</td>
+<td>O valor do item equipavel</td>
+<td>int</td>
+<td></td>
+<td>-Not Null</td>
+</tr>
+<tr>
+<td>equipado</td>
+<td>indica se o item equipavel está equipado ou não</td>
+<td>boolean</td>
+<td></td>
+<td>-Not Null</td>
+</tr>
+</tbody>
+</table>
+<h2 id="entidade-sala_comum">Entidade: Sala_comum</h2>
+<p><strong>Descrição:</strong> É a entidade que representa as salas em que o estudante irá andar.</p>
+<table>
+<thead>
+<tr>
+<th>Nome</th>
+<th>Descrição</th>
+<th>Tipo de dado</th>
+<th>Tamanho</th>
+<th>Restrições de domínio (PK, FK, Not Null, Check, Default, Identity)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id_sala</td>
+<td>Identificador único da sala</td>
+<td>inteiro</td>
+<td></td>
+<td>- PK<br>- Not Null<br></td>
+</tr>
+<tr>
+<td>id_prevSala</td>
+<td>Identificador da sala anterior</td>
+<td>inteiro</td>
+<td></td>
+<td>- FK<br>- Not Null<br></td>
+</tr>
+<tr>
+<td>id_proxSala</td>
+<td>Identificador da próxima sala</td>
+<td>inteiro</td>
+<td></td>
+<td>- FK<br>- Not Null<br></td>
+</tr>
+<tr>
+<td>descrição</td>
+<td>Descrição do que tem/contem na sala</td>
+<td>varchar</td>
+<td>255</td>
+<td>-Not Null</td>
+</tr>
+<tr>
+<td>nome</td>
+<td>nome da sala</td>
+<td>varchar</td>
+<td>100</td>
+<td>- Not Null</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Observação</strong> 
+- Um setor pode conter nenhuma ou várias salas comuns, mas cada sala comum deve pertencer exatamente a um setor.
+- Cada sala comum pode apontar para uma próxima e uma anterior (representando uma estrutura sequencial ou lista duplamente ligada).</p>
+<h2 id="entidade-inventario">Entidade: Inventario</h2>
+<p><strong>Descrição:</strong> Entidade que contem as instâncias de item que o estudante carrega com si.</p>
+<p><strong>Observação:</strong> Essa tabela possui chave estrangeira da entidade <code>instancia_de_item</code> e a entidade <code>estudante</code> tem chave estrangeira dessa entidade.</p>
+<table>
+<thead>
+<tr>
+<th>Nome</th>
+<th>Descrição</th>
+<th>Tipo de dado</th>
+<th>Tamanho</th>
+<th>Restrições de domínio (PK, FK, Not Null, Check, Default, Identity)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id_inventário</td>
+<td>Identificador do inventário</td>
+<td>varchar</td>
+<td>8</td>
+<td>- PK<br>- Not Null<br></td>
+</tr>
+<tr>
+<td>id_instanciaitem</td>
+<td>Identificador da instância do item que o inventário armazena</td>
+<td>varchar</td>
+<td>8</td>
+<td>- FK<br>- Not Null<br></td>
+</tr>
+</tbody>
+</table>
+<h2 id="entidade-instancia_de_item">Entidade: Instancia_de_item</h2>
+<p><strong>Descrição:</strong> É a instância do item.</p>
+<p><strong>Observação:</strong> Essa tabela possui chave estrangeira da entidade <code>item</code> e as entidades <code>loja</code>, <code>inventario</code> e <code>sala_comum</code> possuem chave estrangeira desta entidade.</p>
+<table>
+<thead>
+<tr>
+<th>Nome</th>
+<th>Descrição</th>
+<th>Tipo de dado</th>
+<th>Tamanho</th>
+<th>Restrições de domínio (PK, FK, Not Null, Check, Default, Identity)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id_instanciaitem</td>
+<td>Identificador da instância do item</td>
+<td>varchar</td>
+<td>8</td>
+<td>- PK<br>- Not Null<br></td>
+</tr>
+<tr>
+<td>id_item</td>
+<td>Identificador do item que foi instânciado</td>
+<td>varchar</td>
+<td>8</td>
+<td>- FK<br>- Not Null<br></td>
+</tr>
+</tbody>
+</table>
+<h2 id="entidade-batalha">Entidade: Batalha</h2>
+<p><strong>Descrição:</strong> É a entidade que representa uma agregação do relacionamento entre Instância de monstro e o estudante</p>
+<p><strong>Observação:</strong> Essa tabela possui chave estrangeira da entidade <code>instância de Monstro</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Nome</th>
+<th>Descrição</th>
+<th>Tipo de dado</th>
+<th>Tamanho</th>
+<th>Restrições de domínio (PK, FK, Not Null, Check, Default, Identity)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id_batalha</td>
+<td>Identificador da batalha</td>
+<td>varchar</td>
+<td>8</td>
+<td>- PK<br>- Not Null<br></td>
+</tr>
+<tr>
+<td>id_instânciaMonstro</td>
+<td>Identificador da instância monstro que participa da batalha</td>
+<td>varchar</td>
+<td>8</td>
+<td>- FK<br>- Not Null<br></td>
+</tr>
+<tr>
+<td>player_win</td>
+<td>Identifica se o estudante venceu ou não</td>
+<td>boolean</td>
+<td></td>
+<td>-Not Null</td>
+</tr>
+<tr>
+<td>Moedas</td>
+<td>Quantas moedas o duelo gerou</td>
+<td>int</td>
+<td></td>
+<td>-Not Null</td>
+</tr>
+<tr>
+<td>estresse_gasto</td>
+<td>Quanto de estresse o usuário gastou no duelo</td>
+<td>int</td>
+<td></td>
+<td>-Not Null</td>
+</tr>
+<tr>
+<td>xp_area</td>
+<td>xp relacionado a area ganho na batalha</td>
+<td>int</td>
+<td></td>
+<td>-Not Null</td>
+</tr>
+</tbody>
+</table>
+<h2 id="entidade-duelo">Entidade: Duelo</h2>
+<p><strong>Descrição:</strong> É a entidade que representa uma agregação do relacionamento entre boss e o estudante</p>
+<p><strong>Observação:</strong> Essa tabela possui chave estrangeira da entidade <code>Reliquia</code> e <code>Boss</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Nome</th>
+<th>Descrição</th>
+<th>Tipo de dado</th>
+<th>Tamanho</th>
+<th>Restrições de domínio (PK, FK, Not Null, Check, Default, Identity)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id_duelo</td>
+<td>Identificador do duelo</td>
+<td>varchar</td>
+<td>8</td>
+<td>- PK<br>- Not Null<br></td>
+</tr>
+<tr>
+<td>id_reliquia</td>
+<td>Identificador da reliquia que o duelo vai dropar</td>
+<td>varchar</td>
+<td>8</td>
+<td>- FK<br>- Not Null<br></td>
+</tr>
+<tr>
+<td>id_boss</td>
+<td>Identificador do boss que duelou com o estudante</td>
+<td>varchar</td>
+<td>8</td>
+<td>- FK<br>- Not Null<br></td>
+</tr>
+<tr>
+<td>player_win</td>
+<td>Identifica se o estudante venceu ou não</td>
+<td>boolean</td>
+<td></td>
+<td>-Not Null</td>
+</tr>
+<tr>
+<td>Moedas</td>
+<td>Quantas moedas o duelo gerou</td>
+<td>int</td>
+<td></td>
+<td>-Not Null</td>
+</tr>
+<tr>
+<td>estresse_gasto</td>
+<td>Quanto de estresse o usuário gastou no duelo</td>
+<td>int</td>
+<td></td>
+<td>-Not Null</td>
+</tr>
+</tbody>
+</table>
+<h2 id="entidade-estudante">Entidade: Estudante</h2>
+<p><strong>Descrição:</strong> É a entidade estuande que o jogador controla no jogo, ele batalha, duela, evolui esta entidade.</p>
+<p><strong>Observação:</strong> Essa tabela possui chave estrangeira das entidades <code>sala</code>, <code>inventario</code>, <code>habilidade</code> e <code>afinidade</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Nome</th>
+<th>Descrição</th>
+<th>Tipo de dado</th>
+<th>Tamanho</th>
+<th>Restrições de domínio (PK, FK, Not Null, Check, Default, Identity)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id_estudande</td>
+<td>Identificador de estudante</td>
+<td>varchar</td>
+<td>8</td>
+<td>- PK<br>- Not Null<br></td>
+</tr>
+<tr>
+<td>id_inventario</td>
+<td>Identificador do inventário que o estudante tem</td>
+<td>varchar</td>
+<td>8</td>
+<td>- FK<br>- Not Null<br></td>
+</tr>
+<tr>
+<td>id_habilidade</td>
+<td>Identificador das habilidades que o estudante possui</td>
+<td>varchar</td>
+<td>8</td>
+<td>- FK<br>- Not Null<br></td>
+</tr>
+<tr>
+<td>id_afinidade</td>
+<td>Identificador das afinadades do estudante</td>
+<td>varchar</td>
+<td>8</td>
+<td>- FK<br>- Not Null<br></td>
+</tr>
+<tr>
+<td>id_sala</td>
+<td>Identificador da sala que o estudante está</td>
+<td>varchar</td>
+<td>8</td>
+<td>- FK<br>- Not Null<br></td>
+</tr>
+<tr>
+<td>nome</td>
+<td>Nome do usuário</td>
+<td>varchar</td>
+<td>100</td>
+<td>-Not Null</td>
+</tr>
+<tr>
+<td>vida</td>
+<td>Total de vida que o estudante tem</td>
+<td>int</td>
+<td></td>
+<td>-Not Null</td>
+</tr>
+<tr>
+<td>estresse</td>
+<td>o Nível de stress que o usuário está</td>
+<td>int</td>
+<td></td>
+<td>-Not Null</td>
+</tr>
+<tr>
+<td>total_moedas</td>
+<td>Total de moedas que o estudante tem</td>
+<td>int</td>
+<td></td>
+<td>-Not Null</td>
+</tr>
+</tbody>
+</table>
+<h2 id="entidade-monstro">Entidade: Monstro</h2>
+<p><strong>Descrição:</strong> É a entidade monstro, o qual o estudante deve derrotar para obter moeda e XP.</p>
+<p><strong>Observação:</strong> Essa tabela possui chave estrangeira da entidade <code>Habilidade</code> e entidade <code>Instância de monstro</code> tem chave estrangeira desta entidade.</p>
+<table>
+<thead>
+<tr>
+<th>Nome</th>
+<th>Descrição</th>
+<th>Tipo de dado</th>
+<th>Tamanho</th>
+<th>Restrições de domínio (PK, FK, Not Null, Check, Default, Identity)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id_monstro</td>
+<td>Identificador do monstro</td>
+<td>varchar</td>
+<td>8</td>
+<td>- PK<br>- Not Null<br></td>
+</tr>
+<tr>
+<td>id_habilidade</td>
+<td>Identificador das habilidades que um monstro pode ter</td>
+<td>varchar</td>
+<td>8</td>
+<td>- FK<br>- Not Null<br></td>
+</tr>
+<tr>
+<td>vida_max</td>
+<td>Vida máxima que o monstro pode ter</td>
+<td>int</td>
+<td></td>
+<td>-Not Null</td>
+</tr>
+<tr>
+<td>tipo_setor</td>
+<td>Tipo do setor em que o monstro está presente</td>
+<td>varchar</td>
+<td>100</td>
+<td>-Not Null</td>
+</tr>
+<tr>
+<td>nome</td>
+<td>Nome do monstro</td>
+<td>varchar</td>
+<td>100</td>
+<td>-Not Null</td>
+</tr>
+</tbody>
+</table>
+<h2 id="entidade-instancia_de_monstro">Entidade: Instancia_de_Monstro</h2>
+<p><strong>Descrição:</strong> É a instância do monstro.</p>
+<p><strong>Observação:</strong> Essa tabela possui chave estrangeira da entidade <code>Dungeon_academia</code> e <code>Monstro</code>, a entidade <code>Batalha</code> tem chave estrangeira desta entidade.</p>
+<table>
+<thead>
+<tr>
+<th>Nome</th>
+<th>Descrição</th>
+<th>Tipo de dado</th>
+<th>Tamanho</th>
+<th>Restrições de domínio (PK, FK, Not Null, Check, Default, Identity)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id_instanciaMonstro</td>
+<td>Identificador da instância de monstro</td>
+<td>varchar</td>
+<td>8</td>
+<td>- PK<br>- Not Null<br></td>
+</tr>
+<tr>
+<td>id_monstro</td>
+<td>Identificador do Monstro que foi instânciado</td>
+<td>varchar</td>
+<td>8</td>
+<td>- FK<br>- Not Null<br></td>
+</tr>
+<tr>
+<td>id_Dungeon</td>
+<td>Identificador da Dungeon que a instância está presente</td>
+<td>varchar</td>
+<td>8</td>
+<td>- FK<br>- Not Null<br></td>
+</tr>
+<tr>
+<td>vida_atual</td>
+<td>Valor da vida da instância do boss</td>
+<td>int</td>
+<td></td>
+<td>-Not Null</td>
+</tr>
+</tbody>
+</table>
+<h2 id="entidade-afinidade">Entidade: Afinidade</h2>
+<p><strong>Descrição:</strong> Essa entidade contém os dados da afinidade que um estudante pode ter nas áreas de matemática, humanas, programação e gerais.</p>
+<p><strong>Observação:</strong> A tabela estudante tem chave estrageira desta entidade. </p>
+<table>
+<thead>
+<tr>
+<th>Nome</th>
+<th>Descrição</th>
+<th>Tipo de dado</th>
+<th>Tamanho</th>
+<th>Restrições de domínio (PK, FK, Not Null, Check, Default, Identity)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id_afinidade</td>
+<td>Identificador da afinidade</td>
+<td>varchar</td>
+<td>8</td>
+<td>- PK<br>- Not Null<br></td>
+</tr>
+<tr>
+<td>tipo_afinidade</td>
+<td>Tipo da afinidade, identifica a afinidade</td>
+<td>varchar</td>
+<td>8</td>
+<td>- PK<br>- Not Null<br></td>
+</tr>
+<tr>
+<td>xp_atual</td>
+<td>xp atual que a afinidade tem</td>
+<td>int</td>
+<td></td>
+<td>- Not Null</td>
+</tr>
+<tr>
+<td>xp_max</td>
+<td>xp máximo para upar de nível</td>
+<td>int</td>
+<td></td>
+<td>- Not Null</td>
+</tr>
+<tr>
+<td>nivel_atual</td>
+<td>Qual o nível atual da afinidade</td>
+<td>int</td>
+<td></td>
+<td>- Not Null</td>
+</tr>
+</tbody>
+</table>
+<h2 id="entidade-habilidade">Entidade: Habilidade</h2>
+<p><strong>Descrição:</strong> Esta entidade contém os dados das habilidades que uma criatura, estudante, tema e loja podem ter.</p>
+<table>
+<thead>
+<tr>
+<th>Nome</th>
+<th>Descrição</th>
+<th>Tipo de dado</th>
+<th>Tamanho</th>
+<th>Restrições de domínio (PK, FK, Not Null, Check, Default, Identity)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id_habilidade</td>
+<td>Identificador Da habilidade</td>
+<td>varchar</td>
+<td>8</td>
+<td>- PK<br>- Not Null<br></td>
+</tr>
+<tr>
+<td>nome</td>
+<td>nome da habilidade</td>
+<td>varchar</td>
+<td>100</td>
+<td>- Not Null</td>
+</tr>
+<tr>
+<td>tipo_habilidade</td>
+<td>Qual o tipo da habilidade</td>
+<td>varchar</td>
+<td>6</td>
+<td>- Not Null</td>
+</tr>
+<tr>
+<td>nivel</td>
+<td>Qual o nível da habilidade</td>
+<td>inteiro</td>
+<td></td>
+<td>- Not Null</td>
+</tr>
+<tr>
+<td>coolDown</td>
+<td>tempo de recarga da habilidade</td>
+<td>inteiro</td>
+<td></td>
+<td>- Not Null</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Observações</strong>
+- A criatura pode dominar no mínimo uma habilidade e no máximo várias. A habilidade pode ser dominada por nenhuma criatura e no máximo várias.
+- Uma loja vende várias habilidades, porém, nenhuma habilidade precisa de uma ou várias lojas para ser vendida
+- Uma habilidade contém somente um tema e nenhum tema pode conter várias habilidades
+- Nenhuma habilidade ou várias podem ser dominadas pelo estudante e, um estudante pode dominar várias habilidades
+- Habilidade pode ser de três tipos: ataque, cura e defesa. </p>
+<h2 id="historico-de-versoes">Histórico de Versões</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Versão</th>
+<th style="text-align: center;">Data</th>
+<th>Descrição</th>
+<th>Autor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><code>1.0</code></td>
+<td style="text-align: center;">01/05/2025</td>
+<td>Criação do Dicionário de Dados</td>
+<td><a href="https://github.com/ludmilaaysha">Ludmila Nunes</a> &amp; <a href="https://github.com/isaqzin">Isaque Camargos</a></td>
+</tr>
+</tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Voltar para o topo
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.annotate", "content.tabs.link", "header.autohide", "navigation.instant", "navigation.top", "navigation.tracking"], "search": "../../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copiado para \u00e1rea de transfer\u00eancia", "clipboard.copy": "Copiar para \u00e1rea de transfer\u00eancia", "search.result.more.one": "mais 1 nesta p\u00e1gina", "search.result.more.other": "# mais nesta p\u00e1gina", "search.result.none": "Nenhum documento encontrado", "search.result.one": "1 documento encontrado", "search.result.other": "# documentos encontrados", "search.result.placeholder": "Digite para iniciar a busca", "search.result.term.missing": "Ausente", "select.version": "Selecione a vers\u00e3o"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.13a4f30d.min.js"></script>
+      
+    
+  </body>
+</html>
