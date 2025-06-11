@@ -17,7 +17,6 @@ De acordo com a *UC Merced Library*,
 
 **Descrição:** A entidade `Dungeon_Academica` descreve Dungeons que se relacionam a salas comuns no jogo e outras informações, como: seu número de identificação, nome, descrição e id do tema. Representa desafios ou ambientes acadêmicos temáticos que fazem parte do sistema. Cada dungeon está relacionada a um tema específico de aprendizado, e contém informações como nome e descrição do desafio.
 
-**Observação:** Essa tabela possui chave estrangeira da entidade `Sala_Comum`.
 
 | Nome       | Descrição                                            | Tipo de dado | Tamanho | Restrições de domínio (PK, FK, Not Null, Check, Default, Identity) |
 | ---------- | ---------------------------------------------------- | ------------ | ------- | ------------------------------------------------------------------ |
@@ -72,8 +71,6 @@ De acordo com a *UC Merced Library*,
 ## Entidade: Defesa
 
 **Descrição:** A entidade `Defesa` descreve o tipo de defesa, que está ligado a uma habilidade. Possui informação de dano mitigado e herda todos os atributos de habilidade.
-
-**Observação:**** Essa tabela não possui chave estrangeira.
 
 | Nome         | Descrição                                                 | Tipo de dado | Tamanho | Restrições de domínio (PK, FK, Not Null, Check, Default, Identity) |
 | ------------ | --------------------------------------------------------- | ------------ | ------- | ------------------------------------------------------------------ |
@@ -246,7 +243,6 @@ De acordo com a *UC Merced Library*,
 
 **Descrição:** A tabela Afinidade armazena o relacionamento entre estudantes e temas, representando o nível de domínio que cada estudante possui sobre determinado tema. Cada registro representa uma afinidade única entre um estudante e um tema. Esta tabela possui chave primária composta e duas chaves estrangeiras, referenciando as tabelas Estudante e Tema.
 
-**Observação:** A tabela estudante tem chave estrageira desta entidade. 
 
 | Nome | Descrição | Tipo de dado | Tamanho | Restrições de domínio (PK, FK, Not Null, Check, Default, Identity) |
 | ---- | --------- | ------------ | ------- | ------------------------------------------------------------------ |
