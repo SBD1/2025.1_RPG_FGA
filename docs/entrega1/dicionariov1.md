@@ -57,27 +57,21 @@ De acordo com a *UC Merced Library*,
 
 **Descrição:** A entidade `Ataque` descreve o tipo de ataque, que está ligado a uma habilidade. Possui informações, como dano causado e porcentagem de acerto e herda todos os atributos de habilidade.
 
-**Observação:**** Essa tabela não possui chave estrangeira.
-
-<!-- 🔔 **Nota:** Verificar se esse é realmente o relacionamento correto. -->
-
-
 | Nome              | Descrição                                | Tipo de dado | Tamanho | Restrições de domínio (PK, FK, Not Null, Check, Default, Identity) |
 | ----------------- | ---------------------------------------- | ------------ | ------- | ------------------------------------------------------------------ |
-| danoCausado       | Indica o dano causado pelo ataque        | int          |         | - Not Null                                                         |
-| porcentagemAcerto | Indica a porcentagem de acerto do ataque | float        |         | - Not Null                                                         |
+| danoCausado       | Indica o dano causado pelo ataque        | inteiro |  | - Not Null|
+| porcentagemAcerto | Indica a porcentagem de acerto do ataque | float |  | - Not Null|    
+| id_habilidade | Identificador de habilidade | float |  | - PK<br>- FK<br>- Not Null|      
+
 
 ## Entidade: Cura
 
 **Descrição:** A entidade `Cura` descreve o tipo de cura, que está ligado a uma habilidade. Possui informação de vida recuperada e herda todos os atributos de habilidade.
 
-**Observação:**** Essa tabela não possui chave estrangeira.
-
-<!-- 🔔 **Nota:** Verificar se esse é realmente o relacionamento correto. -->
-
 | Nome           | Descrição                                                               | Tipo de dado | Tamanho | Restrições de domínio (PK, FK, Not Null, Check, Default, Identity) |
 | -------------- | ----------------------------------------------------------------------- | ------------ | ------- | ------------------------------------------------------------------ |
-| vidaRecuperada | Indica o tanto de vida recuperada possibilitado pela habilidade de cura | int          |         | - Not Null                                                         |
+| vidaRecuperada | Indica o tanto de vida recuperada possibilitado pela habilidade de cura | int          |         | - Not Null |
+| id_habilidade | Identificador de habilidade | float |  | - PK<br>- FK<br>- Not Null|
 
 
 ## Entidade: Defesa
@@ -86,11 +80,10 @@ De acordo com a *UC Merced Library*,
 
 **Observação:**** Essa tabela não possui chave estrangeira.
 
-<!-- 🔔 **Nota:** Verificar se esse é realmente o relacionamento correto. -->
-
 | Nome         | Descrição                                                 | Tipo de dado | Tamanho | Restrições de domínio (PK, FK, Not Null, Check, Default, Identity) |
 | ------------ | --------------------------------------------------------- | ------------ | ------- | ------------------------------------------------------------------ |
 | danoMitigado | Indica o tanto de dano mitigado possibilitado pela defesa | int          |         | - Not Null                                                         |
+| id_habilidade | Identificador de habilidade | float |  | - PK<br>- FK<br>- Not Null|      
 
 ## Entidade: Setor
 
@@ -289,17 +282,19 @@ Observação: Essa tabela é chave estrangeira da entidade `Duelo`.
 |xp_max|xp máximo para upar de nível|int||- Not Null|
 |nivel_atual|Qual o nível atual da afinidade|int||- Not Null|
 
-## Entidade: Habilidade
+## Entidade: Habilidades
 
-**Descrição:** Esta entidade contém os dados das habilidades que uma criatura, estudante, tema e loja podem ter.
+**Descrição:** Esta entidade contém os dados das habilidades que uma criatura, estudante, tema e loja podem ter. Ela armazena todas as habilidades disponíveis no sistema. Cada habilidade possui um identificador único (id_habilidade), um nome, um nível associado (nivel) e um tempo de recarga (cooldown). As habilidades estão associadas a um Tema, por meio da chave estrangeira id_tema, e possuem uma classificação por tipo (tipo_habilidade). Essa tabela permite organizar as habilidades por complexidade, categoria e tema relacionado, sendo fundamental para o nosso sistema, que envolve a evolução de personagem, aprendizado progressivo e gamificação.
 
 | Nome | Descrição | Tipo de dado | Tamanho | Restrições de domínio (PK, FK, Not Null, Check, Default, Identity) |
 | ---- | --------- | ------------ | ------- | ------------------------------------------------------------------ |
-|id_habilidade | Identificador Da habilidade|varchar|8|- PK<br>- Not Null<br> |
+|id_habilidade | Identificador Da habilidade|inteiro||- PK<br>- Not Null<br> |
 |nome | nome da habilidade|varchar|100|- Not Null|
-|tipo_habilidade|Qual o tipo da habilidade|varchar|6|- Not Null|
+|tipo_habilidade|Qual o tipo da habilidade|varchar|10|- Not Null|
 |nivel|Qual o nível da habilidade|inteiro||- Not Null|
 |coolDown|tempo de recarga da habilidade|inteiro||- Not Null|
+|id_tema|Identificador de Tema|inteiro||- PK<br>- Not Null|
+
 
 ## Entidade: Tema
 
