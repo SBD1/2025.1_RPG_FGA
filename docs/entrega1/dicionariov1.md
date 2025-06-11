@@ -9,13 +9,9 @@ De acordo com a *UC Merced Library*,
 
 | Nome      | Descrição                         | Tipo de dado | Tamanho | Restrições de domínio (PK, FK, Not Null, Check, Default, Identity) |
 | --------- | --------------------------------- | ------------ | ------- | ------------------------------------------------------------------ |
-| id_Campus | Identificador único do campus | Inteiro      |      | - PK<br>- Not Null<br>                                             |
+| id_campus | Identificador único do campus     | Inteiro      |         | - PK<br>- Not Null<br>                                             |
 | nome      | Nome do campus                    | varchar      | 100     | - Not Null                                                         |
 | descricao | Descrição do campus               | varchar      | 255     | - Not Null                                                         |
-
-**Observações**
- - Cada campus contem um ou mais setores (relação 1:N com Setor).
- - Um campus deve existir (participação total – (1,1)).
 
 ## Entidade: Dungeon\_Academica
 
@@ -98,15 +94,16 @@ De acordo com a *UC Merced Library*,
 
 ## Entidade: Setor
 
-**Descrição:** A entidade `Setor` descreve um setor que está dentro do campus. Possui informação de nome, descrição, identificador do campus em que está e possui um auto-relacionamento em que a partir de um setor pode se chegar a outro.
+**Descrição:** A entidade `Setor` descreve um setor que está dentro do campus, que é uma chave estrangeira da entidade `Campus`. Possui informação de nome, descrição, identificador do campus, e duas chaves estrangeiras referenciando outras lomocomoções para acesso de outros setores, na qual, possui um auto-relacionamento em que a partir de um setor pode se chegar a outro. São elas: `id_prevSetor` e `id_proxSetor`.
 
 | Nome         | Descrição                                  | Tipo de dado | Tamanho | Restrições de domínio (PK, FK, Not Null, Check, Default, Identity) |
 | ------------ | ------------------------------------------ | ------------ | ------- | ------------------------------------------------------------------ |
-| id_setor     | Identificador do Setor                     | inteiro      |        | - PK<br>- Not Null                                                 |
+| id_setor     | Identificador do Setor                     | inteiro      |         | - PK1<br>- Not Null                                                |
+| id_campus    | Identificador do Campus                    | inteiro      |         | - PK2<br>- FK1<br>- Not Null                                        |
 | nome         | Nome do Setor                              | varchar      | 100     | - Not Null                                                         |
 | descricao    | Descrição do Setor                         | varchar      | 255     | - Not Null                                                         |
-| id_proxSetor | Identificador do próximo setor(auto-relacion.) | inteiro      |        | - FK<br>- Not Null                                             |
-| id_prevSetor | Identificador do setor anterior            | varchar      | 8       | - FK<br>- Not Null                                                 |
+| id_proxSetor | Identificador do próximo setor(auto-relacion.) | inteiro      |        | - FK2<br>- Not Null                                              |
+| id_prevSetor | Identificador do setor anterior            | varchar      | 8       | - FK3<br>- Not Null                                                 |
 
 **Observações**
 - Cada setor pertence a um único campus (relação N:1 com Campus).
@@ -309,12 +306,14 @@ Observação: Essa tabela é chave estrangeira da entidade `Duelo`.
 |nivel|Qual o nível da habilidade|inteiro||- Not Null|
 |coolDown|tempo de recarga da habilidade|inteiro||- Not Null|
 
-**Observações**
-- A criatura pode dominar no mínimo uma habilidade e no máximo várias. A habilidade pode ser dominada por nenhuma criatura e no máximo várias.
-- Uma loja vende várias habilidades, porém, nenhuma habilidade precisa de uma ou várias lojas para ser vendida
-- Uma habilidade contém somente um tema e nenhum tema pode conter várias habilidades
-- Nenhuma habilidade ou várias podem ser dominadas pelo estudante e, um estudante pode dominar várias habilidades
-- Habilidade pode ser de três tipos: ataque, cura e defesa. 
+## Entidade: Tema
+
+**Descrição:** Contém as áreas: matemática, programação, 
+
+| Nome | Descrição | Tipo de dado | Tamanho | Restrições de domínio (PK, FK, Not Null, Check, Default, Identity) |
+| ---- | --------- | ------------ | ------- | ------------------------------------------------------------------ |
+|id_tema | Identificador Da habilidade|varchar|8|- PK<br>- Not Null<br> |
+|nome | nome da habilidade|varchar|100|- Not Null|
 
 
 
@@ -322,3 +321,4 @@ Observação: Essa tabela é chave estrangeira da entidade `Duelo`.
 | Versão |  Data  | Descrição| Autor                 |
 | :----: | :--------: | ---------------------------------- | -------------------------------------------------------------------------------- |
 | `1.0` | 01/05/2025 | Criação do Dicionário de Dados      | [Ludmila Nunes](https://github.com/ludmilaaysha) & [Isaque Camargos](https://github.com/isaqzin)|
+| `2.0` | 10/06/2025 | Atualização do Dicionário de Dados      | [Milena Marques](https://github.com/milenamso)|
