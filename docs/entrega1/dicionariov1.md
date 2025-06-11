@@ -94,20 +94,16 @@ De acordo com a *UC Merced Library*,
 
 ## Entidade: Setor
 
-**Descrição:** A entidade `Setor` descreve um setor que está dentro do campus, que é uma chave estrangeira da entidade `Campus`. Possui informação de nome, descrição, identificador do campus, e duas chaves estrangeiras referenciando outras lomocomoções para acesso de outros setores, na qual, possui um auto-relacionamento em que a partir de um setor pode se chegar a outro. São elas: `id_prevSetor` e `id_proxSetor`.
+**Descrição:** A entidade `Setor` descreve um setor que está dentro do campus. A chave primária composta indica que o mesmo id_setor poderia existir em mais de um campus, mas com distinção pelo id_campus. Possui informação de nome, descrição, identificador do campus, e duas chaves estrangeiras referenciando outras lomocomoções para acesso de outros setores, na qual, possui um auto-relacionamento em que a partir de um setor pode se chegar a outro, ou seja, esse relacionamento estre os setrores cria um tipo de estrutura de lista duplamente ligada. Essa estrutura pode ser útil para organizar setores em ordem (por exemplo, geográfica ou lógica). Os campos id_prevSetor e id_proxSetor são auto-relacionamentos com a mesma tabela, ideais para navegação sequencial entre setores.
 
 | Nome         | Descrição                                  | Tipo de dado | Tamanho | Restrições de domínio (PK, FK, Not Null, Check, Default, Identity) |
 | ------------ | ------------------------------------------ | ------------ | ------- | ------------------------------------------------------------------ |
-| id_setor     | Identificador do Setor                     | inteiro      |         | - PK1<br>- Not Null                                                |
-| id_campus    | Identificador do Campus                    | inteiro      |         | - PK2<br>- FK1<br>- Not Null                                        |
+| id_setor     | Identificador do Setor                     | inteiro      |         | - PK<br>- Not Null                                                |
+| id_campus    | Identificador do Campus                    | inteiro      |         | - PK<br>- FK<br>- Not Null                                        |
 | nome         | Nome do Setor                              | varchar      | 100     | - Not Null                                                         |
 | descricao    | Descrição do Setor                         | varchar      | 255     | - Not Null                                                         |
-| id_proxSetor | Identificador do próximo setor(auto-relacion.) | inteiro      |        | - FK2<br>- Not Null                                              |
-| id_prevSetor | Identificador do setor anterior            | inteiro      |       | - FK3<br>- Not Null                                                 |
-
-**Observações**
-- Cada setor pertence a um único campus (relação N:1 com Campus).
-- A relação "Conecta" é um auto-relacionamento 1:1 entre setores, criando uma espécie de lista duplamente ligada entre setores (id_prevSetor ↔ id_proxSetor).
+| id_proxSetor | Identificador do próximo setor(auto-relacion.) | inteiro      |        | - FK<br>- Not Null                                              |
+| id_prevSetor | Identificador do setor anterior            | inteiro      |       | - FK<br>- Not Null                                                 |
 
 ## Entidade: Loja
 
@@ -167,19 +163,18 @@ Observação: Essa tabela é chave estrangeira da entidade `Duelo`.
 
 ## Entidade: Sala_comum
 
-**Descrição:** É a entidade que representa as salas em que o estudante irá andar.
+**Descrição:** A tabela Sala_Comum representa as salas que compõem um setor dentro da estrutura do sistema. Cada sala está vinculada a um setor (id_setor) e possui um identificador próprio (id_sala). A estrutura permite o encadeamento de salas por meio de relacionamentos de anterior e próxima (id_prevSala e id_proxSala), formando uma sequência navegável. Além disso, cada sala pode conter funcionalidades específicas como loja (tem_loja) e dungeon (tem_dungeon), representadas por campos booleanos. Essa modelagem permite a navegação sequencial entre salas e a definição de pontos especiais dentro de um setor.
 
 | Nome | Descrição | Tipo de dado | Tamanho | Restrições de domínio (PK, FK, Not Null, Check, Default, Identity) |
 | ---- | --------- | ------------ | ------- | ------------------------------------------------------------------ |
 |id_sala|Identificador único da sala|inteiro|  |- PK<br>- Not Null<br>|
+|id_setor|Identificador único da sala|inteiro|  |- PK<br>- FK<br>- Not Null<br>|
 |id_prevSala|Identificador da sala anterior|inteiro||- FK<br>- Not Null<br>|
 |id_proxSala|Identificador da próxima sala|inteiro||- FK<br>- Not Null<br>|
 |descrição|Descrição do que tem/contem na sala|varchar|255|-Not Null|
 |nome | nome da sala|varchar|100|- Not Null|
-
-**Observação** 
-- Um setor pode conter nenhuma ou várias salas comuns, mas cada sala comum deve pertencer exatamente a um setor.
-- Cada sala comum pode apontar para uma próxima e uma anterior (representando uma estrutura sequencial ou lista duplamente ligada).
+|tem_loja|Se a sala possui loja|boolean| 1 bit |- Not Null<br>|
+|tem_dungeon|Se a sala possui dungeon|boolean| 1 bit |- Not Null<br>|
 
 ## Entidade: Inventario
 
