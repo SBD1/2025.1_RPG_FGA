@@ -103,7 +103,7 @@ De acordo com a *UC Merced Library*,
 | nome         | Nome do Setor                              | varchar      | 100     | - Not Null                                                         |
 | descricao    | Descrição do Setor                         | varchar      | 255     | - Not Null                                                         |
 | id_proxSetor | Identificador do próximo setor(auto-relacion.) | inteiro      |        | - FK2<br>- Not Null                                              |
-| id_prevSetor | Identificador do setor anterior            | varchar      | 8       | - FK3<br>- Not Null                                                 |
+| id_prevSetor | Identificador do setor anterior            | inteiro      |       | - FK3<br>- Not Null                                                 |
 
 **Observações**
 - Cada setor pertence a um único campus (relação N:1 com Campus).
