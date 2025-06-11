@@ -15,16 +15,16 @@ De acordo com a *UC Merced Library*,
 
 ## Entidade: Dungeon\_Academica
 
-**Descrição:** A entidade `Dungeon_Academica` descreve Dungeons que se relacionam a salas comuns no jogo e outras informações, como: seu número de identificação, id da sala a que se relaciona, nome, descrição e tipo de afinidade.
+**Descrição:** A entidade `Dungeon_Academica` descreve Dungeons que se relacionam a salas comuns no jogo e outras informações, como: seu número de identificação, nome, descrição e id do tema. Representa desafios ou ambientes acadêmicos temáticos que fazem parte do sistema. Cada dungeon está relacionada a um tema específico de aprendizado, e contém informações como nome e descrição do desafio.
 
 **Observação:** Essa tabela possui chave estrangeira da entidade `Sala_Comum`.
 
 | Nome       | Descrição                                            | Tipo de dado | Tamanho | Restrições de domínio (PK, FK, Not Null, Check, Default, Identity) |
 | ---------- | ---------------------------------------------------- | ------------ | ------- | ------------------------------------------------------------------ |
-| id_dungeon | Identificador da Dungeon                             | varchar      | 8       | - PK<br>- Not Null                                                 |
-| id_sala    | Identificador da sala em que a Dungeon está presente | varchar      | 8       | - FK<br>- Not Null                                                 |
-| nome       | Nome da Dungeon Acadêmica                            | varchar      | 100     | - Not Null                                                         |
-| descricao  | Descrição da Dungeon Acadêmica                       | varchar      | 255     | - Not Null                                                         |
+| id_dungeon | Identificador da Dungeon | inteiro  || - FK<br>- PK<br>- Not Null|
+| nome       | Nome da Dungeon Acadêmica   | varchar      | 100     | - Not Null |
+| descricao  | Descrição da Dungeon Acadêmica   | varchar      | 255     | - Not Null|
+| id_tema | Identificador do Tema | inteiro  || - PK<br>- Not Null|
 
 ## Entidade: Boss
 
@@ -183,14 +183,14 @@ Observação: Essa tabela é chave estrangeira da entidade `Duelo`.
 
 ## Entidade: Instancia_de_item
 
-**Descrição:** É a instância do item.
-
-**Observação:** Essa tabela possui chave estrangeira da entidade `item` e as entidades `loja`, `inventario` e `sala_comum` possuem chave estrangeira desta entidade.
+**Descrição:** Armazena as instâncias de itens que existem no sistema, associando cada item a uma sala e/ou a um estudante. Cada instância possui um identificador próprio e referencia um tipo de item. Esta tabela permite controlar a posse e localização dos itens no ambiente.
 
 | Nome | Descrição | Tipo de dado | Tamanho | Restrições de domínio (PK, FK, Not Null, Check, Default, Identity) |
 | ---- | --------- | ------------ | ------- | ------------------------------------------------------------------ |
-|id_instanciaitem|Identificador da instância do item|varchar|8|- PK<br>- Not Null<br>|
-|id_item|Identificador do item que foi instânciado|varchar|8|- FK<br>- Not Null<br>|
+|id_instanciaitem|Identificador da instância do item|inteiro||- PK<br>- Not Null<br>|
+|id_item|Identificador do item que foi instânciado|inteiro||- PK<br>- FK<br>- Not Null<br>|
+|id_sala|Identificador da sala|inteiro||- FK<br>- Not Null<br>|
+|id_estudante|Identificador do estudante|inteiro||- FK<br>- Not Null<br>|
 
 ## Entidade: Batalha
 
@@ -224,21 +224,16 @@ Observação: Essa tabela é chave estrangeira da entidade `Duelo`.
 
 ## Entidade: Estudante
 
-**Descrição:** É a entidade estuande que o jogador controla no jogo, ele batalha, duela, evolui esta entidade.
-
-**Observação:** Essa tabela possui chave estrangeira das entidades `sala`, `inventario`, `habilidade` e `afinidade`.
+**Descrição:** A tabela Estudante armazena os dados principais dos estudantes que participam do sistema. Cada estudante possui atributos como vida, estresse e total de dinheiro acumulado. Essa tabela também indica a qual sala o estudante pertence, por meio de uma chave estrangeira.
 
 | Nome | Descrição | Tipo de dado | Tamanho | Restrições de domínio (PK, FK, Not Null, Check, Default, Identity) |
 | ---- | --------- | ------------ | ------- | ------------------------------------------------------------------ |
-|id_estudande|Identificador de estudante|varchar|8|- PK<br>- Not Null<br>|
-|id_inventario|Identificador do inventário que o estudante tem|varchar|8|- FK<br>- Not Null<br>|
-|id_habilidade|Identificador das habilidades que o estudante possui|varchar|8|- FK<br>- Not Null<br>|
-|id_afinidade|Identificador das afinadades do estudante|varchar|8|- FK<br>- Not Null<br>|
-|id_sala|Identificador da sala que o estudante está|varchar|8|- FK<br>- Not Null<br>|
+|id_estudande|Identificador de estudante|inteiro||- PK<br>- Not Null<br>|
+|id_sala|Identificador da sala que o estudante está|inteiro||- FK<br>- Not Null<br>|
 |nome|Nome do usuário|varchar|100|-Not Null|
 |vida|Total de vida que o estudante tem|int||-Not Null|
 |estresse|o Nível de stress que o usuário está|int||-Not Null|
-|total_moedas|Total de moedas que o estudante tem|int||-Not Null|
+|total_dinheiro|Total de moedas que o estudante tem|int||-Not Null|
 
 ## Entidade: Monstro
 
@@ -270,17 +265,16 @@ Observação: Essa tabela é chave estrangeira da entidade `Duelo`.
 
 ## Entidade: Afinidade
 
-**Descrição:** Essa entidade contém os dados da afinidade que um estudante pode ter nas áreas de matemática, humanas, programação e gerais.
+**Descrição:** A tabela Afinidade armazena o relacionamento entre estudantes e temas, representando o nível de domínio que cada estudante possui sobre determinado tema. Cada registro representa uma afinidade única entre um estudante e um tema. Esta tabela possui chave primária composta e duas chaves estrangeiras, referenciando as tabelas Estudante e Tema.
 
 **Observação:** A tabela estudante tem chave estrageira desta entidade. 
 
 | Nome | Descrição | Tipo de dado | Tamanho | Restrições de domínio (PK, FK, Not Null, Check, Default, Identity) |
 | ---- | --------- | ------------ | ------- | ------------------------------------------------------------------ |
-|id_afinidade|Identificador da afinidade|varchar|8|- PK<br>- Not Null<br>|
-|tipo_afinidade|Tipo da afinidade, identifica a afinidade |varchar|8|- PK<br>- Not Null<br>|
-|xp_atual|xp atual que a afinidade tem|int||- Not Null|
-|xp_max|xp máximo para upar de nível|int||- Not Null|
-|nivel_atual|Qual o nível atual da afinidade|int||- Not Null|
+|id_afinidade|Identificador da afinidade|inteiro||- PK<br>- FK<br>- Not Null|
+|id_tema|Identificador do tema |inteiro| |- PK<br>- FK<br>- Not Null|
+|xp_atual|xp atual que a afinidade tem|inteiro||- Not Null|
+|nivel_atual|Qual o nível atual da afinidade|inteiro||- Not Null|
 
 ## Entidade: Habilidades
 
@@ -298,12 +292,12 @@ Observação: Essa tabela é chave estrangeira da entidade `Duelo`.
 
 ## Entidade: Tema
 
-**Descrição:** Contém as áreas: matemática, programação, 
+**Descrição:** Contém as temáticas: Matemática, Programação, Engenharias, Gerais e Humanidades.
 
 | Nome | Descrição | Tipo de dado | Tamanho | Restrições de domínio (PK, FK, Not Null, Check, Default, Identity) |
 | ---- | --------- | ------------ | ------- | ------------------------------------------------------------------ |
-|id_tema | Identificador Da habilidade|varchar|8|- PK<br>- Not Null<br> |
-|nome | nome da habilidade|varchar|100|- Not Null|
+|id_tema | Identificador do Tema|inteiro| |- PK<br>- Not Null<br> |
+|nome | nome da habilidade |varchar|100|- Not Null|
 
 
 
