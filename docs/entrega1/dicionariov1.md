@@ -28,30 +28,25 @@ De acordo com a *UC Merced Library*,
 
 ## Entidade: Boss
 
-**Descrição**: A entidade `Boss` descreve o Boss de um Gabinete, que está presente em uma Sala_Comum no jogo, e outras informações, como: seu número de identificação, id do gabinete a que se relaciona, nome, descrição e tipo de afinidade.
+**Descrição**: A tabela Boss representa criaturas especiais (chefes) dentro do sistema, associando cada uma a uma relíquia que pode ser guardada, protegida ou concedida ao ser derrotado. Cada boss é uma criatura registrada previamente e está relacionado a uma relíquia específica. A tabela é uma especialização da entidade `Criatura`. Herda todos os atributos de `Criatura`
 
-**Observação**: Essa tabela possui chaves estrangeiras das entidades `Gabinete_Boss` e `Habilidades`.
 
 | Nome             | Descrição                                           | Tipo de dado | Tamanho | Restrições de domínio (PK, FK, Not Null, Check, Default, Identity) |
 | ---------------- | --------------------------------------------------- | ------------ | ------- | ------------------------------------------------------------------ |
-| id_boss          | Identificador do Boss                               | varchar      | 8       | - PK<br>- Not Null                                                 |
-| vida             | Quantidade de vida que o boss possui no momento     | int          |         | - Not Null                                                         |
-| id_gabinete_boss | Identificador do gabinete em que o Boss fica        | varchar      | 8       | - FK<br>- Not Null                                                 |
-| nome             | Nome do Boss                                        | varchar      | 100     | - Not Null                                                         |
-| id_habilidade    | Identificador da(s) habilidade(s) que o boss possui | varchar      | 8       | - FK<br>- Not Null                                                 |
+| id_boss  | Identificador do Boss  | inteiro| | - PK<br>- FK<br>- Not Null                                         |
+| id_reliquia    | Identificador da(s) habilidade(s) que o boss possui |inteiro|      | - FK<br>- Not Null                                                 |
 
 
-## Entidade: Gabinete_Boss
+## Entidade: Instancia_de_Criatura
 
-**Descrição**: A entidade `Gabinete_Boss` descreve o Gabinete de um Boss, presente em alguma Dungeon no jogo. Possui informações, como: seu número de identificação e identificação da Dungeon em que está.
-
-**Observação**: Essa tabela possui chave estrangeira da entidade `Dungeon_Academica`.
+**Descrição**: A tabela Instancia de Criatura registra cada aparição individual de uma criatura dentro de uma dungeon. Serve para controlar dinamicamente a vida atual da criatura durante interações ou combates em ambientes específicos do jogo.
 
 | Nome             | Descrição                                       | Tipo de dado | Tamanho | Restrições de domínio (PK, FK, Not Null, Check, Default, Identity) |
 | ---------------- | ----------------------------------------------- | ------------ | ------- | ------------------------------------------------------------------ |
-| id_gabinete_boss | Identificador do gabinete do Boss               | varchar      | 8       | - PK<br>- Not Null                                                 |
-| id_dungeon       | Identificador da Dungeon em que o gabinete está | varchar      | 8       | - FK<br>- Not Null                                                 |
-
+| id_instanciaMonstro | Identificador do monstro      | inteiro      |   | - PK<br>- Not Null                                                 |
+| id_criatura       | Identificador da criatura |inteiro     |      | - FK<br>- Not Null                                                 |
+| vida_atual | Vida atual da criatura | inteiro      |      | - Not Null                                                 |
+| id_dungeon       | Identificador da Dungeon | inteiro   |     | - FK<br>- Not Null                                                 |
 
 ## Entidade: Ataque
 
@@ -98,61 +93,63 @@ De acordo com a *UC Merced Library*,
 | id_proxSetor | Identificador do próximo setor(auto-relacion.) | inteiro      |        | - FK<br>- Not Null                                              |
 | id_prevSetor | Identificador do setor anterior            | inteiro      |       | - FK<br>- Not Null                                                 |
 
-## Entidade: Loja
+## Entidade: Itens_Loja
 
-**Descrição**: A entidade `Loja` descreve uma loja, que está dentro de uma sala, e por meio da qual podem ser compradas habilidades e instâncias de itens.
-**Observação** 
-- A loja é uma entidade fraca, ou seja, completamente dependente de Sala Comum
-- Uma sala pode conter nenhuma ou várias lojas, mas uma loja precisa estar contida em uma sala
-- Uma loja vende várias habilidades, porém, nenhuma habilidade precisa de uma ou várias lojas para ser vendida
-- Uma loja pode vender nenhum, um ou vários itens, mas um item pode ser vendido por nenhuma, uma ou várias lojas
+**Descrição**: A tabela Itens Loja representa a relação entre as lojas disponíveis no sistema e os itens que estão à venda em cada uma delas. Essa tabela é usada para modelar o relacionamento muitos-para-muitos entre Loja e Item, indicando quais itens estão disponíveis em quais lojas.
+
+| id_loja   | Identificador da loja | inteiro      |    | - PK<br>- FK<br>-Not Null                                                 |
+| id_item      | Identificador de item         | inteiro      |     | - PK<br>- FK<br>- Not Null                                                         |
 
 ## Entidade: Item
 
-**Descrição**: A entidade `Item` descreve um tipo de item, que possui informações de tipo, descrição, nome e identificador.
+**Descrição**: A tabela `item` armazena os dados básicos de todos os itens disponíveis no sistema. Cada item possui uma descrição, um nome e um tipo que indica sua funcionalidade ou categoria.
 
-**Observação**: Essa tabela não possui chave estrangeira, mas é chave estrangeira da entidade `Instância_de_item`.
 
 | Nome      | Descrição             | Tipo de dado | Tamanho | Restrições de domínio (PK, FK, Not Null, Check, Default, Identity) |
 | --------- | --------------------- | ------------ | ------- | ------------------------------------------------------------------ |
-| id_item   | Identificador do item | varchar      | 8       | - PK<br>- Not Null                                                 |
+| id_item   | Identificador do item | inteiro     |       | - PK<br>- Not Null                                                 |
 | nome      | Nome do item          | varchar      | 100     | - Not Null                                                         |
 | descricao | Descreve o item       | varchar      | 255     |                                                                    |
 | item_tipo | Indica o tipo do item | varchar      | 100     | - Not Null                                                         |
 
 ## Entidade: Reliquia
 
-**Descrição**: A entidade `Relíquia` descreve uma relíquia, que é um tipo de item. Se relaciona a um duelo sendo chave estrangeira dele. Herda todos os atributos de Item.
-
-Observação: Essa tabela é chave estrangeira da entidade `Duelo`.
+**Descrição**: A tabela reliquia armazena os dados das relíquias disponíveis no sistema, que estão associadas a chefes (bosses) e possuem um tipo específico. Cada relíquia possui um identificador único e um tipo definido. É um tipo de item.
 
 | Nome          | Descrição                   | Tipo de dado | Tamanho | Restrições de domínio (PK, FK, Not Null, Check, Default, Identity) |
 | ------------- | --------------------------- | ------------ | ------- | ------------------------------------------------------------------ |
-| id_reliquia   | Identificador da relíquia   | varchar      | 8       | - PK<br>- Not Null                                                 |
-| tipo_reliquia | Descreve o tipo da relíquia | varchar      | 100     | - Not Null                                                         |
+| id_reliquia   | Identificador da relíquia   | inteiro      |        | - PK<br>- FK<br>- Not Null                                                 |
+| tipo | Descreve o tipo da relíquia | varchar      | 100     | - Not Null                                                         |
 
 ## Entidade: Consumivel
 
 **Descrição:** A entidade `Consumível` descreve um item consumível. Herda todos os atributos de Item e possui informações como efeito e preço.
 
-**Observação:** Essa tabela não possui chave estrangeira da entidade.
-
 | Nome   | Descrição                             | Tipo de dado | Tamanho | Restrições de domínio (PK, FK, Not Null, Check, Default, Identity) |
 | ------ | ------------------------------------- | ------------ | ------- | ------------------------------------------------------------------ |
-| efeito | Efeito causado por um item consumível | int          |         | - Not Null                                                         |
+| id_item | Identificador do item | int          |         | - PK<br>- FK<br>- Not Null                                                         |
+| efeito  | Efeito do item              | float        |         | - Not Null                                                         |
 | preco  | Preço do item consumível              | float        |         | - Not Null                                                         |
 
 ## Entidade: Equipavel
 
 **Descrição:** A entidade `Equipavel` descreve um item equipável. Herda todos os atributos de Item e possui informações como efeito, preço e se está equipado ou não.
 
-**Observação:** Essa tabela não possui chave estrangeira.
+| Nome | Descrição | Tipo de dado | Tamanho | Restrições de domínio (PK, FK, Not Null, Check, Default, Identity) |
+| ---- | --------- | ------------ | ------- | ------------------------------------------------------------------ |
+|id_item|Identificador do item|int||- FK<br>- PK<br>- Not Null|
+|efeito|Efeito causado por um item consumível|int||-Not Null|
+|preco|O valor do item equipavel|int||-Not Null|
+|equipado|indica se o item equipavel está equipado ou não |boolean|1 bit|-Not Null|
+
+## Entidade: Monetario
+
+**Descrição:** A tabela `monetario` representa itens do tipo monetário no sistema, como moedas ou valores que podem ser acumulados pelos jogadores. Essa tabela especializa a tabela item e define o valor numérico associado a esse tipo de recurso. Herda todos os atributos de Item.
 
 | Nome | Descrição | Tipo de dado | Tamanho | Restrições de domínio (PK, FK, Not Null, Check, Default, Identity) |
 | ---- | --------- | ------------ | ------- | ------------------------------------------------------------------ |
-|efeito|Efeito causado por um item consumível|int||-Not Null|
-|preco|O valor do item equipavel|int||-Not Null|
-|equipado|indica se o item equipavel está equipado ou não |boolean||-Not Null|
+|id_item|Identificador do item|int||- FK<br>- PK<br>- Not Null|
+|valor|O valor do item equipavel|int||-Not Null|
 
 ## Entidade: Sala_comum
 
@@ -169,16 +166,32 @@ Observação: Essa tabela é chave estrangeira da entidade `Duelo`.
 |tem_loja|Se a sala possui loja|boolean| 1 bit |- Not Null<br>|
 |tem_dungeon|Se a sala possui dungeon|boolean| 1 bit |- Not Null<br>|
 
-## Entidade: Inventario
+## Entidade: Habilidade_Criatura
 
-**Descrição:** Entidade que contem as instâncias de item que o estudante carrega com si.
-
-**Observação:** Essa tabela possui chave estrangeira da entidade `instancia_de_item` e a entidade `estudante` tem chave estrangeira dessa entidade.
+**Descrição:** Cada registro da tabela Habilidade_Criatura indica que uma determinada criatura possui uma determinada habilidade.
 
 | Nome | Descrição | Tipo de dado | Tamanho | Restrições de domínio (PK, FK, Not Null, Check, Default, Identity) |
 | ---- | --------- | ------------ | ------- | ------------------------------------------------------------------ |
-|id_inventário|Identificador do inventário|varchar|8|- PK<br>- Not Null<br>|
-|id_instanciaitem|Identificador da instância do item que o inventário armazena|varchar|8|- FK<br>- Not Null<br>|
+|id_Criatura|Identificador da criatura|inteiro||- PK<br>- FK<br>- Not Null<br>|
+|id_habilidade|Identificador da habilidade|inteiro||- PK<br>- FK<br>- Not Null<br>|
+
+## Entidade: Habilidade_Estudante
+
+**Descrição:** A tabela Habilidade_Estudante indica quais habilidades cada estudante possui, permitindo que cada estudante possa ter diversas habilidades cadastradas.
+
+| Nome | Descrição | Tipo de dado | Tamanho | Restrições de domínio (PK, FK, Not Null, Check, Default, Identity) |
+| ---- | --------- | ------------ | ------- | ------------------------------------------------------------------ |
+|id_estudante|Identificador do estudante|inteiro||- PK<br>- FK<br>- Not Null<br>|
+|id_habilidade|Identificador da habilidade|inteiro||- PK<br>- FK<br>- Not Null<br>|
+
+## Entidade: Habilidade_Loja
+
+**Descrição:** A tabela Habilidade_Loja representa o relacionamento entre lojas e habilidades disponíveis para venda. Ela define quais habilidades podem ser adquiridas nas lojas.
+
+| Nome | Descrição | Tipo de dado | Tamanho | Restrições de domínio (PK, FK, Not Null, Check, Default, Identity) |
+| ---- | --------- | ------------ | ------- | ------------------------------------------------------------------ |
+|id_loja|Identificador da loja|inteiro||- PK<br>- FK<br>- Not Null<br>|
+|id_habilidade|Identificador da habilidade|inteiro||- PK<br>- FK<br>- Not Null<br>|
 
 
 ## Entidade: Instancia_de_item
@@ -191,36 +204,6 @@ Observação: Essa tabela é chave estrangeira da entidade `Duelo`.
 |id_item|Identificador do item que foi instânciado|inteiro||- PK<br>- FK<br>- Not Null<br>|
 |id_sala|Identificador da sala|inteiro||- FK<br>- Not Null<br>|
 |id_estudante|Identificador do estudante|inteiro||- FK<br>- Not Null<br>|
-
-## Entidade: Batalha
-
-**Descrição:** É a entidade que representa uma agregação do relacionamento entre Instância de monstro e o estudante
-
-**Observação:** Essa tabela possui chave estrangeira da entidade `instância de Monstro`.
-
-| Nome | Descrição | Tipo de dado | Tamanho | Restrições de domínio (PK, FK, Not Null, Check, Default, Identity) |
-| ---- | --------- | ------------ | ------- | ------------------------------------------------------------------ |
-|id_batalha|Identificador da batalha|varchar|8|- PK<br>- Not Null<br>|
-|id_instânciaMonstro|Identificador da instância monstro que participa da batalha|varchar|8|- FK<br>- Not Null<br>|
-|player_win|Identifica se o estudante venceu ou não|boolean||-Not Null|
-|Moedas|Quantas moedas o duelo gerou|int||-Not Null|
-|estresse_gasto|Quanto de estresse o usuário gastou no duelo|int||-Not Null|
-|xp_area|xp relacionado a area ganho na batalha|int||-Not Null|
-
-## Entidade: Duelo
-
-**Descrição:** É a entidade que representa uma agregação do relacionamento entre boss e o estudante
-
-**Observação:** Essa tabela possui chave estrangeira da entidade `Reliquia` e `Boss`.
-
-| Nome | Descrição | Tipo de dado | Tamanho | Restrições de domínio (PK, FK, Not Null, Check, Default, Identity) |
-| ---- | --------- | ------------ | ------- | ------------------------------------------------------------------ |
-|id_duelo|Identificador do duelo|varchar|8|- PK<br>- Not Null<br>|
-|id_reliquia|Identificador da reliquia que o duelo vai dropar|varchar|8|- FK<br>- Not Null<br>|
-|id_boss|Identificador do boss que duelou com o estudante|varchar|8|- FK<br>- Not Null<br>|
-|player_win|Identifica se o estudante venceu ou não|boolean||-Not Null|
-|Moedas|Quantas moedas o duelo gerou|int||-Not Null|
-|estresse_gasto|Quanto de estresse o usuário gastou no duelo|int||-Not Null|
 
 ## Entidade: Estudante
 
@@ -235,32 +218,28 @@ Observação: Essa tabela é chave estrangeira da entidade `Duelo`.
 |estresse|o Nível de stress que o usuário está|int||-Not Null|
 |total_dinheiro|Total de moedas que o estudante tem|int||-Not Null|
 
-## Entidade: Monstro
+## Entidade: monstroSimples
 
-**Descrição:** É a entidade monstro, o qual o estudante deve derrotar para obter moeda e XP.
-
-**Observação:** Essa tabela possui chave estrangeira da entidade `Habilidade` e entidade `Instância de monstro` tem chave estrangeira desta entidade.
+**Descrição:** A tabela monstroSimples representa criaturas do tipo simples (não-chefes) que aparecem no jogo. Esses monstros, ao serem derrotados, concedem uma certa quantidade de experiência temática (XP) ao jogador e podem deixar moedas como recompensa. A tabela é uma especialização da entidade `Criatura`. Herda todos os atributos de `Criatura`
 
 | Nome | Descrição | Tipo de dado | Tamanho | Restrições de domínio (PK, FK, Not Null, Check, Default, Identity) |
 | ---- | --------- | ------------ | ------- | ------------------------------------------------------------------ |
-|id_monstro|Identificador do monstro|varchar|8|- PK<br>- Not Null<br>|
-|id_habilidade|Identificador das habilidades que um monstro pode ter|varchar|8|- FK<br>- Not Null<br>|
-|vida_max|Vida máxima que o monstro pode ter|int||-Not Null|
-|tipo_setor|Tipo do setor em que o monstro está presente |varchar|100|-Not Null|
-|nome|Nome do monstro|varchar|100|-Not Null|
+|id_criatura|Identificador da criatura|inteiro||- PK<br>- FK<br>- Not Null<br>|
+|xp_tema|Quanidade de pontos que o tema oferece para determinada criatura|inteiro||- Not Null<br>|
+|qtd_moedas|Quantidades de moedas que o monstro dropa|int||-Not Null|
 
-## Entidade: Instancia_de_Monstro
+  ## Entidade: Criatura 
 
-**Descrição:** É a instância do monstro.
-
-**Observação:** Essa tabela possui chave estrangeira da entidade `Dungeon_academia` e `Monstro`, a entidade `Batalha` tem chave estrangeira desta entidade.
+**Descrição:** A tabela Criatura armazena os dados básicos de todas as criaturas presentes no sistema, sejam elas monstros simples ou bosses. Cada criatura possui atributos como nível, vida máxima, tipo e uma descrição que pode ser usada para fins narrativos ou funcionais no jogo.
 
 | Nome | Descrição | Tipo de dado | Tamanho | Restrições de domínio (PK, FK, Not Null, Check, Default, Identity) |
 | ---- | --------- | ------------ | ------- | ------------------------------------------------------------------ |
-|id_instanciaMonstro| Identificador da instância de monstro|varchar|8|- PK<br>- Not Null<br>|
-|id_monstro|Identificador do Monstro que foi instânciado|varchar|8|- FK<br>- Not Null<br>|
-|id_Dungeon|Identificador da Dungeon que a instância está presente|varchar|8|- FK<br>- Not Null<br>|
-|vida_atual|Valor da vida da instância do boss|int||-Not Null|
+|id_criatura| Identificador da criatura|inteiro||- PK<br>- Not Null<br>|
+|nivel|Nivel da criatura|int|100|- FK<br>- Not Null<br>|
+|tipo_criatura|Tipo da criatura|varchar|100|- Not Null<br>|
+|vida_max|Valor da vida da criatura|int||-Not Null|
+|nome|Nome da criatura|varchar|100|- Not Null<br>|
+|descricao|Descriçao da criatura|varchar|200|-Not Nul|
 
 
 ## Entidade: Afinidade
