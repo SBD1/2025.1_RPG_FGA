@@ -9,54 +9,60 @@ O Modelo Entidade-Relacionamento de um banco de dados é um modelo conceitual qu
 1. Campus  
 2. Dungeon Academica   
 3. Boss   
-4. Gabinete Boss   
+4. Sala Comum
 5. Ataque   
 6. Cura   
-7. Defesa   
+7. Defea   
 8. Setor   
-9. Loja   
+9. Itens Loja   
 10. Item   
 11. Reliquia   
 12. Consumivel   
-13. Equipavel   
-14. Sala Comum   
-15. Inventario   
-16. Instancia de item   
-17. Batalha   
-18. Duelo   
-19. Estudante   
-20. Monstro   
-21. Afinidade   
-22. Habilidades   
-23. Instancia de monstro 
+13. Equipavel
+14. Monetario
+15. Criatura   
+16. monstroSimples   
+17. Instancia de item   
+18. Habilidade Estudante   
+19. Habilidade Criatura   
+20. Estudante   
+21. Habilidade Loja   
+22. Afinidade   
+23. Habilidades 
+24. Tema
+25. Instancia de criatura
 
 ---
 
 ### **2\. Atributos**
 
-* **Campus:** nome, descricao, id\_campus;   
-* **Dungeon Academica:** id\_dungeon, id\_sala, nome, descricao, afinidade\_tipo;   
-* **Boss:** id\_boss, id\_gabinete\_boss, nome, vida, id\_Habilidades, tipo\_afinidade;   
-* **Gabinete Boss:** id\_gabinete\_boss, id\_dungeon;   
-* **Ataque:** danoCausado, porcentagemAcerto;   
-* **Cura:** vidaRecuperada;   
-* **Defesa:** danoMitigado;   
-* **Setor:** id\_setor, nome, id\_campus, descricao, id\_proxSetor, id\_prevSetor;   
-* **Loja:** id\_loja, nome, id\_instanciaitem, id\_Habilidade, id\_sala;   
-* **Item:** descricao, nome, id\_item, item\_tipo;   
-* **Reliquia:** id\_reliquia, tipo\_reliquia;   
-* **Consumivel:** efeito, preco;   
-* **Equipavel:** efeito, preco, equipado;   
-* **Sala Comum:** id\_sala, id\_instanciaitem, nome, descricao, id\_setor;   
-* **Inventario:** id\_inventario, id\_instanciaitem;   
-* **Instancia\_de\_item:** id\_item, id\_instanciaitem;   
-* **Batalha:** player\_win, moedas, xp\_area, estresse\_gasto, id\_batalha, id\_instanciaMonstro;   
-* **Duelo:** player\_win, moedas, estresse\_gasto, id\_duelo, id\_instanciaitem, id\_boss;   
-* **Estudante:** id\_estudante, nome, vida, estresse, total\_moedas, id\_inventario, id\_Habilidades, id\_afinidade, id\_sala;   
-* **Monstro:** id\_Monstro, id\_Habilidade, vidaMax, Nome, tipo\_setor;   
-* **Afinidade:** xp\_max, nivel\_atual, xp\_atual, id\_afinidade, tipo\_afinidade;   
-* **Habilidades:** id\_Habilidade, nome, tipoHabilidade, nivel, afinidadeTipo, tipoHabilidade, cooldown, desbloqueado;   
-* **Instancia de monstro**: id\_Monstro, vidaAtual, id\_instanciamonstro, id\_Dungeon; 
+* **tema:** id\_tema, nome;   
+* **habilidades:** id\_habilidade, id\_tema, nome, tipo\_habilidade, nivel, coolDown;   
+* **criatura:** id\_criatura, vida\_max, tipo\_criatura, nome, nivel, descricao;   
+* **campus:** id\_campus, nome, descricao;   
+* **setor:** id\_setor, id\_campus, nome, descricao, id\_proxSetor, id\_prevSetor;   
+* **sala_comum:** id\_sala, id\_setor, id\_prevSala, id\_proxSala, descricao, nome, tem\_loja, tem\_dungeon;   
+* **estudante:** id\_estudante, id\_sala, nome, vida, estresse, total\_dinheiro;   
+* **afinidade:** id\_estudante, id\_tema, xp\_atual, nivel\_atual;
+* **dungeon_academica:** id\_dungeon, nome, descricao, id\_tema;   
+* **boss:** id\_boss, id\_reliquia;   
+* **reliquia:** id\_reliquia, tipo;   
+* **monstro_simples:** id\_criatura, xp\_tema, qtd\_moedas;   
+* **instancia\_de\_criatura:** id\_instanciaMonstro, id\_criatura, vida\_atual, id\_dungeon;   
+* **item:** id\_item, nome, descricao, item\_tipo;   
+* **consumivel:** id\_item, efeito, preco;   
+* **instancia\_de\_item:** id\_item, id\_instanciaItem, id\_sala, id\_estudante;   
+* **equipavel:** id\_item, efeito, preco, equipado;   
+* **monetario:** id\_item, efeito, preco, equipado;   
+* **loja\_item:** id\_sala, id\_item;   
+* **habilidade\_criatura:** id\_criatura, id\_habilidade;   
+* **habilidade\_estudante:** id\_estudante, id\_habilidade;   
+* **loja:** id\_loja, nome;   
+* **habilidade\_loja**: id\_loja, id\_habilidade;
+* **ataque**: id\_habilidade, danoCausado, porcentagemAcerto;
+* **cura**: id\_habilidade, danoCausado, porcentagemAcerto;
+* **defesa**: id\_habilidade, danoMitigado; 
+
 
 
 ---
@@ -136,4 +142,5 @@ O Modelo Entidade-Relacionamento de um banco de dados é um modelo conceitual qu
 | Versão |  Data  | Descrição| Autor                 |
 | :----: | :--------: | ---------------------------------- | -------------------------------------------------------------------------------- |
 | `1.0` | 01/05/2025 | Criação do documento MER      | [Rodrigo Amaral](https://github.com/rodrigoFAmaral) & [Milena Marques](https://github.com/milenamso)|
-| `1.1` | 02/05/2025 | Fazendo correções no MER      | [Milena Marques](https://github.com/milenamso)|
+| `2.0` | 02/05/2025 | Fazendo correções no MER      | [Milena Marques](https://github.com/milenamso)|
+|`3.0`| 12/06/2025 | Atualização do MER | [Milena Marques](https://github.com/milenamso)|
