@@ -1,0 +1,23 @@
+sudo -u postgres psql -f setup.sql
+// inicia o banco
+
+sudo -u postgres psql -d rpg_fga -f DDL.sql
+//cria as tabelas a partir do DDL
+
+sudo -u postgres psql -d rpg_fga -f DML.sql
+//insere as tabelas com o DML
+
+sudo -u postgres psql -d rpg_fga -f permissions.sql
+//coloca as permissao
+
+python3 app.py
+// roda o piton
+
+
+
+//ver graficamente as tabelas
+//baixar o pgaadmin
+// sudo snap install pgadmin4
+// no terminal: pgadmin4
+// n sei direito ainda o resto
+
