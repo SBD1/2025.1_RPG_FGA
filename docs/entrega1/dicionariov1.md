@@ -55,7 +55,7 @@ De acordo com a *UC Merced Library*,
 | ----------------- | ---------------------------------------- | ------------ | ------- | ------------------------------------------------------------------ |
 | danoCausado       | Indica o dano causado pelo ataque        | inteiro |  | - Not Null|
 | porcentagemAcerto | Indica a porcentagem de acerto do ataque | float |  | - Not Null|    
-| id_habilidade | Identificador de habilidade | float |  | - PK<br>- FK<br>- Not Null|      
+| id_habilidade | Identificador de habilidade | inteiro |  | - PK<br>- FK<br>- Not Null|      
 
 
 ## Entidade: Cura
