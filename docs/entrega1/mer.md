@@ -105,9 +105,9 @@ O Modelo Entidade-Relacionamento de um banco de dados é um modelo conceitual qu
 12.  **Criatura *domina* Habilidade** ok
     * Uma Criatura pode dominar uma ou várias habilidades(1,N).  
     * Uma Habilidade pode ser dominada cpor nenhuma ou várias criaturas(0,N).
-13.  **Boss *contém* Habilidades**   
-    * Um boss possui no mínimo um e no máximo várias habilidades. (1,N).
-    * Uma Habilidade pode ser possuída por no mínimo nenhuma e no máximo várias Boss (0,N).
+13.  **Habilidades *contém* Tema**   ok
+    * Uma habilidade contém um tema (1,1).
+    * Um tema não precisa estar contido em uma habilidade, ou pode estar contido em várias(0,N).
 14.  **Monstro *contém* habilidades**   
     * Um Monstro possui no mínimo um e no máximo várias Habilidades. (1,N).
     * Uma Habilidade pode ser possuída por no mínimo 0 e no máximo N Monstros (0,N).
