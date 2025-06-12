@@ -94,11 +94,11 @@ De acordo com a *UC Merced Library*,
 
 **Descrição**: A tabela Itens Loja representa a relação entre as lojas disponíveis no sistema e os itens que estão à venda em cada uma delas. Essa tabela é usada para modelar o relacionamento muitos-para-muitos entre Loja e Item, indicando quais itens estão disponíveis em quais lojas.
 
-| Nome      | Descrição             | Tipo de dado | Tamanho | Restrições de domínio (PK, FK, Not Null, Check, Default, Identity) |
-| --------- | --------------------- | ------------ | ------- | ------------------------------------------------------------------ |
 
-| id_loja| Identificador da loja |inteiro|  | - PK<br>- FK<br>-Not Null|
-| id_item| Identificador de item|inteiro|| - PK<br>- FK<br>- Not Null|
+| Nome | Descrição | Tipo de dado | Tamanho | Restrições de domínio (PK, FK, Not Null, Check, Default, Identity) |
+| ---- | --------- | ------------ | ------- | ------------------------------------------------------------------ |
+|id_loja|Identificador da loja|inteiro||- FK<br>- PK<br>- Not Null|
+|id_item|Identificador de item|inteito||- PK<br>- FK<br>- Not Null|
 
 ## Entidade: Item
 
