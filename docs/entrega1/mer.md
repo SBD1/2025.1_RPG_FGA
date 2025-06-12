@@ -129,7 +129,7 @@ O Modelo Entidade-Relacionamento de um banco de dados é um modelo conceitual qu
 20.  **Monetario *dropa* monstro simples**   
     * Um monetario pode dropar nenhuma monstro simples e no máximo vários(0,N).  
     * Um monstro simples pode ser dropado por nenhum monetario e no máximo vários(0,N).  
-21. **Estudante *ataca* Instancia de Ciatura** 
+21. **Estudante *ataca* Instancia de Criatura** 
     * Um estudante pode batalhar com no mínimo zero e no máximo várias instancias de criaturas (0,N).  
     * Uma instancia de criatura pode atacar com no mínimo zero e no máximo um estudante (0,1).
 22. **Estudante *aprende* afinidade**   
