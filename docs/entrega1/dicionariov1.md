@@ -118,7 +118,7 @@ De acordo com a *UC Merced Library*,
 
 | Nome          | Descrição                   | Tipo de dado | Tamanho | Restrições de domínio (PK, FK, Not Null, Check, Default, Identity) |
 | ------------- | --------------------------- | ------------ | ------- | ------------------------------------------------------------------ |
-| id_reliquia   | Identificador da relíquia   | inteiro      |        | - PK<br>- FK<br>- Not Null                                                 |
+| id_reliquia   | Identificador da relíquia   | inteiro      |        | - PK<br>- Not Null                                                 |
 | tipo | Descreve o tipo da relíquia | varchar      | 100     | - Not Null                                                         |
 
 ## Entidade: Consumivel
