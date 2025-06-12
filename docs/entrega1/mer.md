@@ -69,75 +69,78 @@ O Modelo Entidade-Relacionamento de um banco de dados é um modelo conceitual qu
 
 ### **3\. Relacionamentos**
 
-1. **Campus *contém* Setor**   
+1. **Campus *contém* Setor**   ok
     * O Campus poderá possuir no mínimo um setor e no máximo vários setores (1,N).  
     * Um Setor só pode estar em exatamente um Campus (1,1).  
-2. **Setor *conecta* Setor**   
+2. **Setor *conecta* Setor**   ok
     * Um setor pode conectar exatamente a um setor anterior(1,1)  
-    * Um setor pode conectar a exatamente a um setor próximo(1,1)  
-3. **Sala *contém* Dungeon Acadêmica**   
+    * Um setor pode conectar a exatamente a um setor próximo(1,1)
+3. **Sala_Comum *contém* Dungeon Acadêmica**   ok
     * Uma sala pode possuir zero ou uma dungeon académica (0,1).  
     * Uma Dungeon Acadêmica só pode estar contida em exatamente um sala (1,1).  
-4. **Setor *contém* Sala Comum**   
-    * Um Setor pode conter nenhum a várias Salas Comuns (0,N).  
+4. **Setor *contém* Sala Comum**   ok
+    * Um Setor pode conter nenhuma a várias Salas Comuns (0,N).  
     * Uma Sala Comum só pode estar contida em exatamente um Setor (1,1).  
-5. **Loja *contém* id da Sala**  
+5. **Sala Comum *contém* Loja**  ok
     * Uma sala pode conter nenhuma ou várias Loja (0,N).  
     * Uma loja só pode estar contida em exatamente uma sala (1,1).  
-6. **Loja *vende* Habilidades**  
+6. **Loja *vende* Habilidades**  ok
     * Uma Loja pode vender uma ou várias Habilidades (1,N).  
     * Uma Habilidade pode ser vendida por nenhuma ou várias Loja (0,N).  
-7. **Loja *vende* Instância de Item**  
-    * Uma Loja pode vender uma ou várias Instância de Item (1,N).  
-    * Uma Instância de Item pode ser vendida por nenhuma ou várias Loja (0,N).  
-8. **Salas Comuns *contém* Instância de Item**  
+7. **Loja *vende* Item**  ok
+    * Uma Loja pode vender nenhum ou vários itens (0,N).  
+    * Uma Item pode ser vendida por nenhuma ou várias Loja (0,N).  
+8. **Salas Comuns *contém* Instância de Item**  ok
     * Uma Sala Comum pode conter nenhuma ou várias Instância de Item (0,N).  
     * Uma Instância de Item pode estar contida por nenhuma ou várias Salas Comuns (0,N).  
-9. **Dungeon Acadêmica *contém* Instância de Monstro**   
-    * Uma Dungeon Acadêmica pode conter um ou vários Monstros (1,N).  
-    * Uma instância de monstro pode estar contido em apenas uma Dungeon Acadêmica (1,1).  
-10.  **Dungeon Acadêmica *contém* Gabinete do Boss**   
-    * Uma Dungeon Acadêmica pode conter apenas um Gabinete do Boss (1,1).  
-    * Um Gabinete do Boss pode estar contido em apenas uma Dungeon Acadêmica (1,1).  
-11.  **Instância de Monstro *gera* Monstro**   
-    * Uma instância de monstro pode gerar exatamente um monstro (1,1).  
-    * Um monstro pode ser gerado por nenhuma ou várias instâncias de monstro (0,N).  
-12.  **Gabinete do Boss *contém* Boss**   
-    * Um Gabinete do Boss pode conter apenas um Boss (1,1).  
-    * Um Boss pode estar contido em apenas um Gabinete do Boss (1,1).
+9. **Dungeon Acadêmica *contém* Tema**   ok
+    * Uma Dungeon Acadêmica pode conter apenas um tema (1,1).  
+    * Um tema pode não estar contido em uma Dungeon e caso tiver, só pode ter um por Dungeon (0,1).  
+10.  **Dungeon Acadêmica *contém* Instancia de Criatura** ok   
+    * Uma Dungeon Acadêmica pode abrigar nenhuma instancia de criatura ou várias (0,N).  
+    * Uma Instancia de Criatura pode estar contida em nenhuma Dungeon Acadêmica , e, no mínimo pode ser abrigada uma (0,1).  
+11.  **Instancia de Criatura *gera* Monstro**   ok
+    * Uma instância de criatura pode gerar exatamente um monstro (1,1).  
+    * Um monstro pode ser gerado por nenhuma ou várias instâncias de criaturas (0,N).  
+12.  **Criatura *domina* Habilidade** ok
+    * Uma Criatura pode dominar uma ou várias habilidades(1,N).  
+    * Uma Habilidade pode ser dominada cpor nenhuma ou várias criaturas(0,N).
 13.  **Boss *contém* Habilidades**   
     * Um boss possui no mínimo um e no máximo várias habilidades. (1,N).
     * Uma Habilidade pode ser possuída por no mínimo nenhuma e no máximo várias Boss (0,N).
 14.  **Monstro *contém* habilidades**   
     * Um Monstro possui no mínimo um e no máximo várias Habilidades. (1,N).
     * Uma Habilidade pode ser possuída por no mínimo 0 e no máximo N Monstros (0,N).
-15.  **Estudante *contém* habilidades**   
+15.  **Estudante *domina* habilidades**   ok
     * Um estudante possui no mínimo um e no máximo várias Habilidades. (1,N).
-    * Uma Habilidade pode ser possuída por no mínimo nenhuma e no máximo vários estudantes (0,N).
-16.  **Estudante *contém* Inventário**   
-    * Um estudante pode possuir no mínimo um inventário, e no máximo um (1,1).
-    * Um inventário pode conter no mínimo apenas um estudante e no máximo um (1,1).
+    * Uma Habilidade pode ser possuída por no mínimo nenhum e no máximo vários estudantes (0,N).
+16.  **Estudante *contém* Instancia de item**   ok
+    * Um estudante pode possuir no mínimo nenhuma instancia de item, e no máximo várias (0,N).
+    * Uma instancia de item pode conter no mínimo nenhum estudante e no máximo um (0,1).
 17.  **Inventário *armazena* Instância de Item**   
     * Um inventário pode ter no mínimo nenhuma instância de item e no máximo varias (0,N).
     * Uma instância de item pode conter no mínimo nenhum inventário e no máximo um inventário (0,1).
-18. **Instância de item *é gerada* por item**   
+18. **Instância de item *é gerada* por item** ok  
     * Uma instância de item pode gerar no mínimo um item, e no máximo apenas um item (1,1).
     * Um item pode ser gerado por nenhuma instância de item e no máximo varias (0,N).
-19. **Relíquia *dropada em um* Duelo**   
-    * Uma relíquia pode dropar no mínimo nenhum encontro de duelo e no máximo vários duelos (0,N).
-    * Um duelo pode dropar no mínimo nenhuma relíquia, e no máximo varias relíquias (0,N).
-20.  **Estudante *batalha com* monstro**   
-    * Um estudante pode batalhar com no mínimo zero e no máximo um monstro (0,1).  
-    * Um monstro pode batalhar com no mínimo zero e no máximo um estudante(0,1).  
-21. **Estudante *duela com* Boss**   
-    * Um estudante pode batalhar com no mínimo zero e no máximo um boss (0,1).  
-    * Um boss pode batalhar com no mínimo zero e no máximo um boss (0,1).
-22. **Estudante *contém* afinidade**   
-    * Um estudante pode conter no mínimo uma afinidade e no máximo várias afinidades (1,N).  
-    * Uma afinidade pode conter no mínimo nenhum estudante e no máximo vários estudante (0,N).
-23. **Estudante *está em* sala**   
+19. **Relíquia *dropada em por* Boss**   ok
+    * Uma relíquia pode ser dropada por no mínimo um boss e no máximo vários boss (1,N).
+    * Um boss pode dropar uma relíquia (1,1).
+20.  **Monetario *dropa* monstro simples**   ok
+    * Um monetario pode dropar nenhuma monstro simples e no máximo vários(0,N).  
+    * Um monstro simples pode ser dropado por nenhum monetario e no máximo vários(0,N).  
+21. **Estudante *ataca* Instancia de Ciatura** ok
+    * Um estudante pode batalhar com no mínimo zero e no máximo várias instancias de criaturas (0,N).  
+    * Uma instancia de criatura pode atacar com no mínimo zero e no máximo um estudante (0,1).
+22. **Estudante *aprende* afinidade**   ok
+    * Um estudante pode aprender no mínimo cinco afinidades e no máximo cinco afinidades (5,5). 
+    * Uma afinidade pode ser aprendida no mínimo por nenhum estudante e no máximo por vários estudantes (0,N).
+23. **Estudante *está em* sala comum**   ok
     * Um estudante pode estar inserido em uma sala ou no máximo uma sala (1,1).
     * Uma sala pode conter nenhum estudante ou no máximo vários estudantes (0,N).
+24. **Sala Comum *conecta* Sala Comum**   ok
+    * Uma sala comum pode conectar exatamente uma sala anterior a ela(1,1)  
+    * Uma sala comum pode conectar exatamente uma sala próxima a ela(1,1) 
 
 | Versão |  Data  | Descrição| Autor                 |
 | :----: | :--------: | ---------------------------------- | -------------------------------------------------------------------------------- |
