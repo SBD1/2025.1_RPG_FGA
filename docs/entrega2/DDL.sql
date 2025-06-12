@@ -8,7 +8,7 @@
 -- --------------------------------------------------------------------------------------
 -- | Atualizacao : 31/05/2025 | Autor(es): Milena Marques                       |      --
 --                            | Descricao: Inclusão das linhas de CREATE TABLE  |      --
--- | Atualizacao : 11/06/2025 | Autor(es): Milena Marques                                      |      --
+-- | Atualizacao : 11/06/2025 | Autor(es): Milena Marques                       |      --
 --                            | Descricao: Correção das linhas de CREATE TABLE  |      --
 -- --------------------------------------------------------------------------------------
 CREATE TABLE campus (
