@@ -96,7 +96,7 @@ O Modelo Entidade-Relacionamento de um banco de dados é um modelo conceitual qu
 9. **Dungeon Acadêmica *contém* Tema**   ok
     * Uma Dungeon Acadêmica pode conter apenas um tema (1,1).  
     * Um tema pode não estar contido em uma Dungeon e caso tiver, só pode ter um por Dungeon (0,1).  
-10.  **Dungeon Acadêmica *contém* Instancia de Criatura** ok   
+10.  **Dungeon Acadêmica *abriga* Instancia de Criatura** ok   
     * Uma Dungeon Acadêmica pode abrigar nenhuma instancia de criatura ou várias (0,N).  
     * Uma Instancia de Criatura pode estar contida em nenhuma Dungeon Acadêmica , e, no mínimo pode ser abrigada uma (0,1).  
 11.  **Instancia de Criatura *gera* Monstro**   ok
