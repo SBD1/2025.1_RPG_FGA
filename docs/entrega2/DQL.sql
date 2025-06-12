@@ -1,6 +1,6 @@
 -- --------------------------------------------------------------------------------------
 -- Data Criacao ...........: 12/06/2025                                                --
--- Autor(es) ..............: Isaque Camargos Nascimento e Ludmila Aysha Nunes                                                                                  --
+-- Autor(es) ..............: Isaque Camargos Nascimento e Ludmila Aysha Oliveira Nunes                                                                                  --
 -- Versao ..............: 1.0                                                          --
 -- Banco de Dados .........: PostgreSQL                                                --
 -- Descricao .........: Consulta das tabelas do banco de dados.                        --

@@ -5,7 +5,7 @@ O diagrama de entidade e relacionamento (DER ou ERD) é uma representação visu
 ---
 
 
-# V1
+## V1
 
 
 ![mer versão 1](../assets/merv1.png)
@@ -13,28 +13,38 @@ O diagrama de entidade e relacionamento (DER ou ERD) é uma representação visu
 
 ---
 
-# V2
+## V2
 
 ![mer versão 2](../assets/merv2.png) 
 
 ---
 
-# V3
+## V3
 
 ![mer versão 3](../assets/merv3.png) 
 
 ---
 
-# V4
+## V4
 
 ![mer versão 4](../assets/merv4.png) 
 
 ---
-# V5
+## V5
 
 ![mer versão 5](../assets/merv6.png) 
 
 ---
+
+# Modificações da Entrega 2
+
+
+## V6
+
+![mer versão 6](../assets/merv7.png) 
+
+---
+
 
 
 
@@ -46,3 +56,4 @@ O diagrama de entidade e relacionamento (DER ou ERD) é uma representação visu
 | `1.3` | 29/04/2025 | Criação da terceira versão      |    [Rafael Schadt](https://github.com/rafaelschadt) e [Othavio Bolzan](https://github.com/bolzanMGB)|
 | `1.4` | 29/04/2025 | Criação da quarta versão      |    [Rafael Schadt](https://github.com/rafaelschadt) e [Ludmila Aysha](https://github.com/ludmilaaysha) e [Isaque Camargos](https://github.com/isaqzin)|
 | `1.5` | 29/04/2025 | Criação da quinta versão, após revisão de todos      |  [Isaque Camargos](https://github.com/isaqzin)|
+| `1.6` | 11/06/2025 | Criação da sexta versão      |    [Rafael Schadt](https://github.com/rafaelschadt) e [Ludmila Aysha](https://github.com/ludmilaaysha) e [Isaque Camargos](https://github.com/isaqzin)|
