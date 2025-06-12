@@ -123,7 +123,7 @@ O Modelo Entidade-Relacionamento de um banco de dados é um modelo conceitual qu
 18. **Instância de item *é gerada* por item** ok  
     * Uma instância de item pode gerar no mínimo um item, e no máximo apenas um item (1,1).
     * Um item pode ser gerado por nenhuma instância de item e no máximo varias (0,N).
-19. **Relíquia *dropada em por* Boss**   ok
+19. **Relíquia *dropada por* Boss**   ok
     * Uma relíquia pode ser dropada por no mínimo um boss e no máximo vários boss (1,N).
     * Um boss pode dropar uma relíquia (1,1).
 20.  **Monetario *dropa* monstro simples**   ok
