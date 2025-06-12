@@ -65,7 +65,7 @@ De acordo com a *UC Merced Library*,
 | Nome           | Descrição                                                               | Tipo de dado | Tamanho | Restrições de domínio (PK, FK, Not Null, Check, Default, Identity) |
 | -------------- | ----------------------------------------------------------------------- | ------------ | ------- | ------------------------------------------------------------------ |
 | vidaRecuperada | Indica o tanto de vida recuperada possibilitado pela habilidade de cura | int          |         | - Not Null |
-| id_habilidade | Identificador de habilidade | float |  | - PK<br>- FK<br>- Not Null|
+| id_habilidade | Identificador de habilidade | inteiro |  | - PK<br>- FK<br>- Not Null|
 
 
 ## Entidade: Defesa
@@ -75,7 +75,7 @@ De acordo com a *UC Merced Library*,
 | Nome         | Descrição                                                 | Tipo de dado | Tamanho | Restrições de domínio (PK, FK, Not Null, Check, Default, Identity) |
 | ------------ | --------------------------------------------------------- | ------------ | ------- | ------------------------------------------------------------------ |
 | danoMitigado | Indica o tanto de dano mitigado possibilitado pela defesa | int          |         | - Not Null                                                         |
-| id_habilidade | Identificador de habilidade | float |  | - PK<br>- FK<br>- Not Null|      
+| id_habilidade | Identificador de habilidade | inteiro |  | - PK<br>- FK<br>- Not Null|      
 
 ## Entidade: Setor
 
