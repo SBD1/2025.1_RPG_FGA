@@ -97,7 +97,7 @@ De acordo com a *UC Merced Library*,
 
 | Nome | Descrição | Tipo de dado | Tamanho | Restrições de domínio (PK, FK, Not Null, Check, Default, Identity) |
 | ---- | --------- | ------------ | ------- | ------------------------------------------------------------------ |
-|id_loja|Identificador da loja|inteiro||- FK<br>- PK<br>- Not Null|
+|id_sala|Identificador da sala|inteiro||- FK<br>- PK<br>- Not Null|
 |id_item|Identificador de item|inteito||- PK<br>- FK<br>- Not Null|
 
 ## Entidade: Item
