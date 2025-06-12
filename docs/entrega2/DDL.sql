@@ -8,207 +8,218 @@
 -- --------------------------------------------------------------------------------------
 -- | Atualizacao : 31/05/2025 | Autor(es): Milena Marques                       |      --
 --                            | Descricao: Inclusão das linhas de CREATE TABLE  |      --
--- | Atualizacao : xx/xx/xxxx | Autor(es):                                      |      --
+-- | Atualizacao : 11/06/2025 | Autor(es): Milena Marques                                      |      --
 --                            | Descricao: Correção das linhas de CREATE TABLE  |      --
 -- --------------------------------------------------------------------------------------
--- TABELA: Item
-CREATE TABLE Item (
-    id_item VARCHAR(8) PRIMARY KEY,
+CREATE TABLE campus (
+    id_campus INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     nome VARCHAR(100) NOT NULL,
-    descricao VARCHAR(255),
-    item_tipo VARCHAR(100) NOT NULL
+    descricao VARCHAR(255) NOT NULL
 );
 
--- TABELA: Instancia_de_Item
-CREATE TABLE Instancia_de_Item (
-    id_instanciaItem VARCHAR(8) PRIMARY KEY,
-    id_item VARCHAR(8),
-    FOREIGN KEY (id_item) REFERENCES Item(id_item)
-);
-
--- TABELA: Inventario
-CREATE TABLE Inventario (
-    id_inventario VARCHAR(8) PRIMARY KEY,
-    id_instanciaitem VARCHAR(8) NOT NULL,
-    FOREIGN KEY (id_instanciaitem) REFERENCES Instancia_de_Item(id_instanciaItem)
-);
-
--- TABELA: Afinidade
-CREATE TABLE Afinidade (
-    id_afinidade VARCHAR(8) PRIMARY KEY,
-    tipo_afinidade VARCHAR(8) NOT NULL,
-    xp_atual INTEGER NOT NULL,
-    xp_max INTEGER NOT NULL,
-    nivel_atual INTEGER NOT NULL
-);
-
--- TABELA: Habilidades
-CREATE TABLE Habilidades (
-    id_habilidade VARCHAR(8) PRIMARY KEY,
+CREATE TABLE dungeon_academica (
+    id_dungeon INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     nome VARCHAR(100) NOT NULL,
-    tipo_habilidade VARCHAR(6) NOT NULL,
-    nivel INT NOT NULL,
-    afinidadeTipo VARCHAR(15) NOT NULL,
-    coolDown INTEGER NOT NULL,
-    desbloqueado BOOLEAN NOT NULL
-);
-
--- TABELA: Campus
-CREATE TABLE Campus (
-    id_campus VARCHAR(8) PRIMARY KEY,
-    nome VARCHAR(100) NOT NULL,
-    descricao VARCHAR(225) NOT NULL
-);
-
--- TABELA: Setor
-CREATE TABLE Setor (
-    id_setor VARCHAR(8) PRIMARY KEY,
-    nome VARCHAR(100) NOT NULL,
-    descricao VARCHAR(225) NOT NULL,
-    id_proxSetor VARCHAR(8),
-    id_prevSetor VARCHAR(8),
-    id_campus VARCHAR(8) NOT NULL,
-    FOREIGN KEY (id_proxSetor) REFERENCES Setor(id_setor),
-    FOREIGN KEY (id_prevSetor) REFERENCES Setor(id_setor),
-    FOREIGN KEY (id_campus) REFERENCES Campus(id_campus)
-	-- outra forma id_proxSetor VARCHAR(8) NOT NULL REFERENCES Setor(id_setor),
-);
-
--- TABELA: Sala_Comum
-CREATE TABLE Sala_Comum (
-    id_sala VARCHAR(8) PRIMARY KEY,
-    id_instanciaItem VARCHAR(8) NOT NULL,
-    id_setor VARCHAR(8) NOT NULL,
     descricao VARCHAR(255) NOT NULL,
-    FOREIGN KEY (id_instanciaItem) REFERENCES Instancia_de_Item(id_instanciaItem),
-    FOREIGN KEY (id_setor) REFERENCES Setor(id_setor)
+    id_tema INT NOT NULL,
+    CONSTRAINT fk_id_tema FOREIGN KEY (id_tema) REFERENCES tema(id_tema)
 );
 
--- TABELA: Estudante
-CREATE TABLE Estudante (
-    id_estudante VARCHAR(8) PRIMARY KEY,
-    id_inventario VARCHAR(8) NOT NULL,
-    id_habilidade VARCHAR(8) NOT NULL,
-    id_afinidade VARCHAR(8) NOT NULL,
-    id_sala VARCHAR(8) NOT NULL,
-    nome VARCHAR(100) NOT NULL,
-    vida INTEGER NOT NULL,
-    estresse INTEGER NOT NULL,
-    total_moedas INTEGER NOT NULL,
-    FOREIGN KEY (id_inventario) REFERENCES Inventario(id_inventario),
-    FOREIGN KEY (id_habilidade) REFERENCES Habilidades(id_habilidade),
-    FOREIGN KEY (id_afinidade) REFERENCES Afinidade(id_afinidade),
-    FOREIGN KEY (id_sala) REFERENCES Sala_Comum(id_sala)
+CREATE TABLE boss (
+    id_boss INT NOT NULL,
+    id_reliquia INT NOT NULL,
+    CONSTRAINT pk_boss_reliquia PRIMARY KEY (id_boss),
+    CONSTRAINT fk_boss FOREIGN KEY (id_boss) REFERENCES boss(id_boss),
+    CONSTRAINT fk_reliquia FOREIGN KEY (id_reliquia) REFERENCES reliquia(id_reliquia)
 );
 
--- TABELA: Dungeon_Academica
-CREATE TABLE Dungeon_Academica (
-    id_dungeon VARCHAR(8) PRIMARY KEY,
-    id_sala VARCHAR(8) NOT NULL,
-    nome VARCHAR(100) NOT NULL,
-    descricao VARCHAR(225) NOT NULL,
-    FOREIGN KEY (id_sala) REFERENCES Sala_Comum(id_sala)
+CREATE TABLE instancia_de_criatura (
+    id_instanciaMonstro INT NOT NULL PRIMARY KEY,
+    id_criatura INT NOT NULL,
+    vida_atual INT NOT NULL,
+    id_dungeon INT NOT NULL,
+    
+    CONSTRAINT fk_criatura FOREIGN KEY (id_criatura) REFERENCES criatura(id_criatura),
+    CONSTRAINT fk_dungeon FOREIGN KEY (id_dungeon) REFERENCES dungeon_academica(id_dungeon)
 );
 
--- TABELA: Gabinete_Boss
-CREATE TABLE Gabinete_Boss (
-    id_gabinete_boss VARCHAR(8) PRIMARY KEY,
-    id_dungeon VARCHAR(8) NOT NULL,
-    FOREIGN KEY (id_dungeon) REFERENCES Dungeon_Academica(id_dungeon)
-);
-
--- TABELA: Boss
-CREATE TABLE Boss (
-    id_boss VARCHAR(8) PRIMARY KEY,
-    vida INTEGER NOT NULL,
-    id_gabinete_boss VARCHAR(8) NOT NULL,
-    nome VARCHAR(100) NOT NULL,
-    id_habilidade VARCHAR(8) NOT NULL,
-    FOREIGN KEY (id_gabinete_boss) REFERENCES Gabinete_Boss(id_gabinete_boss),
-    FOREIGN KEY (id_habilidade) REFERENCES Habilidades(id_habilidade)
-);
-
--- TABELAS DE AÇÃO
 CREATE TABLE Ataque (
-    danoCausado INTEGER NOT NULL,
-    porcentagemAcerto FLOAT NOT NULL
+    id_habilidade INT NOT NULL PRIMARY KEY,
+    danoCausado INT NOT NULL,
+    porcentagemAcerto FLOAT NOT NULL,
+    
+    CONSTRAINT fk_habilidade FOREIGN KEY (id_habilidade) REFERENCES habilidades(id_habilidade)
 );
 
 CREATE TABLE Cura (
-    vidaRecuperada INTEGER NOT NULL
+    id_habilidade FLOAT NOT NULL PRIMARY KEY,
+    vidaRecuperada INT NOT NULL,
+    
+    CONSTRAINT fk_id_habilidade FOREIGN KEY (id_habilidade) REFERENCES habilidades(id_habilidade)
 );
 
 CREATE TABLE Defesa (
-    danoMitigado INTEGER NOT NULL
+    id_habilidade INT NOT NULL PRIMARY KEY,
+    danoMitigado INT NOT NULL,
+    
+    CONSTRAINT fk_id_habilidade FOREIGN KEY (id_habilidade) REFERENCES habilidades(id_habilidade)
 );
 
--- TABELA: Loja
-CREATE TABLE Loja (
-    id_loja VARCHAR(8) PRIMARY KEY NOT NULL,
-    nome VARCHAR(255) NOT NULL,
-    id_habilidade VARCHAR(8),
-    id_instanciaItem VARCHAR(8),
-    id_sala VARCHAR(8) NOT NULL,
-    FOREIGN KEY (id_habilidade) REFERENCES Habilidades(id_habilidade),
-    FOREIGN KEY (id_instanciaItem) REFERENCES Instancia_de_Item(id_instanciaItem),
-    FOREIGN KEY (id_sala) REFERENCES Sala_Comum(id_sala)
-);
-
--- TABELAS DE ITENS
-CREATE TABLE Reliquia (
-    id_reliquia VARCHAR(8) PRIMARY KEY,
-    tipo_reliquia VARCHAR(100) NOT NULL
-);
-
-CREATE TABLE Consumivel (
-    efeito INTEGER NOT NULL,
-    preco FLOAT NOT NULL
-);
-
-CREATE TABLE Equipavel (
-    efeito INTEGER NOT NULL,
-    preco INTEGER NOT NULL,
-    equipado BOOLEAN NOT NULL
-);
-
--- TABELA: Monstro e Instancia
-CREATE TABLE Montro (
-    id_monstro VARCHAR(8) PRIMARY KEY,
-    id_habilidade VARCHAR(8),
-    vida_max INTEGER NOT NULL,
-    tipo_setor VARCHAR(100) NOT NULL,
+CREATE TABLE setor (
+    id_setor INT NOT NULL PRIMARY KEY,
+    id_campus INT NOT NULL,
     nome VARCHAR(100) NOT NULL,
-    FOREIGN KEY (id_habilidade) REFERENCES Habilidades(id_habilidade)
+    descricao VARCHAR(255) NOT NULL,
+    id_proxSetor INT,
+    id_prevSetor INT,
+
+    CONSTRAINT fk_id_campus FOREIGN KEY (id_campus) REFERENCES campus(id_campus),
+    CONSTRAINT fk_id_proxSetor FOREIGN KEY (id_proxSetor) REFERENCES setor(id_setor),
+    CONSTRAINT fk_id_prevSetor FOREIGN KEY (id_prevSetor) REFERENCES setor(id_setor)
 );
 
-CREATE TABLE Instancia_de_Monstro (
-    id_instanciaMonstro VARCHAR(8) PRIMARY KEY,
-    id_monstro VARCHAR(8) NOT NULL,
-    id_dungeon VARCHAR(8) NOT NULL,
-    vida_atual INTEGER NOT NULL,
-    FOREIGN KEY (id_monstro) REFERENCES Montro(id_monstro),
-    FOREIGN KEY (id_dungeon) REFERENCES Dungeon_Academica(id_dungeon)
+CREATE TABLE loja_item (
+    id_loja INT NOT NULL,
+    id_item INT NOT NULL,
+    
+    CONSTRAINT pk_loja_item PRIMARY KEY (id_loja, id_item),
+    CONSTRAINT fk_loja FOREIGN KEY (id_loja) REFERENCES loja(id_loja),
+    CONSTRAINT fk_item FOREIGN KEY (id_item) REFERENCES item(id_item)
 );
 
--- TABELA: Batalha
-CREATE TABLE Batalha (
-    id_batalha VARCHAR(8) PRIMARY KEY,
-    id_instanciaMonstro VARCHAR(8) NOT NULL,
-    player_win BOOLEAN NOT NULL,
-    Moedas INTEGER NOT NULL,
-    estresse_gasto INTEGER NOT NULL,
-    xp_area INTEGER NOT NULL,
-    FOREIGN KEY (id_instanciaMonstro) REFERENCES Instancia_de_Monstro(id_instanciaMonstro)
+CREATE TABLE item (
+    id_item INT NOT NULL PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    descricao VARCHAR(255) NOT NULL,
+    item_tipo VARCHAR(100) NOT NULL
 );
 
--- TABELA: Duelo
-CREATE TABLE Duelo (
-    id_duelo VARCHAR(8) PRIMARY KEY,
-    id_reliquia VARCHAR(8) NOT NULL,
-    id_boss VARCHAR(8) NOT NULL,
-    player_win BOOLEAN NOT NULL,
-    Moedas INTEGER NOT NULL,
-    estresse_gasto INTEGER NOT NULL,
-    FOREIGN KEY (id_reliquia) REFERENCES Reliquia(id_reliquia),
-    FOREIGN KEY (id_boss) REFERENCES Boss(id_boss)
+CREATE TABLE reliquia (
+    id_reliquia INT NOT NULL PRIMARY KEY,
+    tipo VARCHAR(100) NOT NULL
 );
+
+CREATE TABLE consumivel (
+    id_item INT NOT NULL PRIMARY KEY,
+    efeito FLOAT NOT NULL,
+    preco FLOAT NOT NULL,
+
+    CONSTRAINT fk_id_item FOREIGN KEY (id_item) REFERENCES item(id_item)
+);
+
+CREATE TABLE equipavel (
+    id_item INT NOT NULL PRIMARY KEY,
+    efeito INT NOT NULL,
+    preco INT NOT NULL,
+    equipado BOOLEAN NOT NULL,
+
+    CONSTRAINT fk_id_item FOREIGN KEY (id_item) REFERENCES item(id_item)
+);
+
+CREATE TABLE monetario (
+    id_item INT NOT NULL PRIMARY KEY,
+    valor INT NOT NULL,
+
+    CONSTRAINT fk_id_item FOREIGN KEY (id_item) REFERENCES item(id_item)
+);
+
+CREATE TABLE sala_comum (
+    id_sala INT NOT NULL PRIMARY KEY,
+    id_setor INT NOT NULL PRIMARY KEY,
+    id_prevSala INT,
+    id_proxSala INT,
+    descricao VARCHAR(255) NOT NULL,
+    nome VARCHAR(100) NOT NULL,
+    tem_loja BOOLEAN NOT NULL,
+    tem_dungeon BOOLEAN NOT NULL,
+
+    CONSTRAINT fk_id_setor FOREIGN KEY (id_setor) REFERENCES setor(id_setor),
+    CONSTRAINT fk_id_prevSala FOREIGN KEY (id_prevSala) REFERENCES sala_comum(id_sala),
+    CONSTRAINT fk_id_proxSala FOREIGN KEY (id_proxSala) REFERENCES sala_comum(id_sala)
+);
+
+CREATE TABLE habilidade_criatura (
+    id_criatura INT NOT NULL,
+    id_habilidade INT NOT NULL,
+    
+    CONSTRAINT pk_habilidade_criatura PRIMARY KEY (id_criatura, id_habilidade),
+    CONSTRAINT fk_criatura FOREIGN KEY (id_criatura) REFERENCES criatura(id_criatura),
+    CONSTRAINT fk_habilidade FOREIGN KEY (id_habilidade) REFERENCES habilidades(id_habilidade)
+);
+
+CREATE TABLE habilidade_estudante (
+    id_estudante INT NOT NULL,
+    id_habilidade INT NOT NULL,
+    
+    CONSTRAINT pk_habilidade_estudante PRIMARY KEY (id_estudante, id_habilidade),
+    CONSTRAINT fk_estudante FOREIGN KEY (id_estudante) REFERENCES estudante(id_estudante),
+    CONSTRAINT fk_habilidade FOREIGN KEY (id_habilidade) REFERENCES habilidades(id_habilidade)
+);
+
+CREATE TABLE habilidade_loja (
+    id_loja INT NOT NULL,
+    id_habilidade INT NOT NULL,
+    
+    CONSTRAINT pk_habilidade_loja PRIMARY KEY (id_loja, id_habilidade),
+    CONSTRAINT fk_loja FOREIGN KEY (id_loja) REFERENCES loja(id_loja),
+    CONSTRAINT fk_habilidade FOREIGN KEY (id_habilidade) REFERENCES habilidades(id_habilidade)
+);
+
+CREATE TABLE instancia_de_item (
+    id_instanciaItem INT NOT NULL PRIMARY KEY,
+    id_item INT NOT NULL,
+    id_sala INT NOT NULL,
+    id_estudante INT NOT NULL,
+
+    CONSTRAINT fk_id_item FOREIGN KEY (id_item) REFERENCES item(id_item),
+    CONSTRAINT fk_id_sala FOREIGN KEY (id_sala) REFERENCES sala_comum(id_sala),
+    CONSTRAINT fk_id_estudante FOREIGN KEY (id_estudante) REFERENCES estudante(id_estudante)
+);
+
+CREATE TABLE estudante (
+    id_estudante INT NOT NULL PRIMARY KEY,
+    id_sala INT NOT NULL,
+    nome VARCHAR(100) NOT NULL,
+    vida INT NOT NULL,
+    estresse INT NOT NULL,
+    total_dinheiro INT NOT NULL,
+
+    CONSTRAINT fk_id_sala FOREIGN KEY (id_sala) REFERENCES sala_comum(id_sala)
+);
+
+CREATE TABLE monstro_simples (
+    id_criatura INT NOT NULL PRIMARY KEY,
+    xp_tema INT NOT NULL,
+    qtd_moedas INT NOT NULL,
+
+    CONSTRAINT fk_id_criatura FOREIGN KEY (id_criatura) REFERENCES criatura(id_criatura)
+);
+
+CREATE TABLE afinidade (
+    id_estudante INT NOT NULL,
+    id_tema INT NOT NULL,
+    xp_atual INT NOT NULL,
+    nivel_atual INT NOT NULL,
+
+    CONSTRAINT pk_afinidade_estudante PRIMARY KEY (id_estudante, id_tema),
+    CONSTRAINT fk_estudante FOREIGN KEY (id_estudante) REFERENCES estudante(id_estudante),
+    CONSTRAINT fk_tema FOREIGN KEY (id_tema) REFERENCES tema(id_tema)
+);
+
+CREATE TABLE habilidades (
+    id_habilidade INT NOT NULL PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    tipo_habilidade VARCHAR(10) NOT NULL,
+    nivel INT NOT NULL,
+    coolDown INT NOT NULL,
+    id_tema INT NOT NULL,
+
+    CONSTRAINT fk_id_tema FOREIGN KEY (id_tema) REFERENCES tema(id_tema)
+);
+
+CREATE TABLE tema (
+    id_tema INT NOT NULL PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL
+);
+
+
