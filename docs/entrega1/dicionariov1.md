@@ -265,7 +265,7 @@ De acordo com a *UC Merced Library*,
 |tipo_habilidade|Qual o tipo da habilidade|varchar|10|- Not Null|
 |nivel|Qual o nível da habilidade|inteiro||- Not Null|
 |coolDown|tempo de recarga da habilidade|inteiro||- Not Null|
-|id_tema|Identificador de Tema|inteiro||- PK<br>- Not Null|
+|id_tema|Identificador de Tema|inteiro||- FK<br>- Not Null|
 
 
 ## Entidade: Tema
