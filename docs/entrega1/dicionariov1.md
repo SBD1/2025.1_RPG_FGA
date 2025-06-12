@@ -249,7 +249,7 @@ De acordo com a *UC Merced Library*,
 
 | Nome | Descrição | Tipo de dado | Tamanho | Restrições de domínio (PK, FK, Not Null, Check, Default, Identity) |
 | ---- | --------- | ------------ | ------- | ------------------------------------------------------------------ |
-|id_afinidade|Identificador da afinidade|inteiro||- PK<br>- FK<br>- Not Null|
+|id_estudante|Identificador do estudante|inteiro||- PK<br>- FK<br>- Not Null|
 |id_tema|Identificador do tema |inteiro| |- PK<br>- FK<br>- Not Null|
 |xp_atual|xp atual que a afinidade tem|inteiro||- Not Null|
 |nivel_atual|Qual o nível atual da afinidade|inteiro||- Not Null|
