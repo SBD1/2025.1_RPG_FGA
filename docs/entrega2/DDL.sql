@@ -79,11 +79,11 @@ CREATE TABLE setor (
 );
 
 CREATE TABLE loja_item (
-    id_loja INT NOT NULL,
+    id_sala INT NOT NULL,
     id_item INT NOT NULL,
     
-    CONSTRAINT pk_loja_item PRIMARY KEY (id_loja, id_item),
-    CONSTRAINT fk_loja FOREIGN KEY (id_loja) REFERENCES loja(id_loja),
+    CONSTRAINT pk_sala_item PRIMARY KEY (id_sala, id_item),
+    CONSTRAINT fk_sala FOREIGN KEY (id_sala) REFERENCES sala(id_sala),
     CONSTRAINT fk_item FOREIGN KEY (id_item) REFERENCES item(id_item)
 );
 
