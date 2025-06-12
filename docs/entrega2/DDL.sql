@@ -26,7 +26,7 @@ CREATE TABLE dungeon_academica (
 );
 
 CREATE TABLE boss (
-    id_boss INT NOT NULL,
+    id_boss INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     id_reliquia INT NOT NULL,
     CONSTRAINT pk_boss_reliquia PRIMARY KEY (id_boss),
     CONSTRAINT fk_boss FOREIGN KEY (id_boss) REFERENCES boss(id_boss),
@@ -34,7 +34,7 @@ CREATE TABLE boss (
 );
 
 CREATE TABLE instancia_de_criatura (
-    id_instanciaMonstro INT NOT NULL PRIMARY KEY,
+    id_instanciaMonstro INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     id_criatura INT NOT NULL,
     vida_atual INT NOT NULL,
     id_dungeon INT NOT NULL,
@@ -66,7 +66,7 @@ CREATE TABLE Defesa (
 );
 
 CREATE TABLE setor (
-    id_setor INT NOT NULL PRIMARY KEY,
+    id_setor INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     id_campus INT NOT NULL,
     nome VARCHAR(100) NOT NULL,
     descricao VARCHAR(255) NOT NULL,
@@ -88,14 +88,14 @@ CREATE TABLE loja_item (
 );
 
 CREATE TABLE item (
-    id_item INT NOT NULL PRIMARY KEY,
+    id_item INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     nome VARCHAR(100) NOT NULL,
     descricao VARCHAR(255) NOT NULL,
     item_tipo VARCHAR(100) NOT NULL
 );
 
 CREATE TABLE reliquia (
-    id_reliquia INT NOT NULL PRIMARY KEY,
+    id_reliquia INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     tipo VARCHAR(100) NOT NULL
 );
 
@@ -124,7 +124,7 @@ CREATE TABLE monetario (
 );
 
 CREATE TABLE sala_comum (
-    id_sala INT NOT NULL PRIMARY KEY,
+    id_sala INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     id_setor INT NOT NULL PRIMARY KEY,
     id_prevSala INT,
     id_proxSala INT,
@@ -166,7 +166,7 @@ CREATE TABLE habilidade_loja (
 );
 
 CREATE TABLE instancia_de_item (
-    id_instanciaItem INT NOT NULL PRIMARY KEY,
+    id_instanciaItem INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     id_item INT NOT NULL,
     id_sala INT NOT NULL,
     id_estudante INT NOT NULL,
@@ -177,7 +177,7 @@ CREATE TABLE instancia_de_item (
 );
 
 CREATE TABLE estudante (
-    id_estudante INT NOT NULL PRIMARY KEY,
+    id_estudante INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     id_sala INT NOT NULL,
     nome VARCHAR(100) NOT NULL,
     vida INT NOT NULL,
@@ -207,7 +207,7 @@ CREATE TABLE afinidade (
 );
 
 CREATE TABLE habilidades (
-    id_habilidade INT NOT NULL PRIMARY KEY,
+    id_habilidade INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     nome VARCHAR(100) NOT NULL,
     tipo_habilidade VARCHAR(10) NOT NULL,
     nivel INT NOT NULL,
@@ -218,7 +218,7 @@ CREATE TABLE habilidades (
 );
 
 CREATE TABLE tema (
-    id_tema INT NOT NULL PRIMARY KEY,
+    id_tema INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     nome VARCHAR(100) NOT NULL
 );
 
