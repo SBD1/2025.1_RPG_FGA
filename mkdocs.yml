@@ -36,6 +36,8 @@ nav:
       - Modelo Entidade Relacionamento: entrega1/mer.md
       - Modelo Relacional: entrega1/relacionamentov1.md
       - Dicionário de Dados: entrega1/dicionariov1.md
+  - Entrega 2:
+      - DQL: entrega2/dql.md
   
 extra_css:
   - stylesheets/extra.css
