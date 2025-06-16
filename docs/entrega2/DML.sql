@@ -75,7 +75,7 @@ INSERT INTO criatura (nivel, vida_max, tipo_criatura, nome, descricao) VALUES
 
 -- Populando tabela 'campus'  
 INSERT INTO campus (nome, descricao) VALUES
-('UnB Campus Gama', 'O coração da jornada acadêmica do RPG-FGA.'); [cite: 5]
+('UnB Campus Gama', 'O coração da jornada acadêmica do RPG-FGA.');
 
 -- Populando tabela 'setor'  
 -- Conectando os setores de forma circular: UED -> Containers -> UAC -> Refeitório Universitário -> Estacionamento -> LDTEA -> UED
@@ -89,14 +89,14 @@ INSERT INTO setor (id_campus, nome, descricao) VALUES
 (1, 'Estacionamento', 'Área externa para veículos e um espaço de lazer.'),
 (1, 'LDTEA', 'Laboratório de Desenho Técnico e Expressão Artística.');
 
--- Atualiza id_proxSetor e id_prevSetor depois que todos os setores forem inseridos
--- Assumindo que os IDs são 1 para UED, 2 para Containers, 3 para UAC, 4 para Refeitório Universitário, 5 para Estacionamento, 6 para LDTEA
-UPDATE setor SET id_proxSetor = 2, id_prevSetor = 6 WHERE id_setor = 1; -- UED -> Containers, UED <- LDTEA
-UPDATE setor SET id_proxSetor = 3, id_prevSetor = 1 WHERE id_setor = 2; -- Containers -> UAC, Containers <- UED
-UPDATE setor SET id_proxSetor = 4, id_prevSetor = 2 WHERE id_setor = 3; -- UAC -> Refeitório Universitário, UAC <- Containers
-UPDATE setor SET id_proxSetor = 5, id_prevSetor = 3 WHERE id_setor = 4; -- Refeitório Universitário -> Estacionamento, Refeitório Universitário <- UAC
-UPDATE setor SET id_proxSetor = 6, id_prevSetor = 4 WHERE id_setor = 5; -- Estacionamento -> LDTEA, Estacionamento <- Refeitório Universitário
-UPDATE setor SET id_proxSetor = 1, id_prevSetor = 5 WHERE id_setor = 6; -- LDTEA -> UED, LDTEA <- Estacionamento
+-- Atualiza id_proxSetor e id_prevSetor
+UPDATE setor SET id_proxSetor = 2, id_prevSetor = 6 WHERE id_setor = 1;
+UPDATE setor SET id_proxSetor = 3, id_prevSetor = 1 WHERE id_setor = 2;
+UPDATE setor SET id_proxSetor = 4, id_prevSetor = 2 WHERE id_setor = 3;
+UPDATE setor SET id_proxSetor = 5, id_prevSetor = 3 WHERE id_setor = 4;
+UPDATE setor SET id_proxSetor = 6, id_prevSetor = 4 WHERE id_setor = 5;
+UPDATE setor SET id_proxSetor = 1, id_prevSetor = 5 WHERE id_setor = 6;
+
 
 -- Populando tabela 'sala_comum'   
 -- Cada setor terá 10 salas comuns, com pelo menos uma loja e uma dungeon.
@@ -110,10 +110,15 @@ DECLARE
     dungeon_assigned BOOLEAN;
     prev_room_id INT;
 BEGIN
+    -- Verifica se há setores disponíveis
+    IF NOT EXISTS (SELECT 1 FROM setor) THEN
+        RAISE EXCEPTION 'Tabela setor está vazia. Verifique as inserções anteriores.';
+    END IF;
+
     FOR sector_id IN 1..6 LOOP
         shop_assigned := FALSE;
         dungeon_assigned := FALSE;
-        prev_room_id := NULL; -- Reinicia para cada setor
+        prev_room_id := NULL;
 
         FOR i IN 1..room_count LOOP
             DECLARE
@@ -123,7 +128,6 @@ BEGIN
                 has_dungeon BOOLEAN := FALSE;
                 current_room_id INT;
             BEGIN
-                -- Garante pelo menos uma loja e uma dungeon por setor 
                 IF NOT shop_assigned AND i = 1 THEN
                     has_shop := TRUE;
                     shop_assigned := TRUE;
@@ -131,33 +135,18 @@ BEGIN
                     has_dungeon := TRUE;
                     dungeon_assigned := TRUE;
                 ELSE
-                    -- Atribui lojas e dungeons aleatoriamente para as salas restantes
                     has_shop := (random() < 0.3);
                     has_dungeon := (random() < 0.2);
                 END IF;
 
                 CASE sector_id
-                    WHEN 1 THEN -- UED
-                        room_name := 'Laboratório de Redes ' || i;
-                        room_desc := 'Um laboratório de informática focado em redes.';
-                    WHEN 2 THEN -- Containers
-                        room_name := 'Laboratório de IoT ' || i;
-                        room_desc := 'Um laboratório modular para projetos de Internet das Coisas.';
-                    WHEN 3 THEN -- UAC
-                        room_name := 'Sala S-' || i;
-                        room_desc := 'Uma sala de aula padrão do UAC.';
-                    WHEN 4 THEN -- Refeitório Universitário
-                        room_name := 'Mesa ' || i;
-                        room_desc := 'Uma mesa no refeitório, ideal para uma refeição rápida.';
-                    WHEN 5 THEN -- Estacionamento
-                        room_name := 'Lote E-' || i;
-                        room_desc := 'Um dos lotes do estacionamento do campus.';
-                    WHEN 6 THEN -- LDTEA
-                        room_name := 'Laboratório de Protótipos ' || i;
-                        room_desc := 'Um laboratório para criação de protótipos e maquetes.';
-                    ELSE
-                        room_name := 'Sala Genérica ' || i;
-                        room_desc := 'Uma sala comum qualquer.';
+                    WHEN 1 THEN room_name := 'Laboratório de Redes ' || i; room_desc := 'Um laboratório de informática focado em redes.';
+                    WHEN 2 THEN room_name := 'Laboratório de IoT ' || i; room_desc := 'Um laboratório modular para projetos de Internet das Coisas.';
+                    WHEN 3 THEN room_name := 'Sala S-' || i; room_desc := 'Uma sala de aula padrão do UAC.';
+                    WHEN 4 THEN room_name := 'Mesa ' || i; room_desc := 'Uma mesa no refeitório, ideal para uma refeição rápida.';
+                    WHEN 5 THEN room_name := 'Lote E-' || i; room_desc := 'Um dos lotes do estacionamento do campus.';
+                    WHEN 6 THEN room_name := 'Laboratório de Protótipos ' || i; room_desc := 'Um laboratório para criação de protótipos e maquetes.';
+                    ELSE room_name := 'Sala Genérica ' || i; room_desc := 'Uma sala comum qualquer.';
                 END CASE;
 
                 INSERT INTO sala_comum (id_setor, id_prevSala, nome, descricao, tem_loja, tem_dungeon) VALUES
@@ -170,7 +159,6 @@ BEGIN
                 prev_room_id := current_room_id;
             END;
         END LOOP;
-        -- Liga a última sala à primeira sala no ciclo para cada setor
         IF prev_room_id IS NOT NULL THEN
             DECLARE
                 first_room_id INT;
@@ -185,11 +173,11 @@ END $$;
 
 -- Populando tabela 'estudante'  
 INSERT INTO estudante (id_sala, nome, vida, estresse, total_dinheiro) VALUES
-(1, 'Alice Dev', 20, 20, 10),
-(11, 'Léo Eng', 20, 20, 10),
-(21, 'Carlos Mat', 20, 20, 10),
-(31, 'Diana Hum', 20, 20, 10),
-(41, 'Eduardo G', 20, 20, 10);
+((SELECT id_sala FROM sala_comum WHERE id_setor = 1 ORDER BY id_sala LIMIT 1), 'Alice Dev', 20, 20, 10),
+((SELECT id_sala FROM sala_comum WHERE id_setor = 2 ORDER BY id_sala LIMIT 1), 'Léo Eng', 20, 20, 10),
+((SELECT id_sala FROM sala_comum WHERE id_setor = 3 ORDER BY id_sala LIMIT 1), 'Carlos Mat', 20, 20, 10),
+((SELECT id_sala FROM sala_comum WHERE id_setor = 4 ORDER BY id_sala LIMIT 1), 'Diana Hum', 20, 20, 10),
+((SELECT id_sala FROM sala_comum WHERE id_setor = 5 ORDER BY id_sala LIMIT 1), 'Eduardo G', 20, 20, 10);
 
 -- Populando tabela 'afinidade'   
 -- Cada estudante começa com nível 1 e 0 XP para todos os 5 temas.
@@ -219,7 +207,7 @@ INSERT INTO dungeon_academica (nome, descricao, id_tema) VALUES
 
 -- Populando tabela 'boss'   
 -- Ligando cada boss a uma relíquia única.
-INSERT INTO boss (id_boss, id_reliquia) VALUES
+INSERT INTO boss (id_criatura, id_reliquia) VALUES
 (
     (SELECT id_criatura FROM criatura WHERE nome = 'Professor Álgebra'),
     (SELECT id_reliquia FROM reliquia WHERE tipo = 'Cálculo Infinito')
@@ -421,6 +409,13 @@ DECLARE
     random_sala_id INT;
     random_estudante_id INT;
 BEGIN
+    IF NOT EXISTS (SELECT 1 FROM sala_comum) THEN
+        RAISE EXCEPTION 'Tabela sala_comum está vazia. Verifique as inserções anteriores.';
+    END IF;
+    IF NOT EXISTS (SELECT 1 FROM estudante) THEN
+        RAISE EXCEPTION 'Tabela estudante está vazia. Verifique as inserções anteriores.';
+    END IF;
+
     FOR i IN 1..instance_count LOOP
         SELECT id_item INTO random_item_id FROM item ORDER BY random() LIMIT 1;
         SELECT id_sala INTO random_sala_id FROM sala_comum ORDER BY random() LIMIT 1;

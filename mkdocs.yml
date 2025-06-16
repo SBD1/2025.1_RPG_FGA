@@ -39,6 +39,7 @@ nav:
   - Entrega 2:
       - DQL: entrega2/dql.md
       - DML: entrega2/dml.md
+      - DDL: entrega2/ddl.md
   
 extra_css:
   - stylesheets/extra.css

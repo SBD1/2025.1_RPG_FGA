@@ -106,7 +106,7 @@ CREATE TABLE boss (
     id_criatura INT NOT NULL PRIMARY KEY,
     id_reliquia INT NOT NULL,
     
-    CONSTRAINT fk_id_criatura FOREIGN KEY (id_criatura) REFERENCES criatura(id_criatura)
+    CONSTRAINT fk_id_criatura FOREIGN KEY (id_criatura) REFERENCES criatura(id_criatura),
     CONSTRAINT fk_reliquia FOREIGN KEY (id_reliquia) REFERENCES reliquia(id_reliquia)
 );
 

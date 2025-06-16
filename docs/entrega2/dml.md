@@ -68,6 +68,7 @@ As habilidades são divididas por tipo:
 ```sql
 -- Monstros Simples (Nível <= 15) - Relacionados aos temas 
 -- Programação
+INSERT INTO criatura (nivel, vida_max, tipo_criatura, nome, descricao) VALUES
 (3, 30, 'Monstro Simples', 'Erro de Sintaxe', 'Um pequeno erro que atrapalha o código.'),
 (9, 70, 'Monstro Simples', 'Loop Infinito', 'Um programa que nunca termina.'),  
 -- Matemática
@@ -102,6 +103,9 @@ Inclui monstros simples (nível ≤ 15) e bosses (nível = 20).
 ### Inserção de campus e setores
 
 ```sql
+INSERT INTO campus (nome, descricao) VALUES
+('UnB Campus Gama', 'O coração da jornada acadêmica do RPG-FGA.');
+
 INSERT INTO setor (id_campus, nome, descricao) VALUES
 (1, 'UED', 'Unidade de Ensino à Distância, com laboratórios e salas de professores.'),
 (1, 'Containers', 'Setor de laboratórios específicos, construídos em containers.'),
@@ -110,13 +114,13 @@ INSERT INTO setor (id_campus, nome, descricao) VALUES
 (1, 'Estacionamento', 'Área externa para veículos e um espaço de lazer.'),
 (1, 'LDTEA', 'Laboratório de Desenho Técnico e Expressão Artística.');
 
--- Atualiza id_proxSetor e id_prevSetor depois que todos os setores forem inseridos
-UPDATE setor SET id_proxSetor = 2, id_prevSetor = 6 WHERE id_setor = 1; -- UED -> Containers, UED <- LDTEA
-UPDATE setor SET id_proxSetor = 3, id_prevSetor = 1 WHERE id_setor = 2; -- Containers -> UAC, Containers <- UED
-UPDATE setor SET id_proxSetor = 4, id_prevSetor = 2 WHERE id_setor = 3; -- UAC -> Refeitório Universitário, UAC <- Containers
-UPDATE setor SET id_proxSetor = 5, id_prevSetor = 3 WHERE id_setor = 4; -- Refeitório Universitário -> Estacionamento, Refeitório Universitário <- UAC
-UPDATE setor SET id_proxSetor = 6, id_prevSetor = 4 WHERE id_setor = 5; -- Estacionamento -> LDTEA, Estacionamento <- Refeitório Universitário
-UPDATE setor SET id_proxSetor = 1, id_prevSetor = 5 WHERE id_setor = 6; -- LDTEA -> UED, LDTEA <- Estacionamento
+-- Atualiza id_proxSetor e id_prevSetor
+UPDATE setor SET id_proxSetor = 2, id_prevSetor = 6 WHERE id_setor = 1;
+UPDATE setor SET id_proxSetor = 3, id_prevSetor = 1 WHERE id_setor = 2;
+UPDATE setor SET id_proxSetor = 4, id_prevSetor = 2 WHERE id_setor = 3;
+UPDATE setor SET id_proxSetor = 5, id_prevSetor = 3 WHERE id_setor = 4;
+UPDATE setor SET id_proxSetor = 6, id_prevSetor = 4 WHERE id_setor = 5;
+UPDATE setor SET id_proxSetor = 1, id_prevSetor = 5 WHERE id_setor = 6;
 ```
 Os setores são interligados de forma circular com `id_proxSetor` e `id_prevSetor`.
 
@@ -134,6 +138,12 @@ DECLARE
     dungeon_assigned BOOLEAN;
     prev_room_id INT;
 BEGIN
+
+    -- Verifica se há setores disponíveis
+    IF NOT EXISTS (SELECT 1 FROM setor) THEN
+        RAISE EXCEPTION 'Tabela setor está vazia. Verifique as inserções anteriores.';
+    END IF;
+
     FOR sector_id IN 1..6 LOOP
         shop_assigned := FALSE;
         dungeon_assigned := FALSE;
@@ -215,11 +225,11 @@ Cada setor possui 10 salas, com pelo menos uma loja e uma dungeon.
 
 ```sql
 INSERT INTO estudante (id_sala, nome, vida, estresse, total_dinheiro) VALUES
-(1, 'Alice Dev', 20, 20, 10),
-(11, 'Léo Eng', 20, 20, 10),
-(21, 'Carlos Mat', 20, 20, 10),
-(31, 'Diana Hum', 20, 20, 10),
-(41, 'Eduardo G', 20, 20, 10);
+((SELECT id_sala FROM sala_comum WHERE id_setor = 1 ORDER BY id_sala LIMIT 1), 'Alice Dev', 20, 20, 10),
+((SELECT id_sala FROM sala_comum WHERE id_setor = 2 ORDER BY id_sala LIMIT 1), 'Léo Eng', 20, 20, 10),
+((SELECT id_sala FROM sala_comum WHERE id_setor = 3 ORDER BY id_sala LIMIT 1), 'Carlos Mat', 20, 20, 10),
+((SELECT id_sala FROM sala_comum WHERE id_setor = 4 ORDER BY id_sala LIMIT 1), 'Diana Hum', 20, 20, 10),
+((SELECT id_sala FROM sala_comum WHERE id_setor = 5 ORDER BY id_sala LIMIT 1), 'Eduardo G', 20, 20, 10);
  
 INSERT INTO afinidade (id_estudante, id_tema, xp_atual, nivel_atual) VALUES
 (1, 1, 0, 1), (1, 2, 0, 1), (1, 3, 0, 1), (1, 4, 0, 1), (1, 5, 0, 1),
@@ -234,6 +244,14 @@ Cada estudante começa com afinidade nível 1 e 0 XP para cada tema.
 
 ### Inserção de itens
 ```sql
+
+INSERT INTO reliquia (tipo) VALUES
+('Cálculo Infinito'), -- Matemática
+('Código Fonte Universal'), -- Programação
+('Projeto Mestre'), -- Engenharias
+('Sabedoria Ancestral'), -- Humanidades
+('Conhecimento Geral Abrangente'); -- Gerais
+
 INSERT INTO item (nome, descricao, item_tipo) VALUES
 -- Consumíveis 
 ('Café Expresso', 'Recupera um pouco de estresse e te dá energia.', 'Consumível'),
@@ -394,6 +412,53 @@ INSERT INTO boss (id_boss, id_reliquia) VALUES
 Cada dungeon é vinculada a um tema e tem um boss, que por sua vez carrega uma relíquia.
 
 ---
+
+### Inserção na tabela habilidade_loja  
+
+```sql
+-- Distribuindo aleatoriamente algumas habilidades entre as lojas 
+DO $$
+DECLARE
+    loja_id INT;
+    habilidade_id INT;
+BEGIN
+    FOR loja_id IN (SELECT id_loja FROM loja) LOOP
+        -- Seleciona um conjunto aleatório de habilidades para cada loja 
+        FOR habilidade_id IN (SELECT id_habilidade FROM habilidades ORDER BY random() LIMIT 5) LOOP
+            INSERT INTO habilidade_loja (id_loja, id_habilidade) VALUES (loja_id, habilidade_id);
+        END LOOP;
+    END LOOP;
+END $$;
+```
+
+### Inserção na tabela 'instancia_de_item' 
+
+```sql
+-- 10 instâncias distribuídas aleatoriamente entre salas e estudantes
+DO $$
+DECLARE
+    instance_count INT := 10;
+    random_item_id INT;
+    random_sala_id INT;
+    random_estudante_id INT;
+BEGIN
+    IF NOT EXISTS (SELECT 1 FROM sala_comum) THEN
+        RAISE EXCEPTION 'Tabela sala_comum está vazia. Verifique as inserções anteriores.';
+    END IF;
+    IF NOT EXISTS (SELECT 1 FROM estudante) THEN
+        RAISE EXCEPTION 'Tabela estudante está vazia. Verifique as inserções anteriores.';
+    END IF;
+
+    FOR i IN 1..instance_count LOOP
+        SELECT id_item INTO random_item_id FROM item ORDER BY random() LIMIT 1;
+        SELECT id_sala INTO random_sala_id FROM sala_comum ORDER BY random() LIMIT 1;
+        SELECT id_estudante INTO random_estudante_id FROM estudante ORDER BY random() LIMIT 1;
+
+        INSERT INTO instancia_de_item (id_item, id_sala, id_estudante) VALUES
+        (random_item_id, random_sala_id, random_estudante_id);
+    END LOOP;
+END $$;
+```
 
 ### Inserção de habilidades ofensivas, defensivas e de cura
 
