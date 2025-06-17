@@ -37,6 +37,7 @@ nav:
       - Modelo Relacional: entrega1/relacionamentov1.md
       - Dicionário de Dados: entrega1/dicionariov1.md
   - Entrega 2:
+      - História: entrega2/historia.md
       - DQL: entrega2/dql.md
       - DML: entrega2/dml.md
       - DDL: entrega2/ddl.md
