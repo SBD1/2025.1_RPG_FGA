@@ -179,8 +179,9 @@ CREATE TABLE habilidade_estudante (
 );
 
 CREATE TABLE loja (
-    id_loja INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    nome VARCHAR(100) NOT NULL
+    PRIMARY KEY id_sala,
+    nome VARCHAR(100) NOT NULL,
+    CONSTRAINT fk_sala FOREIGN KEY (id_sala) REFERENCES sala_comum(id_estudante)
 );
 
 CREATE TABLE habilidade_loja (
