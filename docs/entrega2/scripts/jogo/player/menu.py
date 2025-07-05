@@ -1,52 +1,37 @@
-def barra_stamina(stamina, max_stamina=100):
-    blocos = int(stamina // 10)
-    vazios = 10 - blocos
-    return "🟨" * blocos + "⬛" * vazios
+from jogo.player.habilidades import *
+from jogo.player.inventario import *
+from jogo.db import clear_screen
 
+def barra_estresse(estresse, max_estresse=100):
+    blocos = int((estresse / max_estresse) * 10)
+    blocos = min(blocos, 10)
+    vazios = 10 - blocos
+    return "🟧" * blocos + "⬛" * vazios
 
 def menu_jogador(jogador):
     while True:
+        clear_screen()
         print("\n========= MENU DO JOGADOR =========")
-        print(f"🎒 {jogador['nome']} | Stamina: [{barra_stamina(jogador['stamina'])}] {jogador['stamina']}/{jogador['max_stamina']}")
-        print("[1] Ver itens")
-        print("[2] Ver habilidades")
-        print("[3] Mudar de sala")
-        print("[4] Explorar")
-        print("[5] Voltar")
+        print(f"🎒 {jogador['nome']} | Estresse: [{barra_estresse(jogador['estresse'])}] {jogador['estresse']}/100")
+        print(f"💰 Dinheiro: {jogador['total_dinheiro']}")
+        print(f"📍 Sala atual: {jogador['nome_sala']}")
+        print("[1] Ver catálogo de habilidades")
+        print("[2] Mudar de sala (em desenvolvimento)")
+        print("[3] Explorar (em desenvolvimento)")
+        print("[4] Sair para o menu principal")
 
         opcao = input("Escolha uma opção: ")
 
         if opcao == '1':
-            print("\n📦 Inventário:")
-            for item in jogador['itens']:
-                print(f"- {item}")
+            habilidades = buscar_habilidades_estudante_todas(jogador['id'])
+            mostrar_catalogo_habilidades(habilidades)
+            input("\nPressione Enter para voltar ao menu.")
         elif opcao == '2':
-            print("\n🧠 Habilidades:")
-            for habilidade in jogador['habilidades']:
-                print(f"- {habilidade['nome']} | Tipo: {habilidade['tipo']} | Potência: {habilidade['potencia']}")
+            print("➡️ Mudando de sala... (em desenvolvimento)")
         elif opcao == '3':
-            print("➡️ Mudando de sala... (a lógica ainda será implementada)")
+            print("🔍 Explorando... (em desenvolvimento)")
         elif opcao == '4':
-            print("🔍 Explorando a área... (a lógica ainda será implementada)")
-        elif opcao == '5':
-            print("↩️ Retornando ao menu anterior.")
+            print("↩️ Retornando ao menu principal.")
             break
         else:
             print("❌ Opção inválida. Tente novamente.")
-
-
-
-# Simulação de dados do jogador
-jogador = {
-    "nome": "Estudante Rafael",
-    "stamina": 60,
-    "max_stamina": 100,
-    "itens": ["Poção de Vida", "Livro de FGA", "Moeda de Bronze"],
-    "habilidades": [
-        {"nome": "Chama Sombria", "tipo": "G", "potencia": 85},
-        {"nome": "Benção da Luz", "tipo": "M", "potencia": 80},
-    ]
-}
-
-# Chamada do menu
-menu_jogador(jogador)
