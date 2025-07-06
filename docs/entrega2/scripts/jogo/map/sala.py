@@ -97,6 +97,6 @@ def explorar_sala(jogador):
     clear_screen()
     print("🔍 Explorando a sala...\n")
 
-    if not tem_dungeon(jogador):
+    if not tem_dungeon_interativo(jogador):
         print("❌ Não há dungeon nesta sala.")
         input("\nPressione Enter para continuar.")

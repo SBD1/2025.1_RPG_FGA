@@ -1,6 +1,5 @@
 from jogo.db import get_db_connection
 
-
 def buscar_habilidades_estudante_todas(id_estudante):
     try:
         conn = get_db_connection()

@@ -47,6 +47,7 @@ def menu_jogador(jogador):
                     if sucesso:
                         for sala in salas:
                             if sala[0] == novo_id:
+                                jogador['id_sala'] = novo_id  
                                 jogador['nome_sala'] = sala[1]
                                 break
                 except ValueError:

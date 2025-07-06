@@ -33,7 +33,7 @@ INSERT INTO tipoHabilidade (tipo_habilidade) VALUES ('ataque'); -- ID 4
 INSERT INTO Ataque (id_habilidade, id_tema, nome, nivel, coolDown, danoCausado) VALUES (4, 2, 'Bug Report', 6, 2, 16);
 INSERT INTO tipoHabilidade (tipo_habilidade) VALUES ('ataque'); -- ID 5
 INSERT INTO Ataque (id_habilidade, id_tema, nome, nivel, coolDown, danoCausado) VALUES (5, 2, 'Debug Rápido', 10, 3, 22);
-INSERT INTO tipoHabilidade (tipo_habilidade) VALUES ('ataque'); -- ID 6
+INSERT INTO tipoHabilidade (tipo_habilidade) VALUES ('ataque'); -- ID 6 
 INSERT INTO Ataque (id_habilidade, id_tema, nome, nivel, coolDown, danoCausado) VALUES (6, 2, 'Zero Division', 18, 6, 35);
 -- Habilidades de Engenharias
 INSERT INTO tipoHabilidade (tipo_habilidade) VALUES ('ataque'); -- ID 7
@@ -140,7 +140,7 @@ INSERT INTO campus (nome, descricao) VALUES
 ('UnB Campus Gama', 'O coração da jornada acadêmica do RPG-FGA.');
 
 -- Populando tabela 'setor' (Nenhuma alteração necessária)
-INSERT INTO setor (id_campus, nome, descricao) VALUES
+INSERT INTO setor (id_campus, nome, descricao) VALUES 
 (1, 'UED', 'Unidade de Ensino à Distância, com laboratórios e salas de professores.'),
 (1, 'Containers', 'Setor de laboratórios específicos, construídos em containers.'),
 (1, 'UAC', 'Unidade Acadêmica Central, com salas numeradas.'),

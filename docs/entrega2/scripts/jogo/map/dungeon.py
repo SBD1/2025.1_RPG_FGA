@@ -1,129 +1,163 @@
-from jogo.db import *
-from jogo.monster.boss import *
-from jogo.monster.monster import *
+from jogo.db import get_db_connection, clear_screen
+from psycopg2 import Error
+from jogo.combate.main import * # importe sua função de combate aqui
 
-def sala_tem_dungeon(id_sala):
-    try:
-        conn = get_db_connection()
-        cur = conn.cursor()
+# Mapeamento manual do tema para o ID do boss
+BOSS_POR_TEMA = {
+    1: 11,  # Matemática
+    2: 12,  # Programação
+    3: 14,  # Engenharias
+    4: 13,  # Humanidades
+    5: 15   # Gerais
+}
 
-        cur.execute("""
-            SELECT 1 FROM dungeon_academica WHERE id_dungeon = %s
-        """, (id_sala,))
-        return cur.fetchone() is not None
-
-    except Exception as e:
-        print(f"Erro ao verificar dungeon na sala: {e}")
-        return False
-
-    finally:
-        if cur:
-            cur.close()
-        if conn:
-            conn.close()
-
-
-def mostrar_boss_e_monstros(id_sala):
-    clear_screen()
-
-    boss_reliquia = buscar_boss_e_reliquia(id_sala)
-    if not boss_reliquia:
-        print("Erro: dungeon sem boss.")
-        input("\nPressione Enter para voltar.")
-        return
-
-    (id_criatura, nome_boss, descricao_boss, nivel, vida_max, id_reliquia,
-     nome_reliquia, desc_reliquia, tipo_reliquia, id_instanciaCriatura, vida_atual) = boss_reliquia
-
-    print(f"🦹 Boss: {nome_boss} (Nível {nivel})")
-    print(f"Descrição: {descricao_boss}")
-    print(f"Vida: {vida_atual}/{vida_max}")
-    print(f"Tipo de relíquia: {tipo_reliquia}\n")
-
-    monstros_simples = buscar_monstros_simples(id_sala)
-    print("👾 Monstros Simples na Dungeon:\n")
-    if not monstros_simples:
-        print("Nenhum monstro simples encontrado.")
-    else:
-        for idx, m in enumerate(monstros_simples, start=1):
-            (id_c, nome, descricao, nivel_m, vida_max_m, xp_tema, qtd_moedas, id_instancia, vida_atual_m) = m
-            print(f"[{idx}] {nome} (Nível {nivel_m}) - Vida: {vida_atual_m}/{vida_max_m}")
-            print(f"    Descrição: {descricao}\n")
-
-        print("[0] Voltar")
-
-        escolha = input("Escolha o monstro para enfrentar (digite o número): ")
-        if escolha.isdigit():
-            escolha = int(escolha)
-            if escolha == 0:
-                print("Voltando...")
-                return
-            elif 1 <= escolha <= len(monstros_simples):
-                monstro = monstros_simples[escolha-1]
-                print(f"Você escolheu enfrentar {monstro[1]}!")
-                input("\nPressione Enter para continuar (implementação do combate).")
-            else:
-                print("Opção inválida.")
-        else:
-            print("Entrada inválida.")
-
-
-def tem_dungeon(jogador):
+def tem_dungeon_interativo(jogador):
     id_sala = jogador['id_sala']
     id_estudante = jogador['id']
 
-    if not sala_tem_dungeon(id_sala):
-        return False  # Agora verifica corretamente se há dungeon
-
-    boss_reliquia = buscar_boss_e_reliquia(id_sala)
-    if not boss_reliquia:
-        print("⚠️ Dungeon existe, mas não foi encontrado o boss.")
-        return True  # Dungeon existe, mas incompleta
-
-    (id_criatura, nome_boss, descricao_boss, nivel, vida_max, id_reliquia,
-     nome_reliquia, desc_reliquia, tipo_reliquia, id_instanciaCriatura, vida_atual) = boss_reliquia
-
-    tem_reliquia = jogador_tem_reliquia(id_estudante, id_reliquia)
-    status = "Fechada (Você já completou esta dungeon)" if tem_reliquia else "Aberta"
-
-    print(f"Dungeon: {nome_reliquia}")
-    print(f"Descrição: {desc_reliquia}")
-    print(f"Status: {status}\n")
-
-    if tem_reliquia:
-        print("Você já concluiu essa dungeon e não pode mais acessá-la.")
-        input("\nPressione Enter para voltar.")
-        return True
-
-    print("Opções:")
-    print("[1] Ver detalhes da dungeon (Boss e monstros)")
-    print("[2] Voltar")
-
-    escolha = input("Escolha uma opção: ")
-
-    if escolha == '1':
-        mostrar_boss_e_monstros(id_sala)
-    else:
-        print("Voltando...")
-
-    return True
-
-
-def jogador_tem_reliquia(id_estudante, id_reliquia):
-    """Verifica se o jogador já possui a relíquia (indicando que finalizou a dungeon)."""
     try:
         conn = get_db_connection()
         cur = conn.cursor()
-        query = """
-            SELECT 1 FROM inventario
-            WHERE id_estudante = %s AND id_item = %s
-            LIMIT 1;
-        """
-        cur.execute(query, (id_estudante, id_reliquia))
-        return cur.fetchone() is not None
+
+        # Verifica se a sala tem dungeon e busca os dados da dungeon
+        cur.execute("""
+            SELECT s.tem_dungeon, d.id_dungeon, d.nome, d.descricao, d.id_tema, t.nome
+            FROM sala_comum s
+            JOIN dungeon_academica d ON d.id_dungeon = s.id_sala
+            JOIN tema t ON d.id_tema = t.id_tema
+            WHERE s.id_sala = %s
+        """, (id_sala,))
+        resultado = cur.fetchone()
+
+        if not resultado or not resultado[0]:
+            print("\n📭 Esta sala não possui uma dungeon.")
+            input("\nPressione Enter para voltar.")
+            return False
+
+        _, id_dungeon, nome_dungeon, descricao_dungeon, id_tema, tema_nome = resultado
+
+        # Busca o ID do boss associado ao tema
+        id_boss = BOSS_POR_TEMA.get(id_tema)
+
+        # Busca dados do boss
+        boss_info = None
+        if id_boss:
+            cur.execute("""
+                SELECT b.id_criatura, b.nome, b.descricao, b.nivel, b.vida_max, b.id_reliquia, r.nome
+                FROM boss b
+                JOIN reliquia r ON b.id_reliquia = r.id_reliquia
+                WHERE b.id_criatura = %s
+            """, (id_boss,))
+            boss_info = cur.fetchone()
+
+        disponivel = True
+        if boss_info:
+            id_criatura_boss, nome_boss, desc_boss, nivel_boss, vida_max_boss, id_reliquia, nome_reliquia = boss_info
+
+            cur.execute("""
+                SELECT 1
+                FROM instancia_de_item ii
+                JOIN reliquia r ON ii.id_item = r.id_reliquia
+                WHERE ii.id_estudante = %s AND r.id_reliquia = %s
+                LIMIT 1
+            """, (id_estudante, id_reliquia))
+            possui_reliquia = cur.fetchone() is not None
+            disponivel = not possui_reliquia
+
+        status = "Aberta ✅" if disponivel else "Fechada ❌ (Você já possui a relíquia do boss)"
+
+        # Exibe informações da dungeon
+        clear_screen()
+        print("="*50)
+        print(f"🏰 Dungeon: {nome_dungeon.strip()}")
+        print(f"📚 Tema: {tema_nome.strip()}")
+        print(f"📝 Descrição: {descricao_dungeon.strip()}")
+        print(f"🔐 Status: {status}")
+        print("="*50)
+
+        if not disponivel:
+            print("\nVocê já concluiu essa dungeon.")
+            input("\nPressione Enter para voltar.")
+            return True
+
+        print("\nOpções:")
+        print("[1] Ver detalhes do Boss e Monstros")
+        print("[2] Voltar")
+        escolha = input("Escolha uma opção: ").strip()
+
+        if escolha == '1':
+            clear_screen()
+
+            # Mostra Boss
+            print("="*50)
+            if boss_info:
+                print(f"🦹 Boss: {nome_boss.strip()} (Nível {nivel_boss})")
+                print(f"Descrição: {desc_boss.strip()}")
+                print(f"Vida Máx: {vida_max_boss}")
+                print(f"Relíquia: {nome_reliquia.strip()}")
+            else:
+                print("⚠️ Nenhum boss encontrado para este tema.")
+            print("="*50)
+
+            # Mostra monstros simples da dungeon
+            cur.execute("""
+                SELECT m.id_criatura, m.nome, m.descricao, m.nivel, m.vida_max,
+                       ic.vida_atual, m.qtd_moedas, m.xp_tema
+                FROM instancia_de_criatura ic
+                JOIN monstro_simples m ON ic.id_criatura = m.id_criatura
+                WHERE ic.id_dungeon = %s
+            """, (id_dungeon,))
+            monstros = cur.fetchall()
+
+            print("\n👾 Monstros Simples na Dungeon:\n")
+            if not monstros:
+                print("Nenhum monstro simples encontrado.")
+            else:
+                print(f"{'ID':<4} {'Nome':<25} {'Nível':<6} {'Vida':<10} {'XP':<5} {'Moedas':<7}")
+                print("-"*60)
+                for idx, m in enumerate(monstros, start=1):
+                    id_c, nome, desc, nivel_m, vida_max_m, vida_atual, moedas, xp = m
+                    vida_str = f"{vida_atual}/{vida_max_m}"
+                    print(f"{idx:<4} {nome.strip():<25} {nivel_m:<6} {vida_str:<10} {xp:<5} {moedas:<7}")
+
+                print("-"*60)
+                escolha_monstro = input("\nDigite o número do monstro para enfrentar ou 0 para voltar: ").strip()
+                if escolha_monstro.isdigit():
+                    escolha_monstro = int(escolha_monstro)
+                    if escolha_monstro == 0:
+                        print("Voltando...")
+                    elif 1 <= escolha_monstro <= len(monstros):
+                        monstro = monstros[escolha_monstro - 1]
+                        print(f"\n⚔️ Você escolheu enfrentar {monstro[1].strip()}!")
+                        input("\nPressione Enter para iniciar o combate...")
+
+                        # Aqui inicia o combate, passando id do jogador e id do monstro
+                        resultado, vida_restante = iniciar_combate(id_estudante, monstro[0])
+
+                        if resultado == 'vitoria':
+                            print("🏆 Você venceu o monstro!")
+                            # Aqui você pode adicionar lógica para loot, xp, atualização de vida, etc.
+                        elif resultado == 'derrota':
+                            print("💀 Você foi derrotado pelo monstro!")
+                            # Lógica de derrota
+                        elif resultado == 'fugiu':
+                            print("🏃 Você fugiu do combate!")
+                            # Lógica de fuga
+
+                        input("\nPressione Enter para continuar.")
+                    else:
+                        print("Opção inválida.")
+                else:
+                    print("Entrada inválida.")
+        else:
+            print("Voltando...")
+
+        return True
+
     except Exception as e:
-        print(f"Erro ao verificar relíquia do jogador: {e}")
+        print(f"❌ Erro ao acessar dungeon: {e}")
         return False
+
     finally:
         if cur:
             cur.close()
