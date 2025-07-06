@@ -57,8 +57,10 @@ def mover_estudante_para_sala(id_estudante, novo_id_sala):
         conn = get_db_connection()
         cur = conn.cursor()
 
+        
         cur.execute("""
-            SELECT e.nome, s.nome FROM Estudante e
+            SELECT e.nome, s.nome
+            FROM Estudante e
             JOIN Sala_Comum s ON e.id_sala = s.id_sala
             WHERE e.id_estudante = %s
         """, (id_estudante,))
@@ -73,15 +75,27 @@ def mover_estudante_para_sala(id_estudante, novo_id_sala):
             print("Sala com esse ID não encontrada.")
             return False
 
-        cur.execute("SELECT 1 FROM Estudante WHERE id_estudante = %s AND id_sala = %s", (id_estudante, novo_id_sala))
+        
+        cur.execute("""
+            SELECT 1
+            FROM Estudante
+            WHERE id_estudante = %s AND id_sala = %s
+        """, (id_estudante, novo_id_sala))
         if cur.fetchone():
             print("Você já está nesta sala.")
             return False
 
-        cur.execute("UPDATE Estudante SET id_sala = %s WHERE id_estudante = %s", (novo_id_sala, id_estudante))
+        
+        cur.execute("""
+            UPDATE Estudante
+               SET id_sala  = %s,
+                   estresse = estresse + 1
+             WHERE id_estudante = %s
+        """, (novo_id_sala, id_estudante))
+
         conn.commit()
 
-        print(f"Movido de '{estudante[1].strip()}' para '{nova_sala[0].strip()}' com sucesso!")
+        print(f"Movido de '{estudante[1].strip()}' para '{nova_sala[0].strip()}' com sucesso! (+1 de estresse)")
         return True
 
     except Exception as e:
@@ -89,8 +103,9 @@ def mover_estudante_para_sala(id_estudante, novo_id_sala):
         return False
 
     finally:
-        if cur: cur.close()
+        if cur:  cur.close()
         if conn: conn.close()
+
 
 
 def explorar_sala(jogador):
