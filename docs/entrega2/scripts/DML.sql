@@ -23,65 +23,65 @@ INSERT INTO tema (nome) VALUES
 -- Populando 'tipoHabilidade' e 'Ataque'
 -- Habilidades de Matemática
 INSERT INTO tipoHabilidade (tipo_habilidade) VALUES ('ataque'); -- ID 1
-INSERT INTO Ataque (id_habilidade, id_tema, nome, nivel, coolDown, danoCausado) VALUES (1, 1, 'Equação Quadrática', 5, 2, 15);
+INSERT INTO Ataque (id_habilidade, id_tema, nome, nivel, coolDown, danoCausado, preco) VALUES (1, 1, 'Equação Quadrática', 5, 2, 15, 40);
 INSERT INTO tipoHabilidade (tipo_habilidade) VALUES ('ataque'); -- ID 2
-INSERT INTO Ataque (id_habilidade, id_tema, nome, nivel, coolDown, danoCausado) VALUES (2, 1, 'Teorema de Pitágoras', 8, 3, 20);
+INSERT INTO Ataque (id_habilidade, id_tema, nome, nivel, coolDown, danoCausado, preco) VALUES (2, 1, 'Teorema de Pitágoras', 8, 3, 20, 60);
 INSERT INTO tipoHabilidade (tipo_habilidade) VALUES ('ataque'); -- ID 3
-INSERT INTO Ataque (id_habilidade, id_tema, nome, nivel, coolDown, danoCausado) VALUES (3, 1, 'Cálculo Integral', 15, 5, 30);
+INSERT INTO Ataque (id_habilidade, id_tema, nome, nivel, coolDown, danoCausado, preco) VALUES (3, 1, 'Cálculo Integral', 15, 5, 30, 105);
 -- Habilidades de Programação
 INSERT INTO tipoHabilidade (tipo_habilidade) VALUES ('ataque'); -- ID 4
-INSERT INTO Ataque (id_habilidade, id_tema, nome, nivel, coolDown, danoCausado) VALUES (4, 2, 'Bug Report', 6, 2, 16);
+INSERT INTO Ataque (id_habilidade, id_tema, nome, nivel, coolDown, danoCausado, preco) VALUES (4, 2, 'Bug Report', 6, 2, 16, 46);
 INSERT INTO tipoHabilidade (tipo_habilidade) VALUES ('ataque'); -- ID 5
-INSERT INTO Ataque (id_habilidade, id_tema, nome, nivel, coolDown, danoCausado) VALUES (5, 2, 'Debug Rápido', 10, 3, 22);
+INSERT INTO Ataque (id_habilidade, id_tema, nome, nivel, coolDown, danoCausado, preco) VALUES (5, 2, 'Debug Rápido', 10, 3, 22, 72);
 INSERT INTO tipoHabilidade (tipo_habilidade) VALUES ('ataque'); -- ID 6 
-INSERT INTO Ataque (id_habilidade, id_tema, nome, nivel, coolDown, danoCausado) VALUES (6, 2, 'Zero Division', 18, 6, 35);
+INSERT INTO Ataque (id_habilidade, id_tema, nome, nivel, coolDown, danoCausado, preco) VALUES (6, 2, 'Zero Division', 18, 6, 35, 125);
 -- Habilidades de Engenharias
 INSERT INTO tipoHabilidade (tipo_habilidade) VALUES ('ataque'); -- ID 7
-INSERT INTO Ataque (id_habilidade, id_tema, nome, nivel, coolDown, danoCausado) VALUES (7, 3, 'Desenho Técnico', 7, 2, 18);
+INSERT INTO Ataque (id_habilidade, id_tema, nome, nivel, coolDown, danoCausado, preco) VALUES (7, 3, 'Desenho Técnico', 7, 2, 18, 53);
 INSERT INTO tipoHabilidade (tipo_habilidade) VALUES ('ataque'); -- ID 8
-INSERT INTO Ataque (id_habilidade, id_tema, nome, nivel, coolDown, danoCausado) VALUES (8, 3, 'Análise Estrutural', 12, 4, 25);
+INSERT INTO Ataque (id_habilidade, id_tema, nome, nivel, coolDown, danoCausado, preco) VALUES (8, 3, 'Análise Estrutural', 12, 4, 25, 85);
 INSERT INTO tipoHabilidade (tipo_habilidade) VALUES ('ataque'); -- ID 9
-INSERT INTO Ataque (id_habilidade, id_tema, nome, nivel, coolDown, danoCausado) VALUES (9, 3, 'Falha de Projeto', 17, 5, 32);
+INSERT INTO Ataque (id_habilidade, id_tema, nome, nivel, coolDown, danoCausado, preco) VALUES (9, 3, 'Falha de Projeto', 17, 5, 32, 117);
 -- Habilidades de Humanidades
 INSERT INTO tipoHabilidade (tipo_habilidade) VALUES ('ataque'); -- ID 10
-INSERT INTO Ataque (id_habilidade, id_tema, nome, nivel, coolDown, danoCausado) VALUES (10, 4, 'Retórica Persuasiva', 5, 2, 14);
+INSERT INTO Ataque (id_habilidade, id_tema, nome, nivel, coolDown, danoCausado, preco) VALUES (10, 4, 'Retórica Persuasiva', 5, 2, 14, 39);
 INSERT INTO tipoHabilidade (tipo_habilidade) VALUES ('ataque'); -- ID 11
-INSERT INTO Ataque (id_habilidade, id_tema, nome, nivel, coolDown, danoCausado) VALUES (11, 4, 'Crítica Social', 9, 3, 19);
+INSERT INTO Ataque (id_habilidade, id_tema, nome, nivel, coolDown, danoCausado, preco) VALUES (11, 4, 'Crítica Social', 9, 3, 19, 64);
 INSERT INTO tipoHabilidade (tipo_habilidade) VALUES ('ataque'); -- ID 12
-INSERT INTO Ataque (id_habilidade, id_tema, nome, nivel, coolDown, danoCausado) VALUES (12, 4, 'Argumento Irrefutável', 16, 5, 28);
+INSERT INTO Ataque (id_habilidade, id_tema, nome, nivel, coolDown, danoCausado, preco) VALUES (12, 4, 'Argumento Irrefutável', 16, 5, 28, 108);
 -- Habilidades Gerais
 INSERT INTO tipoHabilidade (tipo_habilidade) VALUES ('ataque'); -- ID 13
-INSERT INTO Ataque (id_habilidade, id_tema, nome, nivel, coolDown, danoCausado) VALUES (13, 5, 'Ataque Básico', 1, 1, 8);
+INSERT INTO Ataque (id_habilidade, id_tema, nome, nivel, coolDown, danoCausado, preco) VALUES (13, 5, 'Ataque Básico', 1, 1, 8, 13);
 INSERT INTO tipoHabilidade (tipo_habilidade) VALUES ('ataque'); -- ID 14
-INSERT INTO Ataque (id_habilidade, id_tema, nome, nivel, coolDown, danoCausado) VALUES (14, 5, 'Estudo Avançado', 10, 4, 20);
+INSERT INTO Ataque (id_habilidade, id_tema, nome, nivel, coolDown, danoCausado, preco) VALUES (14, 5, 'Estudo Avançado', 10, 4, 20, 70);
 
 -- Populando 'tipoHabilidade' e 'Cura'
 INSERT INTO tipoHabilidade (tipo_habilidade) VALUES ('cura'); -- ID 15
-INSERT INTO Cura (id_habilidade, id_tema, nome, nivel, coolDown, vidaRecuperada) VALUES (15, 1, 'Revisão de Conceitos', 4, 3, 10);
+INSERT INTO Cura (id_habilidade, id_tema, nome, nivel, coolDown, vidaRecuperada, preco) VALUES (15, 1, 'Revisão de Conceitos', 4, 3, 10, 30);
 INSERT INTO tipoHabilidade (tipo_habilidade) VALUES ('cura'); -- ID 16
-INSERT INTO Cura (id_habilidade, id_tema, nome, nivel, coolDown, vidaRecuperada) VALUES (16, 2, 'Stack Overflow', 5, 3, 12);
+INSERT INTO Cura (id_habilidade, id_tema, nome, nivel, coolDown, vidaRecuperada, preco) VALUES (16, 2, 'Stack Overflow', 5, 3, 12, 37);
 INSERT INTO tipoHabilidade (tipo_habilidade) VALUES ('cura'); -- ID 17
-INSERT INTO Cura (id_habilidade, id_tema, nome, nivel, coolDown, vidaRecuperada) VALUES (17, 3, 'Reparo de Circuito', 6, 3, 11);
+INSERT INTO Cura (id_habilidade, id_tema, nome, nivel, coolDown, vidaRecuperada, preco) VALUES (17, 3, 'Reparo de Circuito', 6, 3, 11, 41);
 INSERT INTO tipoHabilidade (tipo_habilidade) VALUES ('cura'); -- ID 18
-INSERT INTO Cura (id_habilidade, id_tema, nome, nivel, coolDown, vidaRecuperada) VALUES (18, 4, 'Sessão de Terapia', 4, 3, 9);
+INSERT INTO Cura (id_habilidade, id_tema, nome, nivel, coolDown, vidaRecuperada, preco) VALUES (18, 4, 'Sessão de Terapia', 4, 3, 9, 29);
 INSERT INTO tipoHabilidade (tipo_habilidade) VALUES ('cura'); -- ID 19
-INSERT INTO Cura (id_habilidade, id_tema, nome, nivel, coolDown, vidaRecuperada) VALUES (19, 5, 'Curativo Simples', 1, 1, 5);
+INSERT INTO Cura (id_habilidade, id_tema, nome, nivel, coolDown, vidaRecuperada, preco) VALUES (19, 5, 'Curativo Simples', 1, 1, 5, 10);
 INSERT INTO tipoHabilidade (tipo_habilidade) VALUES ('cura'); -- ID 20
-INSERT INTO Cura (id_habilidade, id_tema, nome, nivel, coolDown, vidaRecuperada) VALUES (20, 5, 'Pausa para o Café', 7, 2, 15);
+INSERT INTO Cura (id_habilidade, id_tema, nome, nivel, coolDown, vidaRecuperada, preco) VALUES (20, 5, 'Pausa para o Café', 7, 2, 15, 50);
 
 -- Populando 'tipoHabilidade' e 'Defesa'
 INSERT INTO tipoHabilidade (tipo_habilidade) VALUES ('defesa'); -- ID 21
-INSERT INTO Defesa (id_habilidade, id_tema, nome, nivel, coolDown, danoMitigado) VALUES (21, 1, 'Defesa Numérica', 7, 2, 10);
+INSERT INTO Defesa (id_habilidade, id_tema, nome, nivel, coolDown, danoMitigado, preco) VALUES (21, 1, 'Defesa Numérica', 7, 2, 10, 45);
 INSERT INTO tipoHabilidade (tipo_habilidade) VALUES ('defesa'); -- ID 22
-INSERT INTO Defesa (id_habilidade, id_tema, nome, nivel, coolDown, danoMitigado) VALUES (22, 2, 'Firewall Pessoal', 9, 2, 13);
+INSERT INTO Defesa (id_habilidade, id_tema, nome, nivel, coolDown, danoMitigado, preco) VALUES (22, 2, 'Firewall Pessoal', 9, 2, 13, 58);
 INSERT INTO tipoHabilidade (tipo_habilidade) VALUES ('defesa'); -- ID 23
-INSERT INTO Defesa (id_habilidade, id_tema, nome, nivel, coolDown, danoMitigado) VALUES (23, 3, 'Material Resistente', 8, 2, 11);
+INSERT INTO Defesa (id_habilidade, id_tema, nome, nivel, coolDown, danoMitigado, preco) VALUES (23, 3, 'Material Resistente', 8, 2, 11, 51);
 INSERT INTO tipoHabilidade (tipo_habilidade) VALUES ('defesa'); -- ID 24
-INSERT INTO Defesa (id_habilidade, id_tema, nome, nivel, coolDown, danoMitigado) VALUES (24, 4, 'Escudo Cultural', 7, 2, 9);
+INSERT INTO Defesa (id_habilidade, id_tema, nome, nivel, coolDown, danoMitigado, preco) VALUES (24, 4, 'Escudo Cultural', 7, 2, 9, 44);
 INSERT INTO tipoHabilidade (tipo_habilidade) VALUES ('defesa'); -- ID 25
-INSERT INTO Defesa (id_habilidade, id_tema, nome, nivel, coolDown, danoMitigado) VALUES (25, 5, 'Corrida Rápida', 2, 1, 7);
+INSERT INTO Defesa (id_habilidade, id_tema, nome, nivel, coolDown, danoMitigado, preco) VALUES (25, 5, 'Corrida Rápida', 2, 1, 7, 17);
 INSERT INTO tipoHabilidade (tipo_habilidade) VALUES ('defesa'); -- ID 26
-INSERT INTO Defesa (id_habilidade, id_tema, nome, nivel, coolDown, danoMitigado) VALUES (26, 5, 'Concentração Total', 11, 3, 14);
+INSERT INTO Defesa (id_habilidade, id_tema, nome, nivel, coolDown, danoMitigado, preco) VALUES (26, 5, 'Concentração Total', 11, 3, 14, 69);
 
 
 -- Populando 'tipo_item'

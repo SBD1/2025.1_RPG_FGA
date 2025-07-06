@@ -243,6 +243,7 @@ CREATE TABLE Ataque (
     nivel INT NOT NULL,
     coolDown INT NOT NULL,
     danoCausado INT NOT NULL,
+    preco INT NOT NULL,  -- <<-- COLUNA ADICIONADA
     CONSTRAINT fk_habilidade FOREIGN KEY (id_habilidade) REFERENCES tipoHabilidade(id_habilidade),
     CONSTRAINT fk_id_tema FOREIGN KEY (id_tema) REFERENCES tema(id_tema)
 );
@@ -255,6 +256,7 @@ CREATE TABLE Cura (
     nivel INT NOT NULL,
     coolDown INT NOT NULL,
     vidaRecuperada INT NOT NULL,
+    preco INT NOT NULL,  -- <<-- COLUNA ADICIONADA
     CONSTRAINT fk_id_habilidade FOREIGN KEY (id_habilidade) REFERENCES tipoHabilidade(id_habilidade),
     CONSTRAINT fk_id_tema FOREIGN KEY (id_tema) REFERENCES tema(id_tema)
 );
@@ -267,6 +269,7 @@ CREATE TABLE Defesa (
     nivel INT NOT NULL,
     coolDown INT NOT NULL,
     danoMitigado INT NOT NULL,
+    preco INT NOT NULL,  -- <<-- COLUNA ADICIONADA
     CONSTRAINT fk_id_habilidade FOREIGN KEY (id_habilidade) REFERENCES tipoHabilidade(id_habilidade),
     CONSTRAINT fk_id_tema FOREIGN KEY (id_tema) REFERENCES tema(id_tema)
 );

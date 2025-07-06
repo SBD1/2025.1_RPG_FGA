@@ -5,6 +5,7 @@ from jogo.map.sala import *
 from jogo.map.setor import *
 from jogo.map.dungeon import *
 from jogo.db import clear_screen
+from jogo.map.loja import acessar_loja  # <<-- IMPORTAR AQUI
 
 def barra_estresse(estresse, max_estresse=100):
     blocos = int((estresse / max_estresse) * 10)
@@ -24,7 +25,8 @@ def menu_jogador(jogador):
         print("[3] Mudar de setor")
         print("[4] Explorar sala atual")
         print("[5] Ver afinidades")
-        print("[6] Sair para o menu principal")
+        print("[6] Acessar Loja")  # <<-- NOVA OPÇÃO
+        print("[7] Sair para o menu principal") # <<-- OPÇÃO ANTIGA AGORA É 7
 
         opcao = input("\nEscolha uma opção: ")
 
@@ -73,7 +75,12 @@ def menu_jogador(jogador):
             mostrar_menu_afinidade(jogador)
             input("\nPressione Enter para continuar.")
 
-        elif opcao == '6':
+        elif opcao == '6': # <<-- NOVA CONDIÇÃO
+            clear_screen()
+            acessar_loja(jogador)
+            # input("\nPressione Enter para voltar ao menu.") # Removido para evitar duplo "enter"
+
+        elif opcao == '7': # <<-- CONDIÇÃO ANTIGA AGORA É 7
             print("↩️ Retornando ao menu principal.")
             break
 
