@@ -3,45 +3,8 @@ from jogo.player.afinidade import *
 from jogo.player.inventario import *
 from jogo.map.sala import *
 from jogo.map.setor import *
-from jogo.map.dungeon import *
+# Não precisamos mais importar dungeon e loja aqui
 from jogo.db import clear_screen
-from jogo.map.loja import acessar_loja  # <<-- IMPORTAR AQUI
-from jogo.player.estresse import *
-
-def carregar_estudante(id_estudante):
-    conn = get_db_connection()
-    if not conn:
-        print("Não foi possível conectar ao banco.")
-        return None
-    try:
-        cur = conn.cursor()
-        cur.execute("""
-            SELECT e.nome, e.vida, e.estresse, e.total_dinheiro, s.nome AS nome_sala, e.id_sala
-            FROM estudante e
-            JOIN sala_comum s ON e.id_sala = s.id_sala
-            WHERE e.id_estudante = %s
-        """, (id_estudante,))
-        resultado = cur.fetchone()
-        if not resultado:
-            print("Estudante não encontrado.")
-            return None
-        
-        nome, vida, estresse, total_dinheiro, nome_sala, id_sala = resultado
-        return {
-            "id": id_estudante,
-            "nome": nome.strip(),
-            "vida": vida,
-            "estresse": estresse,
-            "total_dinheiro": total_dinheiro,
-            "nome_sala": nome_sala.strip(),
-            "id_sala": id_sala
-        }
-    except Exception as e:
-        print("Erro ao carregar dados do estudante:", e)
-        return None
-    finally:
-        cur.close()
-        conn.close()
 
 def barra_estresse(estresse, max_estresse=100):
     blocos = int((estresse / max_estresse) * 10)
@@ -49,13 +12,9 @@ def barra_estresse(estresse, max_estresse=100):
     vazios = 10 - blocos
     return "🟧" * blocos + "⬛" * vazios
 
+# ======== FUNÇÃO MODIFICADA E SIMPLIFICADA ========
 def menu_jogador(jogador):
     while True:
-
-        jogador.update(carregar_estudante(jogador['id']))
-        verifica_estresse(jogador)
-        input("\nPressione Enter para voltar ao menu.")
-
         clear_screen()
         print("\n========= MENU DO JOGADOR =========")
         print(f"🎒 {jogador['nome']} | Estresse: [{barra_estresse(jogador['estresse'])}] {jogador['estresse']}/100")
@@ -64,10 +23,9 @@ def menu_jogador(jogador):
         print("\n[1] Ver catálogo de habilidades")
         print("[2] Mudar de sala")
         print("[3] Mudar de setor")
-        print("[4] Explorar sala atual")
+        print("[4] Explorar sala atual") # <<-- Ação principal
         print("[5] Ver afinidades")
-        print("[6] Acessar Loja")  # <<-- NOVA OPÇÃO
-        print("[7] Sair para o menu principal") # <<-- OPÇÃO ANTIGA AGORA É 7
+        print("[6] Sair para o menu principal") # <<-- Menu mais enxuto
 
         opcao = input("\nEscolha uma opção: ")
 
@@ -107,21 +65,16 @@ def menu_jogador(jogador):
             input("\nPressione Enter para continuar.")
 
         elif opcao == '4':
-            clear_screen()
+            # Agora esta função lida com a lógica de loja/dungeon
             explorar_sala(jogador)
-            input("\nPressione Enter para continuar.")
+            # A função explorar_sala já pede um input, então não é necessário aqui.
 
         elif opcao == '5':
             clear_screen()
             mostrar_menu_afinidade(jogador)
             input("\nPressione Enter para continuar.")
 
-        elif opcao == '6': # <<-- NOVA CONDIÇÃO
-            clear_screen()
-            acessar_loja(jogador)
-            # input("\nPressione Enter para voltar ao menu.") # Removido para evitar duplo "enter"
-
-        elif opcao == '7': # <<-- CONDIÇÃO ANTIGA AGORA É 7
+        elif opcao == '6':
             print("↩️ Retornando ao menu principal.")
             break
 
