@@ -1,4 +1,5 @@
 from jogo.player.habilidades import *
+from jogo.player.afinidade import *
 from jogo.player.inventario import *
 from jogo.map.sala import *
 from jogo.map.setor import *
@@ -21,8 +22,9 @@ def menu_jogador(jogador):
         print("\n[1] Ver catálogo de habilidades")
         print("[2] Mudar de sala")
         print("[3] Mudar de setor")
-        print("[4] Explorar (em desenvolvimento)")
-        print("[5] Sair para o menu principal")
+        print("[4] Explorar sala atual")
+        print("[5] Ver afinidades")
+        print("[6] Sair para o menu principal")
 
         opcao = input("\nEscolha uma opção: ")
 
@@ -67,6 +69,11 @@ def menu_jogador(jogador):
             input("\nPressione Enter para continuar.")
 
         elif opcao == '5':
+            clear_screen()
+            mostrar_menu_afinidade(jogador)
+            input("\nPressione Enter para continuar.")
+
+        elif opcao == '6':
             print("↩️ Retornando ao menu principal.")
             break
 
