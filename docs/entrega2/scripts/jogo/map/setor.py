@@ -58,10 +58,10 @@ def mudar_setor_estudante(id_estudante):
         nova_sala_id, nova_sala_nome = resultado
 
         # Atualiza estudante
-        cur.execute("UPDATE estudante SET id_sala = %s WHERE id_estudante = %s", (nova_sala_id, id_estudante))
+        cur.execute("UPDATE estudante SET id_sala = %s, estresse = estresse + 1 WHERE id_estudante = %s", (nova_sala_id, id_estudante))
         conn.commit()
 
-        print(f"\n✅ Estudante movido para a sala '{nova_sala_nome}' no setor {novo_setor_id}.")
+        print(f"\n✅ Estudante movido para a sala '{nova_sala_nome.strip()}' no setor {novo_setor_id}.")
         return nova_sala_nome  # retorna nome da nova sala
 
     except Exception as e:
