@@ -30,7 +30,7 @@ def carregar_dados_estudante(id_estudante):
     try:
         cur = conn.cursor()
         cur.execute("""
-            SELECT e.nome, e.vida, e.estresse, e.total_dinheiro, s.nome as nome_sala
+            SELECT e.nome, e.vida, e.estresse, e.total_dinheiro, s.nome AS nome_sala, e.id_sala
             FROM estudante e
             JOIN sala_comum s ON e.id_sala = s.id_sala
             WHERE e.id_estudante = %s
@@ -40,14 +40,15 @@ def carregar_dados_estudante(id_estudante):
             print("Estudante não encontrado.")
             return None
         
-        nome, vida, estresse, total_dinheiro, nome_sala = resultado
+        nome, vida, estresse, total_dinheiro, nome_sala, id_sala = resultado
         return {
             "id": id_estudante,
             "nome": nome.strip(),
             "vida": vida,
             "estresse": estresse,
             "total_dinheiro": total_dinheiro,
-            "nome_sala": nome_sala.strip()
+            "nome_sala": nome_sala.strip(),
+            "id_sala": id_sala
         }
     except Exception as e:
         print("Erro ao carregar dados do estudante:", e)
@@ -55,6 +56,7 @@ def carregar_dados_estudante(id_estudante):
     finally:
         cur.close()
         conn.close()
+    
 
 def menu_principal():
     while True:
