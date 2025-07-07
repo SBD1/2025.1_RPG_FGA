@@ -6,6 +6,7 @@ from jogo.combate.combate import menu, escolher_habilidade, atualizar_cooldowns
 import os
 import sys
 from jogo.db import *
+from jogo.monster.monster import *
 
 def limpar_tela():
     try:

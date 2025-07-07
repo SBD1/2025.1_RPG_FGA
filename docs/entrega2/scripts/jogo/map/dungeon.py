@@ -99,9 +99,9 @@ def tem_dungeon_interativo(jogador):
                 print("⚠️ Nenhum boss encontrado para este tema.")
             print("="*50)
 
-            # Mostra monstros simples da dungeon
+            # Mostra monstros simples da dungeon (com id_instanciaCriatura)
             cur.execute("""
-                SELECT m.id_criatura, m.nome, m.descricao, m.nivel, m.vida_max,
+                SELECT ic.id_instanciaCriatura, m.id_criatura, m.nome, m.descricao, m.nivel, m.vida_max,
                        ic.vida_atual, m.qtd_moedas, m.xp_tema
                 FROM instancia_de_criatura ic
                 JOIN monstro_simples m ON ic.id_criatura = m.id_criatura
@@ -113,10 +113,10 @@ def tem_dungeon_interativo(jogador):
             if not monstros:
                 print("Nenhum monstro simples encontrado.")
             else:
-                print(f"{'ID':<4} {'Nome':<25} {'Nível':<6} {'Vida':<10} {'XP':<5} {'Moedas':<7}")
+                print(f"{'Nº':<4} {'Nome':<25} {'Nível':<6} {'Vida':<10} {'XP':<5} {'Moedas':<7}")
                 print("-"*60)
                 for idx, m in enumerate(monstros, start=1):
-                    id_c, nome, desc, nivel_m, vida_max_m, vida_atual, moedas, xp = m
+                    id_inst_criatura, id_c, nome, desc, nivel_m, vida_max_m, vida_atual, moedas, xp = m
                     vida_str = f"{vida_atual}/{vida_max_m}"
                     print(f"{idx:<4} {nome.strip():<25} {nivel_m:<6} {vida_str:<10} {xp:<5} {moedas:<7}")
 
@@ -128,21 +128,21 @@ def tem_dungeon_interativo(jogador):
                         print("Voltando...")
                     elif 1 <= escolha_monstro <= len(monstros):
                         monstro = monstros[escolha_monstro - 1]
-                        print(f"\n⚔️ Você escolheu enfrentar {monstro[1].strip()}!")
+                        id_inst_criatura = monstro[0]
+                        print(f"\n⚔️ Você escolheu enfrentar {monstro[2].strip()}!")
                         input("\nPressione Enter para iniciar o combate...")
 
-                        # Aqui inicia o combate, passando id do jogador e id do monstro
-                        resultado, vida_restante = iniciar_combate(id_estudante, monstro[0])
+                        # Passa o id_instanciaCriatura para o combate
+                        resultado, vida_restante = iniciar_combate(id_estudante, id_inst_criatura)
 
                         if resultado == 'vitoria':
                             print("🏆 Você venceu o monstro!")
-                            # Aqui você pode adicionar lógica para loot, xp, atualização de vida, etc.
+                            # Aqui você pode chamar a função recompensa
+                            recompensa(id_inst_criatura, id_estudante)
                         elif resultado == 'derrota':
                             print("💀 Você foi derrotado pelo monstro!")
-                            # Lógica de derrota
                         elif resultado == 'fugiu':
                             print("🏃 Você fugiu do combate!")
-                            # Lógica de fuga
 
                         input("\nPressione Enter para continuar.")
                     else:
@@ -163,3 +163,4 @@ def tem_dungeon_interativo(jogador):
             cur.close()
         if conn:
             conn.close()
+
