@@ -68,6 +68,7 @@ De acordo com a *UC Merced Library*,
 | nivel | Nível da habilidade | INT |  | - Not Null|      
 | coolDown | Tempo de recarga | INT |  | - Not Null|    
 | danoCausado       | Indica o dano causado pelo ataque        | INT |  | - Not Null|
+|preco| Custo do ataque|INT||- Not Null|
 
 
 <!-- ludmila alterou -->
@@ -83,6 +84,8 @@ De acordo com a *UC Merced Library*,
 | nivel | Nível da habilidade | INT |  | - Not Null|      
 | coolDown | Tempo de recarga | INT |  | - Not Null|   
 | vidaRecuperada | Indica o tanto de vida recuperada possibilitado pela habilidade de cura | INT          |         | - Not Null |
+|preco| Custo cura|INT||- Not Null|
+
 
 <!-- ludmila alterou -->
 ## Entidade: defesa
@@ -97,6 +100,7 @@ De acordo com a *UC Merced Library*,
 | nivel | Nível da habilidade | INT |  | - Not Null|      
 | coolDown | Tempo de recarga | INT |  | - Not Null|   
 | danoMitigado | Indica o tanto de dano mitigado possibilitado pela defesa | INT          |         | - Not Null    
+|preco| Custo do defesa|INT||- Not Null|
 
 <!-- ludmila alterou -->
 ## Entidade: setor
@@ -244,6 +248,7 @@ De acordo com a *UC Merced Library*,
 |id_item|Identificador do item que foi instânciado|INT||- PK<br>- FK<br>- Not Null<br>|
 |id_sala|Identificador da sala|INT||- FK<br>|
 |id_estudante|Identificador do estudante|INT||- FK<br>|
+|equipado|Item equipado|INT|||
 
 
 <!-- isaque alterou -->
