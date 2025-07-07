@@ -1,7 +1,8 @@
 import sys
 from jogo.player.menu import menu_jogador
 from jogo.db import get_db_connection, clear_screen
-from jogo.reset import reiniciar_banco_de_dados # <<-- IMPORTAR AQUI
+from jogo.reset import reiniciar_banco_de_dados
+from jogo.debug_menu import menu_debug_queries # <<-- IMPORTAR AQUI
 
 def listar_estudantes_disponiveis():
     conn = get_db_connection()
@@ -12,14 +13,13 @@ def listar_estudantes_disponiveis():
         cur = conn.cursor()
         cur.execute("SELECT id_estudante, nome FROM estudante ORDER BY id_estudante")
         estudantes = cur.fetchall()
-        # Faz strip nos nomes
         estudantes = [(id_, nome.strip()) for id_, nome in estudantes]
         return estudantes
     except Exception as e:
         print("Erro ao buscar estudantes:", e)
         return []
     finally:
-        if conn: # Adicionado para segurança
+        if conn:
             cur.close()
             conn.close()
 
@@ -55,7 +55,7 @@ def carregar_dados_estudante(id_estudante):
         print("Erro ao carregar dados do estudante:", e)
         return None
     finally:
-        if conn: # Adicionado para segurança
+        if conn:
             cur.close()
             conn.close()
     
@@ -64,10 +64,11 @@ def menu_principal():
     while True:
         clear_screen()
         print("\n===== RPG FGA - MENU INICIAL =====")
-        print("1. Selecionar Personagem")
-        print("2. Créditos")
-        print("3. Reiniciar Jogo (CUIDADO!)") # <<-- NOVA OPÇÃO
-        print("4. Sair do jogo")             # <<-- OPÇÃO ANTIGA AGORA É 4
+        print("[1] Selecionar Personagem")
+        print("[2] Créditos")
+        print("[3] Reiniciar Jogo (CUIDADO!)")
+        print("[4] Menu de Debug") # <<-- NOVA OPÇÃO
+        print("[5] Sair do jogo")  # <<-- OPÇÃO ANTIGA AGORA É 5
         opcao = input("\nEscolha uma opção: ")
 
         if opcao == "1":
@@ -93,12 +94,11 @@ def menu_principal():
             print("\n📜 Créditos: Jogo desenvolvido por Rafael e IA da OpenAI (ChatGPT) 😎")
             input("\nPressione Enter para voltar ao menu.")
 
-        elif opcao == "3": # <<-- NOVA CONDIÇÃO
+        elif opcao == "3":
             clear_screen()
             print("🚨 ATENÇÃO! 🚨")
-            print("Esta ação apagará TODOS os dados salvos (personagens, itens, progresso) e recomeçará o jogo do zero.")
-            print("Esta ação é irreversível.")
-            confirmacao = input("Digite 'CONFIRMAR' para continuar ou qualquer outra coisa para cancelar: ")
+            print("Esta ação apagará TODOS os dados salvos e recomeçará o jogo do zero.")
+            confirmacao = input("Digite 'CONFIRMAR' para continuar: ")
             
             if confirmacao == "CONFIRMAR":
                 reiniciar_banco_de_dados()
@@ -107,7 +107,10 @@ def menu_principal():
             
             input("\nPressione Enter para voltar ao menu principal.")
 
-        elif opcao == "4": # <<-- OPÇÃO ANTIGA AGORA É 4
+        elif opcao == "4": # <<-- NOVA CONDIÇÃO
+            menu_debug_queries()
+
+        elif opcao == "5": # <<-- OPÇÃO ANTIGA AGORA É 5
             print("\n👋 Saindo do jogo...")
             sys.exit()
         else:
