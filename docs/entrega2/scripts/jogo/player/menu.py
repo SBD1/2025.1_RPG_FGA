@@ -66,7 +66,8 @@ def menu_jogador(jogador):
         print("[3] Mudar de setor")
         print("[4] Explorar sala atual") # <<-- Ação principal
         print("[5] Ver afinidades")
-        print("[6] Sair para o menu principal") # <<-- Menu mais enxuto
+        print("[6] Ver inventário")
+        print("[7] Sair para o menu principal")
 
         opcao = input("\nEscolha uma opção: ")
 
@@ -116,6 +117,12 @@ def menu_jogador(jogador):
             input("\nPressione Enter para continuar.")
 
         elif opcao == '6':
+            clear_screen()
+            menu_inventario(jogador)
+
+            input("\nPressione Enter para continuar.")
+
+        elif opcao == '7':
             print("↩️ Retornando ao menu principal.")
             break
 

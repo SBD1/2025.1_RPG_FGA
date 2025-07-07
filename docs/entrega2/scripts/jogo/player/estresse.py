@@ -59,8 +59,6 @@ def penalidade_estresse(jogador):
 
     _persistir_estudante(jogador["id"], novo_total, 0)
 
-    
-
 
 def _persistir_estudante(id_estudante, novo_dinheiro, novo_estresse):
 

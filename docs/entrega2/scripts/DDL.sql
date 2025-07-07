@@ -170,7 +170,6 @@ CREATE TABLE equipavel (
     descricao CHAR(255) NOT NULL,
     efeito INT NOT NULL,
     preco INT NOT NULL,
-    equipado BOOLEAN NOT NULL,
     CONSTRAINT fk_id_item FOREIGN KEY (id_item) REFERENCES tipo_item(id_item)
 );
 
@@ -273,3 +272,34 @@ CREATE TABLE Defesa (
     CONSTRAINT fk_id_habilidade FOREIGN KEY (id_habilidade) REFERENCES tipoHabilidade(id_habilidade),
     CONSTRAINT fk_id_tema FOREIGN KEY (id_tema) REFERENCES tema(id_tema)
 );
+
+ALTER TABLE instancia_de_item
+ADD COLUMN equipado BOOLEAN DEFAULT FALSE;
+
+CREATE OR REPLACE FUNCTION atualiza_equipado_apos_tipoitem_update()
+RETURNS TRIGGER AS $$
+BEGIN
+    IF NEW.item_tipo <> OLD.item_tipo THEN
+        -- Se mudou de Equipável para outro tipo, seta equipado para NULL
+        IF OLD.item_tipo = 'Equipável' AND NEW.item_tipo <> 'Equipável' THEN
+            UPDATE instancia_de_item
+            SET equipado = NULL
+            WHERE id_item = NEW.id_item;
+        
+        -- Se mudou de outro tipo para Equipável, seta equipado para FALSE
+        ELSIF OLD.item_tipo <> 'Equipável' AND NEW.item_tipo = 'Equipável' THEN
+            UPDATE instancia_de_item
+            SET equipado = FALSE
+            WHERE id_item = NEW.id_item;
+        END IF;
+    END IF;
+
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Cria o trigger para chamar a função após UPDATE no tipo_item
+CREATE TRIGGER trg_atualiza_equipado_tipoitem
+AFTER UPDATE OF item_tipo ON tipo_item
+FOR EACH ROW
+EXECUTE FUNCTION atualiza_equipado_apos_tipoitem_update();
