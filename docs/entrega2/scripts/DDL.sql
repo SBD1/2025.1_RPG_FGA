@@ -34,7 +34,7 @@ CREATE TABLE tipo_criatura (
     
 );
 
--- lud alterou
+
 CREATE TABLE campus (
     id_campus INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     nome CHAR(100) NOT NULL,
@@ -116,7 +116,7 @@ CREATE TABLE reliquia (
     CONSTRAINT fk_id_reliquia FOREIGN KEY (id_reliquia) REFERENCES tipo_item(id_item)
 );
 
--- isaque já alterou
+
 CREATE TABLE boss (
     id_criatura INT NOT NULL PRIMARY KEY,
     id_reliquia INT NOT NULL,
@@ -130,7 +130,7 @@ CREATE TABLE boss (
 );
 
 
--- isaque já alterou
+
 CREATE TABLE monstro_simples (
     id_criatura INT NOT NULL PRIMARY KEY,
     nome CHAR(100) NOT NULL,
@@ -209,10 +209,6 @@ CREATE TABLE habilidade_estudante (
     CONSTRAINT fk_habilidade FOREIGN KEY (id_habilidade) REFERENCES tipoHabilidade(id_habilidade)
 );
 
--- CREATE TABLE loja (
---     id_loja INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
---     nome CHAR(100) NOT NULL
--- );
 
 CREATE TABLE habilidade_loja (
     id_loja INT NOT NULL,

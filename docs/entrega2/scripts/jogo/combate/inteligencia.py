@@ -15,6 +15,7 @@ def escolher_acao_monstro(habilidades, vida_monstro, vida_jogador, cooldowns, ul
         habilidades_disponiveis.extend(disp)
 
     if not habilidades_disponiveis:
+        print(habilidades_disponiveis)
         # Sem habilidade disponível
         return 'passar', (None, None)
 

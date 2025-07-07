@@ -11,7 +11,7 @@
 --                            | Descricao: Refatoração para novo DDL            |      --
 -- --------------------------------------------------------------------------------------
 
--- Populando tabela 'tema' (Nenhuma alteração necessária)
+-- Populando tabela 'tema' 
 INSERT INTO tema (nome) VALUES
 ('Matemática'),
 ('Programação'),
@@ -124,15 +124,15 @@ INSERT INTO monstro_simples (id_criatura, nome, descricao, nivel, vida_max, xp_t
 
 -- Populando 'tipo_criatura' e 'boss'
 INSERT INTO tipo_criatura (tipo_criatura) VALUES ('Boss'); -- ID 11
-INSERT INTO boss (id_criatura, nome, descricao, nivel, vida_max, id_reliquia) VALUES (11, 'Professor Álgebra', 'Um mestre implacável da matemática abstrata.', 20, 200, 1);
+INSERT INTO boss (id_criatura, nome, descricao, nivel, vida_max, id_reliquia) VALUES (11, 'Chicão', 'Gêmeo maligno que nega todas as matriculas.', 5, 200, 1);
 INSERT INTO tipo_criatura (tipo_criatura) VALUES ('Boss'); -- ID 12
-INSERT INTO boss (id_criatura, nome, descricao, nivel, vida_max, id_reliquia) VALUES (12, 'O Último Compilador', 'O guardião supremo da lógica de programação.', 20, 220, 2);
+INSERT INTO boss (id_criatura, nome, descricao, nivel, vida_max, id_reliquia) VALUES (12, 'Frango assado do RU', 'Vai te dar uma intoxicação alimentar, pois está sempre cru.', 10, 250, 2);
 INSERT INTO tipo_criatura (tipo_criatura) VALUES ('Boss'); -- ID 13
-INSERT INTO boss (id_criatura, nome, descricao, nivel, vida_max, id_reliquia) VALUES (13, 'A Burocracia Impiedosa', 'Um sistema complexo que desafia a paciência de todos.', 20, 210, 4);
+INSERT INTO boss (id_criatura, nome, descricao, nivel, vida_max, id_reliquia) VALUES (13, 'Superlotação', 'Esse curso não precisa de mais uma aluno...', 15, 260, 4);
 INSERT INTO tipo_criatura (tipo_criatura) VALUES ('Boss'); -- ID 14
-INSERT INTO boss (id_criatura, nome, descricao, nivel, vida_max, id_reliquia) VALUES (14, 'O Gigante de Concreto', 'Uma estrutura colossal que testa a engenharia.', 20, 230, 3);
+INSERT INTO boss (id_criatura, nome, descricao, nivel, vida_max, id_reliquia) VALUES (14, 'Thinkpad do mocap', 'É um ser ancestral que vai travar quando vc menos esperar.', 20, 230, 3);
 INSERT INTO tipo_criatura (tipo_criatura) VALUES ('Boss'); -- ID 15
-INSERT INTO boss (id_criatura, nome, descricao, nivel, vida_max, id_reliquia) VALUES (15, 'A Crise Existencial', 'A dúvida que assola todo estudante na reta final.', 20, 190, 5);
+INSERT INTO boss (id_criatura, nome, descricao, nivel, vida_max, id_reliquia) VALUES (15, 'Mauricio me dá SS', 'Isso mesmo, esse boss sempre dá SS aos alunos, em troca da sua alma, aceitas ?.', 25, 190, 5);
 
 
 -- Populando tabela 'campus' (Nenhuma alteração necessária)
@@ -336,11 +336,11 @@ INSERT INTO habilidade_criatura (id_criatura, id_habilidade) VALUES
 ((SELECT id_criatura FROM monstro_simples WHERE nome = 'Plágio Descarado'), (SELECT id_habilidade FROM Ataque WHERE nome = 'Retórica Persuasiva')),
 ((SELECT id_criatura FROM monstro_simples WHERE nome = 'Plágio Descarado'), (SELECT id_habilidade FROM Ataque WHERE nome = 'Crítica Social')),
 -- Bosses
-((SELECT id_criatura FROM boss WHERE nome = 'Professor Álgebra'), (SELECT id_habilidade FROM Ataque WHERE nome = 'Cálculo Integral')),
-((SELECT id_criatura FROM boss WHERE nome = 'O Último Compilador'), (SELECT id_habilidade FROM Ataque WHERE nome = 'Zero Division')),
-((SELECT id_criatura FROM boss WHERE nome = 'A Burocracia Impiedosa'), (SELECT id_habilidade FROM Ataque WHERE nome = 'Argumento Irrefutável')),
-((SELECT id_criatura FROM boss WHERE nome = 'O Gigante de Concreto'), (SELECT id_habilidade FROM Ataque WHERE nome = 'Falha de Projeto')),
-((SELECT id_criatura FROM boss WHERE nome = 'A Crise Existencial'), (SELECT id_habilidade FROM Ataque WHERE nome = 'Estudo Avançado'));
+((SELECT id_criatura FROM boss WHERE nome = 'Chicão'), (SELECT id_habilidade FROM Ataque WHERE nome = 'Cálculo Integral')),
+((SELECT id_criatura FROM boss WHERE nome = 'Frango assado do RU'), (SELECT id_habilidade FROM Ataque WHERE nome = 'Zero Division')),
+((SELECT id_criatura FROM boss WHERE nome = 'Superlotação'), (SELECT id_habilidade FROM Ataque WHERE nome = 'Argumento Irrefutável')),
+((SELECT id_criatura FROM boss WHERE nome = 'Thinkpad do mocap'), (SELECT id_habilidade FROM Ataque WHERE nome = 'Falha de Projeto')),
+((SELECT id_criatura FROM boss WHERE nome = 'Mauricio me dá SS'), (SELECT id_habilidade FROM Ataque WHERE nome = 'Estudo Avançado'));
 
 
 -- Populando tabela 'habilidade_estudante'

@@ -14,6 +14,57 @@ def barra_progresso(valor_atual, valor_maximo, tamanho=10):
     blocos_vazios = tamanho - blocos_cheios
     return '🟩' * blocos_cheios + '⬛' * blocos_vazios
 
+def verificar_level_up(id_estudante, id_tema):
+    """
+    Verifica se o XP atual ultrapassa o XP necessário para o level up.
+    Caso sim, desconta o XP necessário e incrementa o nível,
+    repete até não ser mais possível upar.
+    Usa fórmula mais justa para XP máximo: 50 * nível^1.5 arredondado.
+    """
+    try:
+        conn = get_db_connection()
+        with conn.cursor() as cur:
+            # Busca xp e nivel atuais
+            cur.execute("""
+                SELECT xp_atual, nivel_atual
+                FROM afinidade
+                WHERE id_estudante = %s AND id_tema = %s
+                FOR UPDATE
+            """, (id_estudante, id_tema))
+            res = cur.fetchone()
+            if not res:
+                return  # Nada a fazer se não existe afinidade
+
+            xp_atual, nivel = res
+            mudou = False
+
+            # Função para calcular xp max (fórmula justa)
+            def xp_max(n):
+                return round(50 * (n ** 1.5))
+
+            while xp_atual >= xp_max(nivel):
+                xp_atual -= xp_max(nivel)
+                nivel += 1
+                mudou = True
+                if nivel > 20:  # limite maximo de nível
+                    nivel = 20
+                    xp_atual = xp_max(nivel)
+                    break
+
+            if mudou:
+                cur.execute("""
+                    UPDATE afinidade
+                    SET xp_atual = %s, nivel_atual = %s
+                    WHERE id_estudante = %s AND id_tema = %s
+                """, (xp_atual, nivel, id_estudante, id_tema))
+                conn.commit()
+
+    except Exception as e:
+        print(f"Erro ao verificar level up: {e}")
+    finally:
+        if conn:
+            conn.close()
+
 def carregar_afinidades_estudante(id_estudante):
     query = """
         SELECT a.id_tema, t.nome AS nome_tema, a.nivel_atual, a.xp_atual
@@ -34,7 +85,19 @@ def carregar_afinidades_estudante(id_estudante):
                 nome_tema = row[1]
                 nivel = row[2]
                 xp_atual = row[3]
-                xp_max = nivel * 100  # regra provisória
+                # Calcula XP max pela fórmula justa
+                xp_max = round(50 * (nivel ** 1.5))
+                # Verifica level up automático (sincroniza com o banco)
+                verificar_level_up(id_estudante, id_tema)
+
+                # Após level up, recarrega os valores atualizados:
+                cur.execute("""
+                    SELECT nivel_atual, xp_atual FROM afinidade
+                    WHERE id_estudante = %s AND id_tema = %s
+                """, (id_estudante, id_tema))
+                nivel, xp_atual = cur.fetchone()
+                xp_max = round(50 * (nivel ** 1.5))
+
                 afinidades.append({
                     'id_tema': id_tema,
                     'nome_tema': nome_tema,
@@ -49,6 +112,69 @@ def carregar_afinidades_estudante(id_estudante):
             conn.close()
     return afinidades
 
+def cheat_menu(id_estudante):
+    """
+    Menu cheat para alterar nível da afinidade manualmente (nível 1 a 20), resetando XP.
+    """
+    afinidades = carregar_afinidades_estudante(id_estudante)
+    if not afinidades:
+        print("Nenhuma afinidade para alterar.")
+        input("Pressione Enter para continuar...")
+        return
+
+    print("\n=== Cheat Menu: Alterar Nível de Afinidade ===")
+    for idx, a in enumerate(afinidades, 1):
+        emoji = EMOJIS_TEMA_ID.get(a['id_tema'], '❓')
+        print(f"[{idx}] {emoji} {a['nome_tema']} (Nível atual: {a['nivel']})")
+    print("[0] Cancelar")
+
+    escolha = input("Escolha a afinidade para alterar o nível: ").strip()
+    if not escolha.isdigit():
+        print("Entrada inválida.")
+        input("Pressione Enter para continuar...")
+        return
+
+    escolha = int(escolha)
+    if escolha == 0:
+        return
+    if escolha < 1 or escolha > len(afinidades):
+        print("Opção inválida.")
+        input("Pressione Enter para continuar...")
+        return
+
+    afinidade_selecionada = afinidades[escolha - 1]
+
+    nivel_novo = input("Digite o novo nível (1 a 20): ").strip()
+    if not nivel_novo.isdigit():
+        print("Nível inválido.")
+        input("Pressione Enter para continuar...")
+        return
+
+    nivel_novo = int(nivel_novo)
+    if nivel_novo < 1 or nivel_novo > 20:
+        print("Nível fora do intervalo permitido.")
+        input("Pressione Enter para continuar...")
+        return
+
+    # Atualiza no banco: nivel novo, xp zero
+    try:
+        conn = get_db_connection()
+        with conn.cursor() as cur:
+            cur.execute("""
+                UPDATE afinidade
+                SET nivel_atual = %s, xp_atual = 0
+                WHERE id_estudante = %s AND id_tema = %s
+            """, (nivel_novo, id_estudante, afinidade_selecionada['id_tema']))
+            conn.commit()
+        print(f"Nível da afinidade '{afinidade_selecionada['nome_tema']}' atualizado para {nivel_novo} e XP zerado.")
+    except Exception as e:
+        print(f"Erro ao atualizar nível: {e}")
+    finally:
+        if conn:
+            conn.close()
+
+    input("Pressione Enter para continuar...")
+
 def mostrar_menu_afinidade(jogador):
     while True:
         clear_screen()
@@ -57,7 +183,6 @@ def mostrar_menu_afinidade(jogador):
         if not afinidades:
             print("Nenhuma afinidade encontrada.")
         else:
-            # Cabeçalho alinhado
             print(f"{'Tema':<18} {'Nível':>5}  {'XP':<15}")
             print("-" * 40)
             for a in afinidades:
@@ -68,6 +193,9 @@ def mostrar_menu_afinidade(jogador):
                 xp_formatado = f"[{barra}] {a['xp_atual']}/{a['xp_max']}"
                 print(f"{tema_formatado:<18} {nivel_formatado}  {xp_formatado:<15}")
         print("\n[0] Voltar")
-        opcao = input("Digite 0 para voltar: ")
+        print("[9] Cheat Menu (Alterar Nível)")
+        opcao = input("Escolha uma opção: ").strip()
         if opcao == '0':
             break
+        elif opcao == '9':
+            cheat_menu(jogador['id'])

@@ -1,10 +1,8 @@
-# jogo/map/loja.py
-
 from jogo.db import get_db_connection, clear_screen
 from psycopg2 import Error
 
 def exibir_itens_e_habilidades(id_loja, cur):
-    """Exibe os itens e habilidades disponíveis na loja, incluindo tema e nível necessário."""
+    """Exibe os itens e habilidades disponíveis na loja, incluindo o tipo da habilidade."""
     
     # Query para buscar consumíveis (sem alterações)
     cur.execute("""
@@ -16,7 +14,7 @@ def exibir_itens_e_habilidades(id_loja, cur):
     """, (id_loja,))
     itens = cur.fetchall()
 
-    # Query de habilidades atualizada para incluir tema e nível
+    # Query de habilidades (sem alterações, pois já buscava o tipo)
     cur.execute("""
         SELECT 
             th.id_habilidade, 
@@ -37,9 +35,9 @@ def exibir_itens_e_habilidades(id_loja, cur):
     habilidades = cur.fetchall()
 
     clear_screen()
-    print("="*80)
-    print("🏪 BEM-VINDO À LOJA! 🏪".center(80))
-    print("="*80)
+    print("="*90)
+    print("🏪 BEM-VINDO À LOJA! 🏪".center(90))
+    print("="*90)
 
     if not itens and not habilidades:
         print("\nEsta loja está vazia no momento.")
@@ -50,7 +48,7 @@ def exibir_itens_e_habilidades(id_loja, cur):
         print("Nenhum item disponível.")
     else:
         print(f"{'ID':<5} {'Nome':<30} {'Preço':<10} {'Descrição'}")
-        print("-"*80)
+        print("-" * 80)
         for item in itens:
             print(f"{item[0]:<5} {item[1].strip():<30} {item[3]:<10} {item[2].strip()}")
 
@@ -58,15 +56,16 @@ def exibir_itens_e_habilidades(id_loja, cur):
     if not habilidades:
         print("Nenhuma habilidade disponível.")
     else:
-        # Header da tabela de habilidades atualizado
-        print(f"{'ID':<5} {'Nome':<25} {'Tema':<15} {'Nível Req.':<12} {'Preço'}")
-        print("-"*80)
+        # Header da tabela de habilidades atualizado para incluir "Tipo"
+        print(f"{'ID':<5} {'Nome':<25} {'Tipo':<10} {'Tema':<15} {'Nível Req.':<12} {'Preço'}")
+        print("-" * 90)
         for hab in habilidades:
             # id, nome, tipo, preco, nome_tema, nivel_req, id_tema
             if hab[3] is None: continue
-            print(f"{hab[0]:<5} {hab[1].strip():<25} {hab[4].strip():<15} {hab[5]:<12} {hab[3]}")
+            # Exibição atualizada para incluir o tipo da habilidade (hab[2])
+            print(f"{hab[0]:<5} {hab[1].strip():<25} {hab[2].strip():<10} {hab[4].strip():<15} {hab[5]:<12} {hab[3]}")
 
-    print("="*80)
+    print("="*90)
     return itens, habilidades
 
 def comprar_item(jogador, item, conn, cur):
@@ -91,20 +90,18 @@ def comprar_habilidade(jogador, habilidade, conn, cur):
     id_estudante = jogador['id']
     id_habilidade, nome_habilidade, _, preco_habilidade, nome_tema, nivel_req, id_tema = habilidade
 
-    # --- NOVA VALIDAÇÃO DE NÍVEL ---
-    # 1. Buscar o nível de afinidade do jogador no tema da habilidade
+    # Validação de nível
     cur.execute("SELECT nivel_atual FROM afinidade WHERE id_estudante = %s AND id_tema = %s", (id_estudante, id_tema))
     resultado_afinidade = cur.fetchone()
     
     nivel_jogador_no_tema = resultado_afinidade[0] if resultado_afinidade else 0
 
-    # 2. Comparar o nível do jogador com o nível requerido
     if nivel_jogador_no_tema < nivel_req:
         print(f"\n❌ Nível insuficiente no tema '{nome_tema.strip()}'!")
         print(f"   Nível requerido: {nivel_req} | Seu nível: {nivel_jogador_no_tema}")
         return
 
-    # --- LÓGICA DE COMPRA EXISTENTE ---
+    # Lógica de compra
     if jogador['total_dinheiro'] < preco_habilidade:
         print("❌ Dinheiro insuficiente!")
         return
@@ -176,7 +173,6 @@ def acessar_loja(jogador):
                         id_compra = int(input("Digite o ID da habilidade que deseja comprar: "))
                         habilidade_selecionada = next((hab for hab in habilidades if hab[0] == id_compra), None)
                         if habilidade_selecionada:
-                            # Passa a habilidade com todos os dados novos para a função de compra
                             comprar_habilidade(jogador, habilidade_selecionada, conn, cur)
                         else:
                             print("ID de habilidade inválido.")
