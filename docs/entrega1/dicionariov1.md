@@ -248,6 +248,7 @@ De acordo com a *UC Merced Library*,
 |id_item|Identificador do item que foi instânciado|INT||- PK<br>- FK<br>- Not Null<br>|
 |id_sala|Identificador da sala|INT||- FK<br>|
 |id_estudante|Identificador do estudante|INT||- FK<br>|
+|equipado|Item equipado|BOOL||Not Null|
 
 
 <!-- isaque alterou -->
