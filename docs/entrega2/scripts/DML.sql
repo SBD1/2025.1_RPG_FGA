@@ -124,15 +124,15 @@ INSERT INTO monstro_simples (id_criatura, nome, descricao, nivel, vida_max, xp_t
 
 -- Populando 'tipo_criatura' e 'boss'
 INSERT INTO tipo_criatura (tipo_criatura) VALUES ('Boss'); -- ID 11
-INSERT INTO boss (id_criatura, nome, descricao, nivel, vida_max, id_reliquia) VALUES (11, 'Chicão', 'Gêmeo maligno que nega todas as matriculas.', 5, 200, 1);
+INSERT INTO boss (id_criatura, nome, descricao, nivel, vida_max, id_reliquia) VALUES (11, 'Chicão', 'Gêmeo maligno que nega todas as matriculas.', 20, 200, 1);
 INSERT INTO tipo_criatura (tipo_criatura) VALUES ('Boss'); -- ID 12
-INSERT INTO boss (id_criatura, nome, descricao, nivel, vida_max, id_reliquia) VALUES (12, 'Frango assado do RU', 'Vai te dar uma intoxicação alimentar, pois está sempre cru.', 10, 250, 2);
+INSERT INTO boss (id_criatura, nome, descricao, nivel, vida_max, id_reliquia) VALUES (12, 'Frango assado do RU', 'Vai te dar uma intoxicação alimentar, pois está sempre cru.', 20, 250, 2);
 INSERT INTO tipo_criatura (tipo_criatura) VALUES ('Boss'); -- ID 13
-INSERT INTO boss (id_criatura, nome, descricao, nivel, vida_max, id_reliquia) VALUES (13, 'Superlotação', 'Esse curso não precisa de mais uma aluno...', 15, 260, 4);
+INSERT INTO boss (id_criatura, nome, descricao, nivel, vida_max, id_reliquia) VALUES (13, 'Superlotação', 'Esse curso não precisa de mais uma aluno...', 20, 260, 4);
 INSERT INTO tipo_criatura (tipo_criatura) VALUES ('Boss'); -- ID 14
 INSERT INTO boss (id_criatura, nome, descricao, nivel, vida_max, id_reliquia) VALUES (14, 'Thinkpad do mocap', 'É um ser ancestral que vai travar quando vc menos esperar.', 20, 230, 3);
 INSERT INTO tipo_criatura (tipo_criatura) VALUES ('Boss'); -- ID 15
-INSERT INTO boss (id_criatura, nome, descricao, nivel, vida_max, id_reliquia) VALUES (15, 'Mauricio me dá SS', 'Isso mesmo, esse boss sempre dá SS aos alunos, em troca da sua alma, aceitas ?.', 25, 190, 5);
+INSERT INTO boss (id_criatura, nome, descricao, nivel, vida_max, id_reliquia) VALUES (15, 'Mauricio me dá SS', 'Isso mesmo, esse boss sempre dá SS aos alunos, em troca da sua alma, aceitas ?.', 20, 190, 5);
 
 
 -- Populando tabela 'campus' (Nenhuma alteração necessária)
