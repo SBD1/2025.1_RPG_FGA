@@ -83,21 +83,37 @@ def menu_jogador(jogador):
             if not salas:
                 print("❌ Nenhuma sala vizinha disponível.")
             else:
-                print("\nSalas vizinhas:")
+            # Cria um conjunto de IDs válidos para uma verificação rápida
+                salas_disponiveis_ids = {sala[0] for sala in salas}
+
+                print("\n--- 🗺️  Salas Vizinhas Disponíveis  ---")
+                
+                # Itera e imprime cada sala com um formato mais limpo
                 for sala in salas:
-                    print(f"ID: {sala[0]} | Nome: {sala[1]} | Campus: {sala[3]}\n   Descrição: {sala[2]}")
+                    # sala[0]=id, sala[1]=nome, sala[2]=desc, sala[3]=campus
+                    print(f"\n🚪 ID: {sala[0]} - {sala[1]}")
+                    print(f"   ({sala[2]})")
+                
+                print("\n" + "="*40)
+
                 try:
                     novo_id = int(input("\nDigite o ID da sala para onde deseja ir: "))
-                    sucesso = mover_estudante_para_sala(jogador['id'], novo_id)
-                    if sucesso:
-                        for sala in salas:
-                            if sala[0] == novo_id:
-                                jogador['id_sala'] = novo_id  
-                                jogador['nome_sala'] = sala[1]
-                                break
+
+                    # Verifica se o ID digitado está na lista de salas disponíveis
+                    if novo_id in salas_disponiveis_ids:
+                        sucesso = mover_estudante_para_sala(jogador['id'], novo_id)
+                        if sucesso:
+                            # Atualiza o dicionário do jogador para feedback imediato na tela
+                            nova_sala_nome = next((s[1] for s in salas if s[0] == novo_id), "Sala Desconhecida")
+                            jogador['id_sala'] = novo_id  
+                            jogador['nome_sala'] = nova_sala_nome
+                    else:
+                        print("\n❌ ID inválido. Você só pode se mover para uma das salas listadas.")
+
                 except ValueError:
-                    print("❌ Entrada inválida.")
-            input("\nPressione Enter para continuar.")
+                    print("\n❌ Entrada inválida. Por favor, digite um número.")
+            #input("\nPressione Enter para continuar.")
+
 
         elif opcao == '3':
             clear_screen()
