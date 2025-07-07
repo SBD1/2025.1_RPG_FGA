@@ -47,7 +47,6 @@ def barra_estresse(estresse, max_estresse=100):
     vazios = 10 - blocos
     return "🟧" * blocos + "⬛" * vazios
 
-# ======== FUNÇÃO MODIFICADA E SIMPLIFICADA ========
 def menu_jogador(jogador):
     while True:
 
@@ -61,13 +60,18 @@ def menu_jogador(jogador):
         print(f"🎒 {jogador['nome']} | Estresse: [{barra_estresse(jogador['estresse'])}] {jogador['estresse']}/100")
         print(f"💰 Dinheiro: {jogador['total_dinheiro']}")
         print(f"📍 Sala atual: {jogador['nome_sala']}")
-        print("\n[1] Ver catálogo de habilidades")
-        print("[2] Mudar de sala")
-        print("[3] Mudar de setor")
-        print("[4] Explorar sala atual") # <<-- Ação principal
-        print("[5] Ver afinidades")
-        print("[6] Ver inventário")
-        print("[7] Sair para o menu principal")
+        
+        # ======== MENU REORGANIZADO ========
+        print("\n--- Personagem ---")
+        print("[1] Ver Habilidades")
+        print("[2] Ver Afinidades")
+        print("[3] Ver Inventário")
+        print("\n--- Ações no Mundo ---")
+        print("[4] Explorar Sala Atual")
+        print("[5] Mudar de Sala")
+        print("[6] Mudar de Setor")
+        print("\n--- Sistema ---")
+        print("[7] Sair para o Menu Principal")
 
         opcao = input("\nEscolha uma opção: ")
 
@@ -76,34 +80,42 @@ def menu_jogador(jogador):
             habilidades = buscar_habilidades_estudante_todas(jogador['id'])
             mostrar_catalogo_habilidades(habilidades)
             input("\nPressione Enter para voltar ao menu.")
-        
+
         elif opcao == '2':
+            clear_screen()
+            mostrar_menu_afinidade(jogador)
+            input("\nPressione Enter para continuar.")
+
+        elif opcao == '3':
+            clear_screen()
+            menu_inventario(jogador)
+            input("\nPressione Enter para continuar.")
+
+        elif opcao == '4':
+            explorar_sala(jogador)
+
+        elif opcao == '5':
             clear_screen()
             salas = listar_salas(jogador['id'])
             if not salas:
                 print("❌ Nenhuma sala vizinha disponível.")
             else:
-            # Cria um conjunto de IDs válidos para uma verificação rápida
                 salas_disponiveis_ids = {sala[0] for sala in salas}
 
                 print("\n--- 🗺️  Salas Vizinhas Disponíveis  ---")
                 
-                # Itera e imprime cada sala com um formato mais limpo
                 for sala in salas:
-                    # sala[0]=id, sala[1]=nome, sala[2]=desc, sala[3]=campus
                     print(f"\n🚪 ID: {sala[0]} - {sala[1]}")
                     print(f"   ({sala[2]})")
                 
                 print("\n" + "="*40)
-
+                
                 try:
                     novo_id = int(input("\nDigite o ID da sala para onde deseja ir: "))
-
-                    # Verifica se o ID digitado está na lista de salas disponíveis
+                    
                     if novo_id in salas_disponiveis_ids:
                         sucesso = mover_estudante_para_sala(jogador['id'], novo_id)
                         if sucesso:
-                            # Atualiza o dicionário do jogador para feedback imediato na tela
                             nova_sala_nome = next((s[1] for s in salas if s[0] == novo_id), "Sala Desconhecida")
                             jogador['id_sala'] = novo_id  
                             jogador['nome_sala'] = nova_sala_nome
@@ -112,30 +124,13 @@ def menu_jogador(jogador):
 
                 except ValueError:
                     print("\n❌ Entrada inválida. Por favor, digite um número.")
-            #input("\nPressione Enter para continuar.")
-
-
-        elif opcao == '3':
-            clear_screen()
-            nova_sala = mudar_setor_estudante(jogador['id'])
-            if nova_sala:
-                jogador['nome_sala'] = nova_sala
-            input("\nPressione Enter para continuar.")
-
-        elif opcao == '4':
-            # Agora esta função lida com a lógica de loja/dungeon
-            explorar_sala(jogador)
-            # A função explorar_sala já pede um input, então não é necessário aqui.
-
-        elif opcao == '5':
-            clear_screen()
-            mostrar_menu_afinidade(jogador)
             input("\nPressione Enter para continuar.")
 
         elif opcao == '6':
             clear_screen()
-            menu_inventario(jogador)
-
+            nova_sala = mudar_setor_estudante(jogador['id'])
+            if nova_sala:
+                jogador['nome_sala'] = nova_sala
             input("\nPressione Enter para continuar.")
 
         elif opcao == '7':
