@@ -1,4 +1,6 @@
 from jogo.db import get_db_connection, clear_screen
+import statistics
+
 
 EMOJIS_TEMA_ID = {
     1: '📐',  # Matemática
@@ -199,3 +201,50 @@ def mostrar_menu_afinidade(jogador):
             break
         elif opcao == '9':
             cheat_menu(jogador['id'])
+
+
+def calcular_vida_maxima_por_afinidades(conn, id_estudante):
+    """
+    Carrega níveis das afinidades, atualiza níveis com level up se necessário,
+    e calcula a vida máxima do jogador.
+    """
+    niveis = []
+    try:
+        with conn.cursor() as cur:
+            # Primeiro busca os ids de temas do jogador para verificar level up
+            cur.execute("""
+                SELECT id_tema
+                FROM afinidade
+                WHERE id_estudante = %s
+                ORDER BY id_tema
+            """, (id_estudante,))
+            temas = [row[0] for row in cur.fetchall()]
+
+        # Para cada tema, verificar e atualizar level up
+        for tema_id in temas:
+            verificar_level_up(id_estudante, tema_id)
+
+        # Depois de atualizar níveis, buscar os níveis atualizados
+        with conn.cursor() as cur:
+            cur.execute("""
+                SELECT nivel_atual
+                FROM afinidade
+                WHERE id_estudante = %s
+                ORDER BY id_tema
+            """, (id_estudante,))
+            niveis = [row[0] for row in cur.fetchall()]
+
+    except Exception as e:
+        print(f"Erro ao carregar níveis para vida: {e}")
+        return 20  # valor base
+
+    if not niveis or len(niveis) < 5:
+        return 20  # valor base caso falte info
+
+    VIDA_BASE = 20
+    soma_niveis = sum(niveis)
+    desvio = statistics.stdev(niveis) if len(set(niveis)) > 1 else 0
+    multiplicador = max(0, 4.8 - desvio * 0.25)
+    vida_maxima = VIDA_BASE + int(soma_niveis * multiplicador)
+
+    return vida_maxima

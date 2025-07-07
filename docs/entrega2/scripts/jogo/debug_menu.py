@@ -174,6 +174,73 @@ def listar_detalhes_dungeons():
     input("\nPressione Enter para voltar...")
 
 
+def adicionar_moedas_a_jogador():
+    """Permite escolher um jogador e adicionar moedas ao saldo atual (total_dinheiro)."""
+    clear_screen()
+    print("--- 💰 Adicionar Dinheiro a um Jogador ---")
+    
+    try:
+        conn = get_db_connection()
+        cur = conn.cursor()
+
+        # Lista jogadores
+        cur.execute("""
+            SELECT e.id_estudante, e.nome, e.total_dinheiro, s.nome AS nome_sala
+            FROM estudante e
+            JOIN sala_comum s ON e.id_sala = s.id_sala
+            ORDER BY e.id_estudante;
+        """)
+        jogadores = cur.fetchall()
+
+        if not jogadores:
+            print("Nenhum jogador encontrado.")
+            return
+
+        print(f"{'ID':<5} | {'Nome':<25} | {'Sala':<25} | {'Dinheiro'}")
+        print("-" * 70)
+        for j in jogadores:
+            print(f"{j[0]:<5} | {j[1].strip():<25} | {j[3].strip():<25} | {j[2]}")
+
+        id_escolhido = input("\nDigite o ID do jogador para adicionar dinheiro (ou 0 para cancelar): ").strip()
+        if not id_escolhido.isdigit() or int(id_escolhido) == 0:
+            print("Cancelado.")
+            return
+
+        id_escolhido = int(id_escolhido)
+        jogador = next((j for j in jogadores if j[0] == id_escolhido), None)
+
+        if not jogador:
+            print("Jogador não encontrado.")
+            return
+
+        qtd = input("Digite a quantidade de dinheiro a adicionar (1 a 200): ").strip()
+        if not qtd.isdigit():
+            print("Entrada inválida.")
+            return
+
+        qtd = int(qtd)
+        if qtd < 1 or qtd > 200:
+            print("A quantidade deve estar entre 1 e 200.")
+            return
+
+        novo_saldo = jogador[2] + qtd
+        cur.execute("""
+            UPDATE estudante
+            SET total_dinheiro = %s
+            WHERE id_estudante = %s
+        """, (novo_saldo, id_escolhido))
+
+        conn.commit()
+        print(f"✅ R${qtd},00 adicionados com sucesso ao jogador {jogador[1].strip()} (Novo saldo: R${novo_saldo},00)")
+
+    except Exception as e:
+        print(f"❌ Erro ao adicionar dinheiro: {e}")
+    finally:
+        if conn:
+            conn.close()
+
+    input("\nPressione Enter para voltar...")
+
 def menu_debug_queries():
     """Exibe o menu de consultas de debug."""
     while True:
@@ -183,8 +250,9 @@ def menu_debug_queries():
         print("[2] Listar salas com Loja")
         print("[3] Listar salas com Itens no Chão")
         print("[4] Mostrar Posição dos Jogadores")
-        print("[5] Ver Detalhes das Dungeons") # <<-- NOVA OPÇÃO
-        print("[6] Voltar ao Menu Principal")  # <<-- OPÇÃO ANTIGA AGORA É 6
+        print("[5] Ver Detalhes das Dungeons") 
+        print("[6] Adicionar Moedas a Jogador") 
+        print("[7] Voltar ao Menu Principal")  
         
         opcao = input("\nEscolha uma opção: ").strip()
 
@@ -198,7 +266,9 @@ def menu_debug_queries():
             listar_posicao_jogadores()
         elif opcao == '5': # <<-- NOVA CONDIÇÃO
             listar_detalhes_dungeons()
-        elif opcao == '6': # <<-- OPÇÃO ANTIGA AGORA É 6
+        elif opcao == '6':
+            adicionar_moedas_a_jogador()
+        elif opcao == '7':
             print("Retornando ao menu principal...")
             break
         else:

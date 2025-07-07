@@ -5,6 +5,7 @@ from jogo.map.sala import *
 from jogo.map.setor import *
 from jogo.db import clear_screen
 from jogo.player.estresse import *
+from jogo.map.concluir import *
 
 def carregar_estudante(id_estudante):
     conn = get_db_connection()
@@ -71,7 +72,8 @@ def menu_jogador(jogador):
         print("[5] Mudar de Sala")
         print("[6] Mudar de Setor")
         print("\n--- Sistema ---")
-        print("[7] Sair para o Menu Principal")
+        print("[7] Concluir")
+        print("[8] Sair para o Menu Principal")
 
         opcao = input("\nEscolha uma opção: ")
 
@@ -132,8 +134,11 @@ def menu_jogador(jogador):
             if nova_sala:
                 jogador['nome_sala'] = nova_sala
             input("\nPressione Enter para continuar.")
-
+        
         elif opcao == '7':
+           mostrar_progresso_conclusao(jogador)
+
+        elif opcao == '8':
             print("↩️ Retornando ao menu principal.")
             break
 

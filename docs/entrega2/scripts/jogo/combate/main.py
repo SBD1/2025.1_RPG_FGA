@@ -1,5 +1,4 @@
 # ===== main.py =====
-import psycopg2
 from jogo.combate.inteligencia import escolher_acao_monstro
 from jogo.combate.regras import aplicar_regras
 from jogo.combate.combate import menu, escolher_habilidade, atualizar_cooldowns
@@ -7,6 +6,7 @@ import os
 import sys
 from jogo.db import *
 from jogo.monster.monster import *
+from jogo.player.afinidade import *
 
 def limpar_tela():
     try:
@@ -142,7 +142,7 @@ def iniciar_combate(id_jogador, id_monstro):
         if habilidades_jogador is None or habilidades_monstro is None:
             return "erro", 0
 
-        vida_max_jogador = carregar_vida_jogador(conn, id_jogador)
+        vida_max_jogador = calcular_vida_maxima_por_afinidades(conn, id_jogador)
         vida_max_monstro = carregar_vida_monstro(conn, id_monstro)
         vida_jogador = vida_max_jogador
         vida_monstro = vida_max_monstro

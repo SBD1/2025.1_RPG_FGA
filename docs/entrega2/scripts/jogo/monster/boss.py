@@ -35,3 +35,42 @@ def buscar_boss_e_reliquia(id_dungeon):
             cur.close()
         if conn:
             conn.close()
+
+
+
+def recompensa_boss(id_boss, id_jogador):
+    try:
+        conn = get_db_connection()
+        with conn.cursor() as cur:
+            # Busca a relíquia associada ao boss
+            cur.execute("""
+                SELECT id_reliquia
+                FROM boss
+                WHERE id_criatura = %s
+            """, (id_boss,))
+            resultado = cur.fetchone()
+
+            if not resultado:
+                print("❌ Boss não encontrado ou sem relíquia associada.")
+                return False
+
+            id_reliquia = resultado[0]
+
+            # Cria nova instância de item (relíquia)
+            cur.execute("""
+                INSERT INTO instancia_de_item (id_item, id_estudante)
+                VALUES (%s, %s)
+            """, (id_reliquia, id_jogador))
+
+            conn.commit()
+            print("🎁 Relíquia conquistada com sucesso!")
+
+            return True
+
+    except Exception as e:
+        print(f"❌ Erro ao gerar recompensa do boss: {e}")
+        return False
+
+    finally:
+        if conn:
+            conn.close()
