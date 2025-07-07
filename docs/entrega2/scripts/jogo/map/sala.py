@@ -80,10 +80,10 @@ def mover_estudante_para_sala(id_estudante, novo_id_sala):
             print("Você já está nesta sala.")
             return False
 
-        cur.execute("UPDATE Estudante SET id_sala = %s WHERE id_estudante = %s", (novo_id_sala, id_estudante))
+        cur.execute("UPDATE Estudante SET id_sala = %s, estresse = estresse + 1 WHERE id_estudante = %s", (novo_id_sala, id_estudante))
         conn.commit()
 
-        print(f"Movido de '{estudante[1].strip()}' para '{nova_sala[0].strip()}' com sucesso!")
+        print(f"Movido de '{estudante[1].strip()}' para '{nova_sala[0].strip()}' com sucesso! (+1 de estresse)")
         return True
 
     except Exception as e:

@@ -3,8 +3,43 @@ from jogo.player.afinidade import *
 from jogo.player.inventario import *
 from jogo.map.sala import *
 from jogo.map.setor import *
-# Não precisamos mais importar dungeon e loja aqui
 from jogo.db import clear_screen
+from jogo.player.estresse import *
+
+def carregar_estudante(id_estudante):
+    conn = get_db_connection()
+    if not conn:
+        print("Não foi possível conectar ao banco.")
+        return None
+    try:
+        cur = conn.cursor()
+        cur.execute("""
+            SELECT e.nome, e.vida, e.estresse, e.total_dinheiro, s.nome AS nome_sala, e.id_sala
+            FROM estudante e
+            JOIN sala_comum s ON e.id_sala = s.id_sala
+            WHERE e.id_estudante = %s
+        """, (id_estudante,))
+        resultado = cur.fetchone()
+        if not resultado:
+            print("Estudante não encontrado.")
+            return None
+        
+        nome, vida, estresse, total_dinheiro, nome_sala, id_sala = resultado
+        return {
+            "id": id_estudante,
+            "nome": nome.strip(),
+            "vida": vida,
+            "estresse": estresse,
+            "total_dinheiro": total_dinheiro,
+            "nome_sala": nome_sala.strip(),
+            "id_sala": id_sala
+        }
+    except Exception as e:
+        print("Erro ao carregar dados do estudante:", e)
+        return None
+    finally:
+        cur.close()
+        conn.close()
 
 def barra_estresse(estresse, max_estresse=100):
     blocos = int((estresse / max_estresse) * 10)
@@ -15,6 +50,12 @@ def barra_estresse(estresse, max_estresse=100):
 # ======== FUNÇÃO MODIFICADA E SIMPLIFICADA ========
 def menu_jogador(jogador):
     while True:
+
+        jogador.update(carregar_estudante(jogador['id']))
+        verifica_estresse(jogador)
+        input("\nPressione Enter para continuar.")
+
+
         clear_screen()
         print("\n========= MENU DO JOGADOR =========")
         print(f"🎒 {jogador['nome']} | Estresse: [{barra_estresse(jogador['estresse'])}] {jogador['estresse']}/100")
