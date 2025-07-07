@@ -252,10 +252,10 @@ INSERT INTO consumivel (id_item, nome, descricao, efeito, preco) VALUES
 (10, 'Chocolate Acadêmico', 'Melhora o humor e a concentração.', 12.0, 6.0);
 
 -- Populando 'equipavel'
-INSERT INTO equipavel (id_item, nome, descricao, efeito, preco, equipado) VALUES
-(11, 'Óculos de Leitura Avançada', 'Aumenta sua vida máxima permanentemente.', 10, 50, FALSE),
-(12, 'Mochila de Estudo', 'Permite carregar mais itens.', 5, 30, FALSE),
-(13, 'Tênis Confortável', 'Aumenta sua capacidade de fuga em combate.', 2, 40, FALSE);
+INSERT INTO equipavel (id_item, nome, descricao, efeito, preco) VALUES
+(11, 'Óculos de Leitura Avançada', 'Aumenta sua vida máxima permanentemente.', 10, 50),
+(12, 'Mochila de Estudo', 'Permite carregar mais itens.', 5, 30),
+(13, 'Tênis Confortável', 'Aumenta sua capacidade de fuga em combate.', 2, 40);
 
 -- Populando 'monetario'
 INSERT INTO monetario (id_item, nome, descricao, valor) VALUES
@@ -373,18 +373,40 @@ DECLARE
     random_item_id INT;
     random_sala_id INT;
     random_estudante_id INT;
+    v_item_tipo CHAR(10);
+    equipado_val BOOLEAN;
 BEGIN
     FOR i IN 1..instance_count LOOP
-        SELECT id_item INTO random_item_id FROM tipo_item ORDER BY random() LIMIT 1;
+        -- Sorteia um item aleatório
+        SELECT id_item, item_tipo INTO random_item_id, v_item_tipo
+        FROM tipo_item
+        ORDER BY random()
+        LIMIT 1;
+
+        -- Define o valor de "equipado" conforme o tipo do item
+        IF v_item_tipo = 'Equipável' THEN
+            equipado_val := FALSE;
+        ELSE
+            equipado_val := NULL;
+        END IF;
+
+
+        -- Sorteia uma sala e um estudante
         SELECT id_sala INTO random_sala_id FROM sala_comum ORDER BY random() LIMIT 1;
         SELECT id_estudante INTO random_estudante_id FROM estudante ORDER BY random() LIMIT 1;
 
-        -- Garante que o item seja atribuído a uma sala OU a um estudante, mas não a ambos
+        -- Garante que a instância vá para sala OU estudante (não ambos)
         IF random() > 0.5 THEN
-            INSERT INTO instancia_de_item (id_item, id_sala, id_estudante) VALUES (random_item_id, random_sala_id, NULL);
+            INSERT INTO instancia_de_item (id_item, id_sala, id_estudante, equipado)
+            VALUES (random_item_id, random_sala_id, NULL, equipado_val);
         ELSE
-            INSERT INTO instancia_de_item (id_item, id_sala, id_estudante) VALUES (random_item_id, NULL, random_estudante_id);
+            INSERT INTO instancia_de_item (id_item, id_sala, id_estudante, equipado)
+            VALUES (random_item_id, NULL, random_estudante_id, equipado_val);
         END IF;
-
     END LOOP;
 END $$;
+
+
+INSERT INTO instancia_de_item (id_item, id_sala, id_estudante, equipado) VALUES 
+        (11, NULL, 4, FALSE),
+        (12, NULL, 4, TRUE)
