@@ -2,11 +2,18 @@
 
 from .db import get_db_connection, clear_screen
 from psycopg2 import Error
+from rich.console import Console
+from rich.panel import Panel
+from rich.table import Table
+from .player.menu import check_emoji_support # Reutiliza a função de verificação
+
+# Inicializa o console e verifica o suporte a emojis
+console = Console()
+EMOJI_SUPPORT = check_emoji_support()
 
 def listar_salas_com_dungeon():
-    """Consulta e exibe todas as salas que possuem uma dungeon."""
+    """Consulta e exibe todas as salas com dungeon em uma tabela Rich."""
     clear_screen()
-    print("--- 🏰 Salas com Dungeon ---")
     try:
         conn = get_db_connection()
         cur = conn.cursor()
@@ -14,30 +21,33 @@ def listar_salas_com_dungeon():
             SELECT s.id_sala, s.nome, st.nome AS nome_setor
             FROM sala_comum s
             JOIN setor st ON s.id_setor = st.id_setor
-            WHERE s.tem_dungeon = TRUE
-            ORDER BY s.id_sala;
+            WHERE s.tem_dungeon = TRUE ORDER BY s.id_sala;
         """)
         salas = cur.fetchall()
 
+        title = "🏰 Salas com Dungeon" if EMOJI_SUPPORT else "Salas com Dungeon"
+        table = Table(title=title, border_style="cyan")
+        table.add_column("ID Sala", style="magenta")
+        table.add_column("Nome da Sala", style="green")
+        table.add_column("Setor", style="yellow")
+
         if not salas:
-            print("Nenhuma sala com dungeon encontrada.")
+            console.print(Panel("[yellow]Nenhuma sala com dungeon encontrada.[/yellow]", title="Resultado"))
         else:
-            print(f"{'ID da Sala':<12} | {'Nome da Sala':<30} | {'Setor'}")
-            print("-" * 60)
             for sala in salas:
-                print(f"{sala[0]:<12} | {sala[1].strip():<30} | {sala[2].strip()}")
+                table.add_row(str(sala[0]), sala[1].strip(), sala[2].strip())
+            console.print(table)
         
         cur.close()
         conn.close()
     except (Exception, Error) as e:
-        print(f"Erro ao buscar salas com dungeon: {e}")
+        console.print(f"[bold red]Erro ao buscar salas com dungeon: {e}[/bold red]")
 
-    input("\nPressione Enter para voltar...")
+    console.input("\n[dim]Pressione Enter para voltar...[/dim]")
 
 def listar_salas_com_loja():
-    """Consulta e exibe todas as salas que possuem uma loja."""
+    """Consulta e exibe todas as salas com loja em uma tabela Rich."""
     clear_screen()
-    print("--- 🏪 Salas com Loja ---")
     try:
         conn = get_db_connection()
         cur = conn.cursor()
@@ -45,30 +55,33 @@ def listar_salas_com_loja():
             SELECT s.id_sala, s.nome, st.nome AS nome_setor
             FROM sala_comum s
             JOIN setor st ON s.id_setor = st.id_setor
-            WHERE s.tem_loja = TRUE
-            ORDER BY s.id_sala;
+            WHERE s.tem_loja = TRUE ORDER BY s.id_sala;
         """)
         salas = cur.fetchall()
 
+        title = "🏪 Salas com Loja" if EMOJI_SUPPORT else "Salas com Loja"
+        table = Table(title=title, border_style="cyan")
+        table.add_column("ID Sala", style="magenta")
+        table.add_column("Nome da Sala", style="green")
+        table.add_column("Setor", style="yellow")
+
         if not salas:
-            print("Nenhuma sala com loja encontrada.")
+            console.print(Panel("[yellow]Nenhuma sala com loja encontrada.[/yellow]", title="Resultado"))
         else:
-            print(f"{'ID da Sala':<12} | {'Nome da Sala':<30} | {'Setor'}")
-            print("-" * 60)
             for sala in salas:
-                print(f"{sala[0]:<12} | {sala[1].strip():<30} | {sala[2].strip()}")
+                table.add_row(str(sala[0]), sala[1].strip(), sala[2].strip())
+            console.print(table)
 
         cur.close()
         conn.close()
     except (Exception, Error) as e:
-        print(f"Erro ao buscar salas com loja: {e}")
+        console.print(f"[bold red]Erro ao buscar salas com loja: {e}[/bold red]")
 
-    input("\nPressione Enter para voltar...")
+    console.input("\n[dim]Pressione Enter para voltar...[/dim]")
 
 def listar_salas_com_itens():
-    """Consulta e exibe todas as salas que possuem itens no chão."""
+    """Consulta e exibe todas as salas com itens no chão em uma tabela Rich."""
     clear_screen()
-    print("--- ✨ Salas com Itens no Chão ---")
     try:
         conn = get_db_connection()
         cur = conn.cursor()
@@ -77,38 +90,38 @@ def listar_salas_com_itens():
             FROM sala_comum s
             JOIN instancia_de_item ii ON s.id_sala = ii.id_sala
             WHERE ii.id_estudante IS NULL
-            GROUP BY s.id_sala, s.nome
-            ORDER BY s.id_sala;
+            GROUP BY s.id_sala, s.nome ORDER BY s.id_sala;
         """)
         salas = cur.fetchall()
 
+        title = "✨ Salas com Itens no Chão" if EMOJI_SUPPORT else "Salas com Itens no Chão"
+        table = Table(title=title, border_style="cyan")
+        table.add_column("ID Sala", style="magenta")
+        table.add_column("Nome da Sala", style="green")
+        table.add_column("Qtd. de Itens", style="yellow")
+
         if not salas:
-            print("Nenhuma sala com itens no chão encontrada.")
+            console.print(Panel("[yellow]Nenhuma sala com itens no chão encontrada.[/yellow]", title="Resultado"))
         else:
-            print(f"{'ID da Sala':<12} | {'Nome da Sala':<30} | {'Qtd. de Itens'}")
-            print("-" * 60)
             for sala in salas:
-                print(f"{sala[0]:<12} | {sala[1].strip():<30} | {sala[2]}")
+                table.add_row(str(sala[0]), sala[1].strip(), str(sala[2]))
+            console.print(table)
 
         cur.close()
         conn.close()
     except (Exception, Error) as e:
-        print(f"Erro ao buscar salas com itens: {e}")
+        console.print(f"[bold red]Erro ao buscar salas com itens: {e}[/bold red]")
 
-    input("\nPressione Enter para voltar...")
+    console.input("\n[dim]Pressione Enter para voltar...[/dim]")
 
 def listar_posicao_jogadores():
-    """Consulta e exibe a localização atual de todos os jogadores."""
+    """Consulta e exibe a localização de todos os jogadores em uma tabela Rich."""
     clear_screen()
-    print("--- 📍 Posição dos Jogadores ---")
     try:
         conn = get_db_connection()
         cur = conn.cursor()
         cur.execute("""
-            SELECT
-                e.nome AS nome_jogador,
-                s.nome AS nome_sala,
-                st.nome AS nome_setor
+            SELECT e.nome, s.nome, st.nome
             FROM estudante e
             JOIN sala_comum s ON e.id_sala = s.id_sala
             JOIN setor st ON s.id_setor = st.id_setor
@@ -116,77 +129,89 @@ def listar_posicao_jogadores():
         """)
         jogadores = cur.fetchall()
 
+        title = "📍 Posição dos Jogadores" if EMOJI_SUPPORT else "Posição dos Jogadores"
+        table = Table(title=title, border_style="cyan")
+        table.add_column("Jogador", style="magenta")
+        table.add_column("Sala Atual", style="green")
+        table.add_column("Setor", style="yellow")
+
         if not jogadores:
-            print("Nenhum jogador encontrado no banco de dados.")
+            console.print(Panel("[yellow]Nenhum jogador encontrado.[/yellow]", title="Resultado"))
         else:
-            print(f"{'Jogador':<20} | {'Sala Atual':<30} | {'Setor'}")
-            print("-" * 70)
             for jogador in jogadores:
-                print(f"{jogador[0].strip():<20} | {jogador[1].strip():<30} | {jogador[2].strip()}")
+                table.add_row(jogador[0].strip(), jogador[1].strip(), jogador[2].strip())
+            console.print(table)
 
         cur.close()
         conn.close()
     except (Exception, Error) as e:
-        print(f"Erro ao buscar a posição dos jogadores: {e}")
+        console.print(f"[bold red]Erro ao buscar a posição dos jogadores: {e}[/bold red]")
 
-    input("\nPressione Enter para voltar...")
+    console.input("\n[dim]Pressione Enter para voltar...[/dim]")
 
-# ======== NOVA FUNÇÃO ========
 def listar_detalhes_dungeons():
-    """Consulta e exibe informações detalhadas de todas as dungeons."""
+    """Consulta e exibe informações detalhadas de todas as dungeons em uma tabela Rich."""
     clear_screen()
-    print("--- 📜 Detalhes das Dungeons ---")
     try:
         conn = get_db_connection()
         cur = conn.cursor()
-        # A query que você pediu, mas sem o WHERE para listar todas
         cur.execute("""
-            SELECT
-                s.id_sala,
-                s.nome AS nome_sala,
-                d.nome AS nome_dungeon,
-                t.nome AS nome_tema
-            FROM
-                sala_comum s
-            JOIN
-                dungeon_academica d ON d.id_dungeon = s.id_sala
-            JOIN
-                tema t ON d.id_tema = t.id_tema
-            ORDER BY
-                s.id_sala;
+            SELECT s.id_sala, s.nome, d.nome, t.nome
+            FROM sala_comum s
+            JOIN dungeon_academica d ON d.id_dungeon = s.id_sala
+            JOIN tema t ON d.id_tema = t.id_tema
+            ORDER BY s.id_sala;
         """)
         dungeons = cur.fetchall()
 
+        title = "📜 Detalhes das Dungeons" if EMOJI_SUPPORT else "Detalhes das Dungeons"
+        table = Table(title=title, border_style="cyan")
+        table.add_column("ID Sala", style="magenta")
+        table.add_column("Nome da Sala", style="green")
+        table.add_column("Nome da Dungeon", style="yellow")
+        table.add_column("Tema", style="blue")
+
         if not dungeons:
-            print("Nenhuma dungeon encontrada no banco de dados.")
+            console.print(Panel("[yellow]Nenhuma dungeon encontrada.[/yellow]", title="Resultado"))
         else:
-            print(f"{'ID Sala':<10} | {'Nome da Sala':<25} | {'Nome da Dungeon':<30} | {'Tema'}")
-            print("-" * 90)
             for dungeon in dungeons:
-                # id_sala, nome_sala, nome_dungeon, nome_tema
-                print(f"{dungeon[0]:<10} | {dungeon[1].strip():<25} | {dungeon[2].strip():<30} | {dungeon[3].strip()}")
+                table.add_row(str(dungeon[0]), dungeon[1].strip(), dungeon[2].strip(), dungeon[3].strip())
+            console.print(table)
 
         cur.close()
         conn.close()
     except (Exception, Error) as e:
-        print(f"Erro ao buscar detalhes das dungeons: {e}")
+        console.print(f"[bold red]Erro ao buscar detalhes das dungeons: {e}[/bold red]")
 
-    input("\nPressione Enter para voltar...")
+    console.input("\n[dim]Pressione Enter para voltar...[/dim]")
 
 
 def menu_debug_queries():
-    """Exibe o menu de consultas de debug."""
+    """Exibe o menu de consultas de debug estilizado com Rich."""
+    icon_dungeon = "🏰" if EMOJI_SUPPORT else ""
+    icon_shop = "🏪" if EMOJI_SUPPORT else ""
+    icon_item = "✨" if EMOJI_SUPPORT else ""
+    icon_player = "📍" if EMOJI_SUPPORT else ""
+    icon_details = "📜" if EMOJI_SUPPORT else ""
+    icon_back = "↩️" if EMOJI_SUPPORT else ""
+
     while True:
         clear_screen()
-        print("\n--- 🛠️  Menu de Consultas de Debug 🛠️  ---")
-        print("[1] Listar salas com Dungeon")
-        print("[2] Listar salas com Loja")
-        print("[3] Listar salas com Itens no Chão")
-        print("[4] Mostrar Posição dos Jogadores")
-        print("[5] Ver Detalhes das Dungeons") # <<-- NOVA OPÇÃO
-        print("[6] Voltar ao Menu Principal")  # <<-- OPÇÃO ANTIGA AGORA É 6
         
-        opcao = input("\nEscolha uma opção: ").strip()
+        menu_table = Table(show_header=False, show_edge=False, box=None)
+        menu_table.add_column(style="bold magenta", justify="right")
+        menu_table.add_column(justify="left")
+
+        menu_table.add_row("[1]", f" {icon_dungeon} Listar salas com Dungeon")
+        menu_table.add_row("[2]", f" {icon_shop} Listar salas com Loja")
+        menu_table.add_row("[3]", f" {icon_item} Listar salas com Itens no Chão")
+        menu_table.add_row("[4]", f" {icon_player} Mostrar Posição dos Jogadores")
+        menu_table.add_row("[5]", f" {icon_details} Ver Detalhes das Dungeons")
+        menu_table.add_row("[6]", f" {icon_back} Voltar ao Menu Principal")
+        
+        console.print(Panel(menu_table, title="[bold cyan]Menu de Debug[/bold cyan]", border_style="blue"))
+        
+        opcao = console.input("[bold]Escolha uma opção: [/bold]").strip()
 
         if opcao == '1':
             listar_salas_com_dungeon()
@@ -196,11 +221,11 @@ def menu_debug_queries():
             listar_salas_com_itens()
         elif opcao == '4':
             listar_posicao_jogadores()
-        elif opcao == '5': # <<-- NOVA CONDIÇÃO
+        elif opcao == '5':
             listar_detalhes_dungeons()
-        elif opcao == '6': # <<-- OPÇÃO ANTIGA AGORA É 6
-            print("Retornando ao menu principal...")
+        elif opcao == '6':
+            console.print("Retornando ao menu principal...", style="yellow")
             break
         else:
-            print("Opção inválida.")
+            console.print("Opção inválida.", style="bold red")
             input("\nPressione Enter para tentar novamente.")

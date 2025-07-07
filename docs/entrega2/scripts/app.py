@@ -1,13 +1,23 @@
 import sys
-from jogo.player.menu import menu_jogador
+import os
+from rich.console import Console
+from rich.panel import Panel
+from rich.table import Table
+
+# Importa as funções necessárias dos outros módulos
+from jogo.player.menu import menu_jogador, check_emoji_support
 from jogo.db import get_db_connection, clear_screen
 from jogo.reset import reiniciar_banco_de_dados
-from jogo.debug_menu import menu_debug_queries # <<-- IMPORTAR AQUI
+from jogo.debug_menu import menu_debug_queries
+
+# Inicializa o console da Rich e verifica o suporte a emojis
+console = Console()
+EMOJI_SUPPORT = check_emoji_support()
 
 def listar_estudantes_disponiveis():
     conn = get_db_connection()
     if not conn:
-        print("Não foi possível conectar ao banco.")
+        console.print("Não foi possível conectar ao banco.", style="bold red")
         return []
     try:
         cur = conn.cursor()
@@ -16,7 +26,7 @@ def listar_estudantes_disponiveis():
         estudantes = [(id_, nome.strip()) for id_, nome in estudantes]
         return estudantes
     except Exception as e:
-        print("Erro ao buscar estudantes:", e)
+        console.print(f"Erro ao buscar estudantes: {e}", style="bold red")
         return []
     finally:
         if conn:
@@ -24,6 +34,7 @@ def listar_estudantes_disponiveis():
             conn.close()
 
 def carregar_dados_estudante(id_estudante):
+    # Esta função não precisa de alterações visuais
     conn = get_db_connection()
     if not conn:
         print("Não foi possível conectar ao banco.")
@@ -59,30 +70,53 @@ def carregar_dados_estudante(id_estudante):
             cur.close()
             conn.close()
     
-# ======== FUNÇÃO MODIFICADA ========
+# ======== MENU PRINCIPAL ESTILIZADO COM RICH ========
 def menu_principal():
+    # Define ícones condicionais para o menu
+    icon_student = "🎓" if EMOJI_SUPPORT else ""
+    icon_wave = "👋" if EMOJI_SUPPORT else ""
+
     while True:
         clear_screen()
-        print("\n===== RPG FGA - MENU INICIAL =====")
-        print("[1] Selecionar Personagem")
-        print("[2] Créditos")
-        print("[3] Reiniciar Jogo (CUIDADO!)")
-        print("[4] Menu de Debug") # <<-- NOVA OPÇÃO
-        print("[5] Sair do jogo")  # <<-- OPÇÃO ANTIGA AGORA É 5
-        opcao = input("\nEscolha uma opção: ")
+        
+        # Título do Jogo em um Painel
+        console.print(Panel("RPG FGA", title="[bold green]Bem-vindo ao[/bold green]", border_style="magenta"), justify="center")
+
+        # Tabela de Opções
+        menu_table = Table(show_header=False, show_edge=False, box=None)
+        menu_table.add_column(style="bold magenta", justify="right")
+        menu_table.add_column(justify="left")
+        
+        menu_table.add_row("[1]", "Selecionar Personagem")
+        menu_table.add_row("[2]", "Créditos")
+        menu_table.add_row("[3]", "Reiniciar Jogo")
+        menu_table.add_row("[4]", "Menu de Debug")
+        menu_table.add_row("[5]", "Sair do Jogo")
+        
+        console.print(Panel(menu_table, title="[bold cyan]MENU INICIAL[/bold cyan]", border_style="blue"))
+
+        opcao = console.input("[bold]Escolha uma opção: [/bold]")
 
         if opcao == "1":
+            clear_screen()
             estudantes = listar_estudantes_disponiveis()
             if not estudantes:
-                print("\nNenhum estudante disponível. Talvez o banco precise ser reiniciado?")
+                console.print("\nNenhum estudante disponível. Talvez o banco precise ser reiniciado?", style="yellow")
                 input("\nPressione Enter para continuar...")
                 continue
-            print("\n🎓 Estudantes disponíveis:")
+            
+            # Exibe estudantes em uma tabela estilizada
+            student_table = Table(title=f"{icon_student} Estudantes Disponíveis", border_style="green")
+            student_table.add_column("ID", style="cyan")
+            student_table.add_column("Nome", style="magenta")
             for id_, nome in estudantes:
-                print(f"ID: {id_} | Nome: {nome}")
-            escolhido = input("\nDigite o ID do estudante: ")
+                student_table.add_row(str(id_), nome)
+            
+            console.print(student_table)
+            
+            escolhido = console.input("\n[bold]Digite o ID do estudante: [/bold]")
             if not escolhido.isdigit():
-                print("ID inválido.")
+                console.print("ID inválido.", style="bold red")
                 input("\nPressione Enter para continuar...")
                 continue
             jogador = carregar_dados_estudante(int(escolhido))
@@ -91,30 +125,29 @@ def menu_principal():
         
         elif opcao == "2":
             clear_screen()
-            print("\n📜 Créditos: Jogo desenvolvido por Rafael e IA da OpenAI (ChatGPT) 😎")
+            console.print(Panel("Jogo desenvolvido por Rafael e IA da OpenAI 😎", title="[bold yellow]Créditos[/bold yellow]"))
             input("\nPressione Enter para voltar ao menu.")
 
         elif opcao == "3":
             clear_screen()
-            print("🚨 ATENÇÃO! 🚨")
-            print("Esta ação apagará TODOS os dados salvos e recomeçará o jogo do zero.")
-            confirmacao = input("Digite 'CONFIRMAR' para continuar: ")
+            console.print(Panel("Esta ação apagará TODOS os dados salvos e recomeçará o jogo do zero.", title="[bold red]ATENÇÃO![/bold red]"))
+            confirmacao = console.input("Digite [bold yellow]'CONFIRMAR'[/bold yellow] para continuar ou qualquer outra coisa para cancelar: ")
             
             if confirmacao == "CONFIRMAR":
                 reiniciar_banco_de_dados()
             else:
-                print("\nOperação cancelada.")
+                console.print("\nOperação cancelada.", style="yellow")
             
             input("\nPressione Enter para voltar ao menu principal.")
 
-        elif opcao == "4": # <<-- NOVA CONDIÇÃO
+        elif opcao == "4":
             menu_debug_queries()
 
-        elif opcao == "5": # <<-- OPÇÃO ANTIGA AGORA É 5
-            print("\n👋 Saindo do jogo...")
+        elif opcao == "5":
+            console.print(f"\n{icon_wave} Saindo do jogo...", style="bold yellow")
             sys.exit()
         else:
-            print("Opção inválida.")
+            console.print("Opção inválida.", style="bold red")
             input("\nPressione Enter para continuar...")
 
 
