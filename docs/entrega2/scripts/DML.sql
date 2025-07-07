@@ -326,22 +326,44 @@ END $$;
 
 -- Populando tabela 'habilidade_criatura'
 INSERT INTO habilidade_criatura (id_criatura, id_habilidade) VALUES
--- Erro de Sintaxe (id_criatura=1, Monstro)
+-- Monstros Simples
 ((SELECT id_criatura FROM monstro_simples WHERE nome = 'Erro de Sintaxe'), (SELECT id_habilidade FROM Ataque WHERE nome = 'Bug Report')),
 ((SELECT id_criatura FROM monstro_simples WHERE nome = 'Erro de Sintaxe'), (SELECT id_habilidade FROM Ataque WHERE nome = 'Ataque Básico')),
--- Derivada Confusa (id_criatura=2, Monstro)
 ((SELECT id_criatura FROM monstro_simples WHERE nome = 'Derivada Confusa'), (SELECT id_habilidade FROM Ataque WHERE nome = 'Equação Quadrática')),
 ((SELECT id_criatura FROM monstro_simples WHERE nome = 'Derivada Confusa'), (SELECT id_habilidade FROM Defesa WHERE nome = 'Defesa Numérica')),
--- Plágio Descarado (id_criatura=3, Monstro)
 ((SELECT id_criatura FROM monstro_simples WHERE nome = 'Plágio Descarado'), (SELECT id_habilidade FROM Ataque WHERE nome = 'Retórica Persuasiva')),
 ((SELECT id_criatura FROM monstro_simples WHERE nome = 'Plágio Descarado'), (SELECT id_habilidade FROM Ataque WHERE nome = 'Crítica Social')),
+((SELECT id_criatura FROM monstro_simples WHERE nome = 'Fio Solto'), (SELECT id_habilidade FROM Ataque WHERE nome = 'Desenho Técnico')),
+((SELECT id_criatura FROM monstro_simples WHERE nome = 'Fio Solto'), (SELECT id_habilidade FROM Defesa WHERE nome = 'Material Resistente')),
+((SELECT id_criatura FROM monstro_simples WHERE nome = 'Preguiça Matinal'), (SELECT id_habilidade FROM Ataque WHERE nome = 'Ataque Básico')),
+((SELECT id_criatura FROM monstro_simples WHERE nome = 'Preguiça Matinal'), (SELECT id_habilidade FROM Cura WHERE nome = 'Pausa para o Café')),
+((SELECT id_criatura FROM monstro_simples WHERE nome = 'Loop Infinito'), (SELECT id_habilidade FROM Ataque WHERE nome = 'Debug Rápido')),
+((SELECT id_criatura FROM monstro_simples WHERE nome = 'Loop Infinito'), (SELECT id_habilidade FROM Defesa WHERE nome = 'Firewall Pessoal')),
+((SELECT id_criatura FROM monstro_simples WHERE nome = 'Paradoxo Lógico'), (SELECT id_habilidade FROM Ataque WHERE nome = 'Teorema de Pitágoras')),
+((SELECT id_criatura FROM monstro_simples WHERE nome = 'Paradoxo Lógico'), (SELECT id_habilidade FROM Defesa WHERE nome = 'Defesa Numérica')),
+((SELECT id_criatura FROM monstro_simples WHERE nome = 'Teoria da Conspiração'), (SELECT id_habilidade FROM Ataque WHERE nome = 'Crítica Social')),
+((SELECT id_criatura FROM monstro_simples WHERE nome = 'Teoria da Conspiração'), (SELECT id_habilidade FROM Defesa WHERE nome = 'Escudo Cultural')),
+((SELECT id_criatura FROM monstro_simples WHERE nome = 'Solda Fria'), (SELECT id_habilidade FROM Ataque WHERE nome = 'Análise Estrutural')),
+((SELECT id_criatura FROM monstro_simples WHERE nome = 'Solda Fria'), (SELECT id_habilidade FROM Cura WHERE nome = 'Reparo de Circuito')),
+((SELECT id_criatura FROM monstro_simples WHERE nome = 'Distração Coletiva'), (SELECT id_habilidade FROM Ataque WHERE nome = 'Estudo Avançado')),
+((SELECT id_criatura FROM monstro_simples WHERE nome = 'Distração Coletiva'), (SELECT id_habilidade FROM Cura WHERE nome = 'Sessão de Terapia')),
+
 -- Bosses
 ((SELECT id_criatura FROM boss WHERE nome = 'Chicão'), (SELECT id_habilidade FROM Ataque WHERE nome = 'Cálculo Integral')),
+((SELECT id_criatura FROM boss WHERE nome = 'Chicão'), (SELECT id_habilidade FROM Defesa WHERE nome = 'Defesa Numérica')),
+((SELECT id_criatura FROM boss WHERE nome = 'Chicão'), (SELECT id_habilidade FROM Cura WHERE nome = 'Revisão de Conceitos')),
 ((SELECT id_criatura FROM boss WHERE nome = 'Frango assado do RU'), (SELECT id_habilidade FROM Ataque WHERE nome = 'Zero Division')),
+((SELECT id_criatura FROM boss WHERE nome = 'Frango assado do RU'), (SELECT id_habilidade FROM Defesa WHERE nome = 'Firewall Pessoal')),
+((SELECT id_criatura FROM boss WHERE nome = 'Frango assado do RU'), (SELECT id_habilidade FROM Cura WHERE nome = 'Stack Overflow')),
 ((SELECT id_criatura FROM boss WHERE nome = 'Superlotação'), (SELECT id_habilidade FROM Ataque WHERE nome = 'Argumento Irrefutável')),
+((SELECT id_criatura FROM boss WHERE nome = 'Superlotação'), (SELECT id_habilidade FROM Defesa WHERE nome = 'Escudo Cultural')),
+((SELECT id_criatura FROM boss WHERE nome = 'Superlotação'), (SELECT id_habilidade FROM Cura WHERE nome = 'Sessão de Terapia')),
 ((SELECT id_criatura FROM boss WHERE nome = 'Thinkpad do mocap'), (SELECT id_habilidade FROM Ataque WHERE nome = 'Falha de Projeto')),
-((SELECT id_criatura FROM boss WHERE nome = 'Mauricio me dá SS'), (SELECT id_habilidade FROM Ataque WHERE nome = 'Estudo Avançado'));
-
+((SELECT id_criatura FROM boss WHERE nome = 'Thinkpad do mocap'), (SELECT id_habilidade FROM Defesa WHERE nome = 'Material Resistente')),
+((SELECT id_criatura FROM boss WHERE nome = 'Thinkpad do mocap'), (SELECT id_habilidade FROM Cura WHERE nome = 'Reparo de Circuito')),
+((SELECT id_criatura FROM boss WHERE nome = 'Mauricio me dá SS'), (SELECT id_habilidade FROM Ataque WHERE nome = 'Estudo Avançado')),
+((SELECT id_criatura FROM boss WHERE nome = 'Mauricio me dá SS'), (SELECT id_habilidade FROM Defesa WHERE nome = 'Concentração Total')),
+((SELECT id_criatura FROM boss WHERE nome = 'Mauricio me dá SS'), (SELECT id_habilidade FROM Cura WHERE nome = 'Pausa para o Café'));
 
 -- Populando tabela 'habilidade_estudante'
 INSERT INTO habilidade_estudante (id_estudante, id_habilidade) VALUES
