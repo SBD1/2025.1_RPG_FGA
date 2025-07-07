@@ -3,64 +3,53 @@
 DDL (Data Definition Language) é uma parte da linguagem SQL usada para definir e modificar a estrutura dos objetos no banco de dados, como tabelas, índices e restrições. Abaixo estão as definições de tabelas utilizadas no banco de dados.
 
 
-## Tabela tema ()
+## tema
+
 ```sql
 CREATE TABLE tema (
     id_tema INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    nome VARCHAR(100) NOT NULL
+    nome CHAR(100) NOT NULL CHECK(nome IN ('Matemática', 'Programação', 'Engenharias', 'Gerais', 'Humanidades'))
 );
 ```
-Tabela responsável por armazenar os temas das habilidades e dungeons.
-- `id_tema`: Identificador único do tema.
-- `nome`: Nome do tema.
 
-## Tabela habilidades ()
+## tipoHabilidade
+
 ```sql
-CREATE TABLE habilidades (
+CREATE TABLE tipoHabilidade (
     id_habilidade INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    nome VARCHAR(100) NOT NULL,
-    tipo_habilidade VARCHAR(10) NOT NULL,
-    nivel INT NOT NULL,
-    coolDown INT NOT NULL,
-    id_tema INT NOT NULL,
-    CONSTRAINT fk_id_tema FOREIGN KEY (id_tema) REFERENCES tema(id_tema)
+    tipo_habilidade CHAR(10) NOT NULL CHECK(tipo_habilidade IN ('ataque', 'cura', 'defesa'))
+    
 );
 ```
-Define as habilidades existentes.
-- `id_habilidade`: Identificador único.
-- `nome`: Nome da habilidade.
-- `tipo_habilidade`: Pode ser Ataque, Cura ou Defesa.
-- `nivel`, `coolDown`: Atributos da habilidade.
-- `id_tema`: Chave estrangeira para `tema`.
 
-## Tabela criatura ()
+## tipo_criatura
+
 ```sql
-CREATE TABLE criatura (
+CREATE TABLE tipo_criatura (
     id_criatura INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    nivel INT NOT NULL,
-    vida_max INT NOT NULL,
-    tipo_criatura VARCHAR(100) NOT NULL,
-    nome VARCHAR(100) NOT NULL,
-    descricao VARCHAR(255) NOT NULL
+    tipo_criatura CHAR(10) NOT NULL CHECK(tipo_criatura IN ('Monstro', 'Boss'))
+    
 );
 ```
-Representa qualquer tipo de criatura do jogo.
-- `id_criatura`: Identificador único.
-- `nivel`, `vida_max`, `tipo_criatura`, `nome`, `descricao`.
 
-## Tabela campus () e setor ()
-``` sql
+## campus
+
+```sql
 CREATE TABLE campus (
     id_campus INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    nome VARCHAR(100) NOT NULL,
-    descricao VARCHAR(255) NOT NULL
+    nome CHAR(100) NOT NULL,
+    descricao CHAR(255) NOT NULL
 );
+```
 
+## setor
+
+```sql
 CREATE TABLE setor (
     id_setor INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     id_campus INT NOT NULL,
-    nome VARCHAR(100) NOT NULL,
-    descricao VARCHAR(255) NOT NULL,
+    nome CHAR(100) NOT NULL,
+    descricao CHAR(255) NOT NULL,
     id_proxSetor INT,
     id_prevSetor INT,
     CONSTRAINT fk_id_campus FOREIGN KEY (id_campus) REFERENCES campus(id_campus),
@@ -68,46 +57,44 @@ CREATE TABLE setor (
     CONSTRAINT fk_id_prevSetor FOREIGN KEY (id_prevSetor) REFERENCES setor(id_setor)
 );
 ```
-Estrutura o mapa do jogo
-- `campus`: Cada campus tem seu id nome e descrição.
-- `setor`: Pertence a um campus, com nome, descrição e referências para setores anterior e próximo.
 
-## Tabela sala_comum ()
-``` sql
+## sala_comum
+
+```sql
 CREATE TABLE sala_comum (
-    id_sala INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    id_sala INT GENERATED ALWAYS AS IDENTITY,
     id_setor INT NOT NULL,
     id_prevSala INT,
     id_proxSala INT,
-    descricao VARCHAR(255) NOT NULL,
-    nome VARCHAR(100) NOT NULL,
+    descricao CHAR(255) NOT NULL,
+    nome CHAR(100) NOT NULL,
     tem_loja BOOLEAN NOT NULL,
     tem_dungeon BOOLEAN NOT NULL,
+    UNIQUE (id_sala),
+    PRIMARY KEY (id_sala, id_setor),
     CONSTRAINT fk_id_setor FOREIGN KEY (id_setor) REFERENCES setor(id_setor),
     CONSTRAINT fk_id_prevSala FOREIGN KEY (id_prevSala) REFERENCES sala_comum(id_sala),
     CONSTRAINT fk_id_proxSala FOREIGN KEY (id_proxSala) REFERENCES sala_comum(id_sala)
 );
 ```
-Define salas dentro de setores, que podem conter lojas ou dungeons.
-- Contém informações como `descricao`, `tem_loja`, `tem_dungeon`.
 
-## Tabela estudante ()
-``` sql
+## estudante
+
+```sql
 CREATE TABLE estudante (
     id_estudante INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    id_sala INT NOT NULL,
-    nome VARCHAR(100) NOT NULL,
+    nome CHAR(100) NOT NULL,
     vida INT NOT NULL,
     estresse INT NOT NULL,
     total_dinheiro INT NOT NULL,
+    id_sala INT NOT NULL,
     CONSTRAINT fk_id_sala FOREIGN KEY (id_sala) REFERENCES sala_comum(id_sala)
 );
 ```
-Define jogadores/estudantes com vida, estresse e dinheiro, associados a uma sala.
 
+## afinidade
 
-## Tabela afinidade ()
-``` sql
+```sql
 CREATE TABLE afinidade (
     id_estudante INT NOT NULL,
     id_tema INT NOT NULL,
@@ -117,178 +104,238 @@ CREATE TABLE afinidade (
     CONSTRAINT fk_estudante FOREIGN KEY (id_estudante) REFERENCES estudante(id_estudante),
     CONSTRAINT fk_tema FOREIGN KEY (id_tema) REFERENCES tema(id_tema)
 );
-``` 
-Relaciona estudantes com temas, com campos de XP e nível atual.
+```
 
-## Tabela dungeon_academica ()
-``` sql
+## dungeon_academica
+
+```sql
 CREATE TABLE dungeon_academica (
-    id_dungeon INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    nome VARCHAR(100) NOT NULL,
-    descricao VARCHAR(255) NOT NULL,
+    id_dungeon INT NOT NULL PRIMARY KEY,
+    nome CHAR(100) NOT NULL,
+    descricao CHAR(255) NOT NULL,
     id_tema INT NOT NULL,
+    CONSTRAINT fk_id_dungeon FOREIGN KEY (id_dungeon) REFERENCES sala_comum(id_sala),
     CONSTRAINT fk_id_tema FOREIGN KEY (id_tema) REFERENCES tema(id_tema)
 );
 ```
-Define as dungeons do jogo, ligadas a temas.
 
-## Tabelas reliquia (), boss (), monstro_simples ()
-``` sql
-CREATE TABLE reliquia (
-    id_reliquia INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    tipo VARCHAR(100) NOT NULL
+## tipo_item
+
+```sql
+CREATE TABLE tipo_item (
+    id_item INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    item_tipo CHAR(10) CHECK (item_tipo IN ('Consumível', 'Equipável', 'Monetário', 'Relíquia'))
 );
+```
 
+## reliquia
+
+```sql
+CREATE TABLE reliquia (
+    id_reliquia INT NOT NULL PRIMARY KEY,
+    nome CHAR(100) NOT NULL,
+    descricao CHAR(255) NOT NULL,
+    tipo_reliquia CHAR(100) NOT NULL,
+    CONSTRAINT fk_id_reliquia FOREIGN KEY (id_reliquia) REFERENCES tipo_item(id_item)
+);
+```
+
+## boss
+
+```sql
 CREATE TABLE boss (
     id_criatura INT NOT NULL PRIMARY KEY,
     id_reliquia INT NOT NULL,
+    nome CHAR(100) NOT NULL,
+    descricao CHAR(255) NOT NULL,
+    nivel INT NOT NULL,
+    vida_max INT NOT NULL,
     
-    CONSTRAINT fk_id_criatura FOREIGN KEY (id_criatura) REFERENCES criatura(id_criatura)
+    CONSTRAINT fk_id_criatura FOREIGN KEY (id_criatura) REFERENCES tipo_criatura(id_criatura),
     CONSTRAINT fk_reliquia FOREIGN KEY (id_reliquia) REFERENCES reliquia(id_reliquia)
 );
+```
 
+## monstro_simples
+
+```sql
 CREATE TABLE monstro_simples (
     id_criatura INT NOT NULL PRIMARY KEY,
+    nome CHAR(100) NOT NULL,
+    descricao CHAR(255) NOT NULL,
+    nivel INT NOT NULL,
+    vida_max INT NOT NULL,
     xp_tema INT NOT NULL,
-    qtd_moedas INT NOT NULL,
-    CONSTRAINT fk_id_criatura FOREIGN KEY (id_criatura) REFERENCES criatura(id_criatura)
+    qtd_moedas INT NOT NULL CHECK (qtd_moedas >= 0),
+
+    CONSTRAINT fk_id_criatura FOREIGN KEY (id_criatura) REFERENCES tipo_criatura(id_criatura)
 );
 ```
-Definem entidades de combate. `boss` e `monstro_simples` herdam de `criatura`.
 
-## Tabela instancia_de_criatura ()
-``` sql
+## instancia_de_criatura
+
+```sql
 CREATE TABLE instancia_de_criatura (
-    id_instanciaMonstro INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    id_instanciaCriatura INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     id_criatura INT NOT NULL,
     vida_atual INT NOT NULL,
     id_dungeon INT NOT NULL,
-    CONSTRAINT fk_criatura FOREIGN KEY (id_criatura) REFERENCES criatura(id_criatura),
+    CONSTRAINT fk_criatura FOREIGN KEY (id_criatura) REFERENCES tipo_criatura(id_criatura),
     CONSTRAINT fk_dungeon FOREIGN KEY (id_dungeon) REFERENCES dungeon_academica(id_dungeon)
 );
-``` 
-Define instâncias específicas de criaturas dentro de dungeons.
+```
 
-## Tabela item (), consumivel (), equipavel () e monetario ()
-``` sql
-CREATE TABLE item (
-    id_item INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    nome VARCHAR(100) NOT NULL,
-    descricao VARCHAR(255) NOT NULL,
-    item_tipo VARCHAR(100) NOT NULL
-);
+## consumivel
 
+```sql
 CREATE TABLE consumivel (
     id_item INT NOT NULL PRIMARY KEY,
+    nome CHAR(100) NOT NULL,
+    descricao CHAR(255) NOT NULL,
     efeito FLOAT NOT NULL,
     preco FLOAT NOT NULL,
-    CONSTRAINT fk_id_item FOREIGN KEY (id_item) REFERENCES item(id_item)
+    CONSTRAINT fk_id_item FOREIGN KEY (id_item) REFERENCES tipo_item(id_item)
 );
+```
 
+## equipavel
+
+```sql
 CREATE TABLE equipavel (
     id_item INT NOT NULL PRIMARY KEY,
+    nome CHAR(100) NOT NULL,
+    descricao CHAR(255) NOT NULL,
     efeito INT NOT NULL,
     preco INT NOT NULL,
-    equipado BOOLEAN NOT NULL,
-    CONSTRAINT fk_id_item FOREIGN KEY (id_item) REFERENCES item(id_item)
+    CONSTRAINT fk_id_item FOREIGN KEY (id_item) REFERENCES tipo_item(id_item)
 );
+```
 
+## monetario
+
+```sql
 CREATE TABLE monetario (
     id_item INT NOT NULL PRIMARY KEY,
+    nome CHAR(100) NOT NULL,
+    descricao CHAR(255) NOT NULL,
     valor INT NOT NULL,
-    CONSTRAINT fk_id_item FOREIGN KEY (id_item) REFERENCES item(id_item)
+    CONSTRAINT fk_id_item FOREIGN KEY (id_item) REFERENCES tipo_item(id_item)
 );
-``` 
-Define os itens do jogo: `consumivel`, `equipavel`, `monetario`.
+```
 
-## Tabela loja_item ()
-``` sql
+## loja_item
+
+```sql
 CREATE TABLE loja_item (
     id_sala INT NOT NULL,
     id_item INT NOT NULL,
     PRIMARY KEY (id_sala, id_item),
     CONSTRAINT fk_sala FOREIGN KEY (id_sala) REFERENCES sala_comum(id_sala),
-    CONSTRAINT fk_item FOREIGN KEY (id_item) REFERENCES item(id_item)
+    CONSTRAINT fk_item FOREIGN KEY (id_item) REFERENCES tipo_item(id_item)
 );
-``` 
-Relaciona salas com os itens disponíveis.
+```
 
-## Tabela habilidade_criatura () e habilidade_estudante ()
-``` sql
+## habilidade_criatura
+
+```sql
 CREATE TABLE habilidade_criatura (
     id_criatura INT NOT NULL,
     id_habilidade INT NOT NULL,
     PRIMARY KEY (id_criatura, id_habilidade),
-    CONSTRAINT fk_criatura FOREIGN KEY (id_criatura) REFERENCES criatura(id_criatura),
-    CONSTRAINT fk_habilidade FOREIGN KEY (id_habilidade) REFERENCES habilidades(id_habilidade)
+    CONSTRAINT fk_criatura FOREIGN KEY (id_criatura) REFERENCES tipo_criatura(id_criatura),
+    CONSTRAINT fk_habilidade FOREIGN KEY (id_habilidade) REFERENCES tipoHabilidade(id_habilidade)
 );
+```
 
+## habilidade_estudante
+
+```sql
 CREATE TABLE habilidade_estudante (
     id_estudante INT NOT NULL,
     id_habilidade INT NOT NULL,
     PRIMARY KEY (id_estudante, id_habilidade),
     CONSTRAINT fk_estudante FOREIGN KEY (id_estudante) REFERENCES estudante(id_estudante),
-    CONSTRAINT fk_habilidade FOREIGN KEY (id_habilidade) REFERENCES habilidades(id_habilidade)
+    CONSTRAINT fk_habilidade FOREIGN KEY (id_habilidade) REFERENCES tipoHabilidade(id_habilidade)
 );
 ```
-Relacionam habilidades com criaturas ou estudantes.
 
-## Tabela loja () e habilidade_loja ()
+## habilidade_loja
+
 ```sql
-CREATE TABLE loja (
-    id_loja INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    nome VARCHAR(100) NOT NULL
-);
-
 CREATE TABLE habilidade_loja (
     id_loja INT NOT NULL,
     id_habilidade INT NOT NULL,
     PRIMARY KEY (id_loja, id_habilidade),
-    CONSTRAINT fk_loja FOREIGN KEY (id_loja) REFERENCES loja(id_loja),
-    CONSTRAINT fk_habilidade FOREIGN KEY (id_habilidade) REFERENCES habilidades(id_habilidade)
+    CONSTRAINT fk_loja FOREIGN KEY (id_loja) REFERENCES sala_comum(id_sala),
+    CONSTRAINT fk_habilidade FOREIGN KEY (id_habilidade) REFERENCES tipoHabilidade(id_habilidade)
 );
 ```
-Define lojas e suas habilidades à venda.
 
-## Tabela instancia_de_item ()
+## instancia_de_item
+
 ```sql
 CREATE TABLE instancia_de_item (
-    id_instanciaItem INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    id_instanciaItem INT GENERATED ALWAYS AS IDENTITY,
     id_item INT NOT NULL,
-    id_sala INT NOT NULL,
-    id_estudante INT NOT NULL,
-    CONSTRAINT fk_id_item FOREIGN KEY (id_item) REFERENCES item(id_item),
+    id_sala INT,
+    id_estudante INT,
+    PRIMARY KEY (id_instanciaItem, id_item),
+    CONSTRAINT fk_id_item FOREIGN KEY (id_item) REFERENCES tipo_item(id_item),
     CONSTRAINT fk_id_sala FOREIGN KEY (id_sala) REFERENCES sala_comum(id_sala),
     CONSTRAINT fk_id_estudante FOREIGN KEY (id_estudante) REFERENCES estudante(id_estudante)
 );
-```
-Itens possuídos por estudantes, localizados em salas.
 
-### Ataque, Cura, Defesa
+ALTER TABLE instancia_de_item
+ADD COLUMN equipado BOOLEAN DEFAULT FALSE;
+```
+
+## Ataque
+
 ```sql
 CREATE TABLE Ataque (
     id_habilidade INT NOT NULL PRIMARY KEY,
+    id_tema INT NOT NULL,
+    nome CHAR(100) NOT NULL,
+    nivel INT NOT NULL,
+    coolDown INT NOT NULL,
     danoCausado INT NOT NULL,
-    porcentagemAcerto FLOAT NOT NULL,
-    CONSTRAINT fk_habilidade FOREIGN KEY (id_habilidade) REFERENCES habilidades(id_habilidade)
-);
-
-CREATE TABLE Cura (
-    id_habilidade INT NOT NULL PRIMARY KEY,
-    vidaRecuperada INT NOT NULL,
-    CONSTRAINT fk_id_habilidade FOREIGN KEY (id_habilidade) REFERENCES habilidades(id_habilidade)
-);
-
-CREATE TABLE Defesa (
-    id_habilidade INT NOT NULL PRIMARY KEY,
-    danoMitigado INT NOT NULL,
-    CONSTRAINT fk_id_habilidade FOREIGN KEY (id_habilidade) REFERENCES habilidades(id_habilidade)
+    preco INT NOT NULL,  -- <<-- COLUNA ADICIONADA
+    CONSTRAINT fk_habilidade FOREIGN KEY (id_habilidade) REFERENCES tipoHabilidade(id_habilidade),
+    CONSTRAINT fk_id_tema FOREIGN KEY (id_tema) REFERENCES tema(id_tema)
 );
 ```
-Subtipos de habilidades com atributos específicos:
-- `Ataque`: dano causado e chance de acerto.
-- `Cura`: quantidade de vida recuperada.
-- `Defesa`: dano mitigado.
+
+## Cura
+
+```sql
+CREATE TABLE Cura (
+    id_habilidade INT NOT NULL PRIMARY KEY,
+    id_tema INT NOT NULL,
+    nome CHAR(100) NOT NULL,
+    nivel INT NOT NULL,
+    coolDown INT NOT NULL,
+    vidaRecuperada INT NOT NULL,
+    preco INT NOT NULL,  -- <<-- COLUNA ADICIONADA
+    CONSTRAINT fk_id_habilidade FOREIGN KEY (id_habilidade) REFERENCES tipoHabilidade(id_habilidade),
+    CONSTRAINT fk_id_tema FOREIGN KEY (id_tema) REFERENCES tema(id_tema)
+);
+```
+
+## Defesa
+
+```sql
+CREATE TABLE Defesa (
+    id_habilidade INT NOT NULL PRIMARY KEY,
+    id_tema INT NOT NULL,
+    nome CHAR(100) NOT NULL,
+    nivel INT NOT NULL,
+    coolDown INT NOT NULL,
+    danoMitigado INT NOT NULL,
+    preco INT NOT NULL,  -- <<-- COLUNA ADICIONADA
+    CONSTRAINT fk_id_habilidade FOREIGN KEY (id_habilidade) REFERENCES tipoHabilidade(id_habilidade),
+    CONSTRAINT fk_id_tema FOREIGN KEY (id_tema) REFERENCES tema(id_tema)
+);
+```
 
 <br>
 
@@ -296,3 +343,4 @@ Subtipos de habilidades com atributos específicos:
 | Versão | Data       | Descrição                                 | Autor             |
 |--------|------------|-------------------------------------------|-------------------|
 | 1.0    | 31/05/2025 | Inclusão das tabelas do banco de dados    | Milena Marques    |
+| 2.0    | 07/07/2025 | Colocando a versão final das tabelas      | Isaque Camargos   |

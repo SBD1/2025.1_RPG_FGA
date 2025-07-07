@@ -11,7 +11,7 @@
 --                            | Descricao: Refatoração para novo DDL            |      --
 -- --------------------------------------------------------------------------------------
 
--- Populando tabela 'tema' (Nenhuma alteração necessária)
+-- Populando tabela 'tema' 
 INSERT INTO tema (nome) VALUES
 ('Matemática'),
 ('Programação'),
