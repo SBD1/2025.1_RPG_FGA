@@ -157,18 +157,20 @@ UPDATE setor SET id_proxSetor = 6, id_prevSetor = 4 WHERE id_setor = 5;
 UPDATE setor SET id_proxSetor = 1, id_prevSetor = 5 WHERE id_setor = 6;
 
 
--- Populando tabela 'sala_comum' com lógica de dungeon corrigida
+-- Populando tabela 'sala_comum' com lógica de loja e dungeon corrigida
 DO $$
 DECLARE
     i INT;
     sector_id INT;
     room_count INT := 10;
-    shop_assigned BOOLEAN;
     prev_room_id INT;
     
-    -- Lógica para garantir no máximo 5 dungeons, uma por setor
+    -- Lógica para dungeons
     dungeon_sectors INT[];
     dungeon_room_number INT;
+
+    -- Lógica para lojas
+    shop_rooms INT[];
 BEGIN
     -- Seleciona 5 setores aleatórios para receber uma dungeon
     SELECT ARRAY(
@@ -176,11 +178,15 @@ BEGIN
     ) INTO dungeon_sectors;
 
     FOR sector_id IN 1..6 LOOP
-        shop_assigned := FALSE;
         prev_room_id := NULL;
         
         -- Sorteia em qual sala do setor a dungeon será colocada, caso o setor seja um dos escolhidos
         dungeon_room_number := floor(random() * room_count + 1);
+
+        -- Sorteia 3 números de sala únicos (de 1 a 10) para este setor ter lojas
+        SELECT ARRAY(
+            SELECT num FROM generate_series(1, room_count) AS s(num) ORDER BY random() LIMIT 3
+        ) INTO shop_rooms;
 
         FOR i IN 1..room_count LOOP
             DECLARE
@@ -190,16 +196,12 @@ BEGIN
                 has_dungeon BOOLEAN := FALSE;
                 current_room_id INT;
             BEGIN
-                -- Lógica para lojas (pode continuar a mesma)
-                IF NOT shop_assigned AND i = 1 THEN
+                -- Lógica para lojas: a sala tem uma loja se o seu número 'i' estiver no array sorteado
+                IF i = ANY(shop_rooms) THEN
                     has_shop := TRUE;
-                    shop_assigned := TRUE;
-                ELSE
-                    has_shop := (random() < 0.3);
                 END IF;
 
-                -- Lógica corrigida para dungeons
-                -- A sala recebe uma dungeon apenas se seu setor foi sorteado E se for a sala sorteada dentro do setor
+                -- Lógica para dungeons: a sala recebe uma dungeon apenas se seu setor foi sorteado E se for a sala sorteada
                 IF sector_id = ANY(dungeon_sectors) AND i = dungeon_room_number THEN
                     has_dungeon := TRUE;
                 END IF;
