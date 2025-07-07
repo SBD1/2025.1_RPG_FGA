@@ -1,79 +1,67 @@
 from jogo.db import get_db_connection, clear_screen
+from rich.console import Console
+from rich.table import Table
+from rich.panel import Panel
+from rich.text import Text
+# A importação problemática foi removida do topo do arquivo
+
+# Inicializa o console da Rich
+console = Console()
 
 EMOJIS_TEMA_ID = {
-    1: '📐',  # Matemática
-    2: '💻',  # Programação
-    3: '⚙️',  # Engenharias
-    4: '📚',  # Humanidades
-    5: '🌐',  # Gerais
+    1: '📐', 2: '💻', 3: '⚙️', 4: '📚', 5: '🌐',
 }
 
 def barra_progresso(valor_atual, valor_maximo, tamanho=10):
+    """Cria uma barra de progresso com emojis ou caracteres de fallback."""
+    # A importação é feita aqui para evitar o ciclo
+    from .menu import check_emoji_support
+    EMOJI_SUPPORT = check_emoji_support()
+    
     proporcao = valor_atual / valor_maximo if valor_maximo > 0 else 0
     blocos_cheios = int(proporcao * tamanho)
     blocos_vazios = tamanho - blocos_cheios
-    return '🟩' * blocos_cheios + '⬛' * blocos_vazios
+    
+    bar = Text()
+    if EMOJI_SUPPORT:
+        bar.append("🟩" * blocos_cheios)
+        bar.append("⬛" * blocos_vazios)
+    else:
+        bar.append("*" * blocos_cheios, style="bold green")
+        bar.append("-" * blocos_vazios, style="white")
+    return bar
 
 def verificar_level_up(id_estudante, id_tema):
-    """
-    Verifica se o XP atual ultrapassa o XP necessário para o level up.
-    Caso sim, desconta o XP necessário e incrementa o nível,
-    repete até não ser mais possível upar.
-    Usa fórmula mais justa para XP máximo: 50 * nível^1.5 arredondado.
-    """
+    """Verifica e aplica o level up para uma afinidade específica."""
     try:
         conn = get_db_connection()
         with conn.cursor() as cur:
-            # Busca xp e nivel atuais
-            cur.execute("""
-                SELECT xp_atual, nivel_atual
-                FROM afinidade
-                WHERE id_estudante = %s AND id_tema = %s
-                FOR UPDATE
-            """, (id_estudante, id_tema))
+            cur.execute("SELECT xp_atual, nivel_atual FROM afinidade WHERE id_estudante = %s AND id_tema = %s FOR UPDATE", (id_estudante, id_tema))
             res = cur.fetchone()
-            if not res:
-                return  # Nada a fazer se não existe afinidade
+            if not res: return
 
             xp_atual, nivel = res
             mudou = False
+            xp_max = lambda n: round(50 * (n ** 1.5))
 
-            # Função para calcular xp max (fórmula justa)
-            def xp_max(n):
-                return round(50 * (n ** 1.5))
-
-            while xp_atual >= xp_max(nivel):
+            while xp_atual >= xp_max(nivel) and nivel < 20:
                 xp_atual -= xp_max(nivel)
                 nivel += 1
                 mudou = True
-                if nivel > 20:  # limite maximo de nível
-                    nivel = 20
-                    xp_atual = xp_max(nivel)
-                    break
+            
+            if nivel >= 20: xp_atual = xp_max(20)
 
             if mudou:
-                cur.execute("""
-                    UPDATE afinidade
-                    SET xp_atual = %s, nivel_atual = %s
-                    WHERE id_estudante = %s AND id_tema = %s
-                """, (xp_atual, nivel, id_estudante, id_tema))
+                cur.execute("UPDATE afinidade SET xp_atual = %s, nivel_atual = %s WHERE id_estudante = %s AND id_tema = %s", (xp_atual, nivel, id_estudante, id_tema))
                 conn.commit()
-
     except Exception as e:
-        print(f"Erro ao verificar level up: {e}")
+        console.print(f"[bold red]Erro ao verificar level up: {e}[/bold red]")
     finally:
-        if conn:
-            conn.close()
+        if conn: conn.close()
 
 def carregar_afinidades_estudante(id_estudante):
-    query = """
-        SELECT a.id_tema, t.nome AS nome_tema, a.nivel_atual, a.xp_atual
-        FROM afinidade a
-        JOIN tema t ON a.id_tema = t.id_tema
-        WHERE a.id_estudante = %s
-        ORDER BY a.id_tema;
-    """
-    conn = None
+    """Carrega as afinidades de um estudante do banco de dados."""
+    query = "SELECT a.id_tema, t.nome, a.nivel_atual, a.xp_atual FROM afinidade a JOIN tema t ON a.id_tema = t.id_tema WHERE a.id_estudante = %s ORDER BY a.id_tema;"
     afinidades = []
     try:
         conn = get_db_connection()
@@ -81,121 +69,49 @@ def carregar_afinidades_estudante(id_estudante):
             cur.execute(query, (id_estudante,))
             rows = cur.fetchall()
             for row in rows:
-                id_tema = row[0]
-                nome_tema = row[1]
-                nivel = row[2]
-                xp_atual = row[3]
-                # Calcula XP max pela fórmula justa
-                xp_max = round(50 * (nivel ** 1.5))
-                # Verifica level up automático (sincroniza com o banco)
+                id_tema, nome_tema, nivel, xp_atual = row
                 verificar_level_up(id_estudante, id_tema)
-
-                # Após level up, recarrega os valores atualizados:
-                cur.execute("""
-                    SELECT nivel_atual, xp_atual FROM afinidade
-                    WHERE id_estudante = %s AND id_tema = %s
-                """, (id_estudante, id_tema))
+                
+                cur.execute("SELECT nivel_atual, xp_atual FROM afinidade WHERE id_estudante = %s AND id_tema = %s", (id_estudante, id_tema))
                 nivel, xp_atual = cur.fetchone()
                 xp_max = round(50 * (nivel ** 1.5))
 
-                afinidades.append({
-                    'id_tema': id_tema,
-                    'nome_tema': nome_tema,
-                    'nivel': nivel,
-                    'xp_atual': xp_atual,
-                    'xp_max': xp_max
-                })
+                afinidades.append({'id_tema': id_tema, 'nome_tema': nome_tema.strip(), 'nivel': nivel, 'xp_atual': xp_atual, 'xp_max': xp_max})
     except Exception as e:
-        print(f"Erro ao carregar afinidades: {e}")
+        console.print(f"[bold red]Erro ao carregar afinidades: {e}[/bold red]")
     finally:
-        if conn:
-            conn.close()
+        if conn: conn.close()
     return afinidades
 
-def cheat_menu(id_estudante):
-    """
-    Menu cheat para alterar nível da afinidade manualmente (nível 1 a 20), resetando XP.
-    """
-    afinidades = carregar_afinidades_estudante(id_estudante)
-    if not afinidades:
-        print("Nenhuma afinidade para alterar.")
-        input("Pressione Enter para continuar...")
-        return
-
-    print("\n=== Cheat Menu: Alterar Nível de Afinidade ===")
-    for idx, a in enumerate(afinidades, 1):
-        emoji = EMOJIS_TEMA_ID.get(a['id_tema'], '❓')
-        print(f"[{idx}] {emoji} {a['nome_tema']} (Nível atual: {a['nivel']})")
-    print("[0] Cancelar")
-
-    escolha = input("Escolha a afinidade para alterar o nível: ").strip()
-    if not escolha.isdigit():
-        print("Entrada inválida.")
-        input("Pressione Enter para continuar...")
-        return
-
-    escolha = int(escolha)
-    if escolha == 0:
-        return
-    if escolha < 1 or escolha > len(afinidades):
-        print("Opção inválida.")
-        input("Pressione Enter para continuar...")
-        return
-
-    afinidade_selecionada = afinidades[escolha - 1]
-
-    nivel_novo = input("Digite o novo nível (1 a 20): ").strip()
-    if not nivel_novo.isdigit():
-        print("Nível inválido.")
-        input("Pressione Enter para continuar...")
-        return
-
-    nivel_novo = int(nivel_novo)
-    if nivel_novo < 1 or nivel_novo > 20:
-        print("Nível fora do intervalo permitido.")
-        input("Pressione Enter para continuar...")
-        return
-
-    # Atualiza no banco: nivel novo, xp zero
-    try:
-        conn = get_db_connection()
-        with conn.cursor() as cur:
-            cur.execute("""
-                UPDATE afinidade
-                SET nivel_atual = %s, xp_atual = 0
-                WHERE id_estudante = %s AND id_tema = %s
-            """, (nivel_novo, id_estudante, afinidade_selecionada['id_tema']))
-            conn.commit()
-        print(f"Nível da afinidade '{afinidade_selecionada['nome_tema']}' atualizado para {nivel_novo} e XP zerado.")
-    except Exception as e:
-        print(f"Erro ao atualizar nível: {e}")
-    finally:
-        if conn:
-            conn.close()
-
-    input("Pressione Enter para continuar...")
-
+# ======== FUNÇÃO ATUALIZADA ========
 def mostrar_menu_afinidade(jogador):
-    while True:
-        clear_screen()
-        print(f"\n=== Afinidades de {jogador['nome']} ===\n")
-        afinidades = carregar_afinidades_estudante(jogador['id'])
-        if not afinidades:
-            print("Nenhuma afinidade encontrada.")
-        else:
-            print(f"{'Tema':<18} {'Nível':>5}  {'XP':<15}")
-            print("-" * 40)
-            for a in afinidades:
-                emoji = EMOJIS_TEMA_ID.get(a['id_tema'], '❓')
+    """Exibe as afinidades do jogador e espera o usuário pressionar Enter para voltar."""
+    # A importação é feita aqui para evitar o ciclo
+    from .menu import check_emoji_support
+    EMOJI_SUPPORT = check_emoji_support()
+    
+    clear_screen()
+    afinidades = carregar_afinidades_estudante(jogador['id'])
+    
+    table = Table(title=f"Afinidades de {jogador['nome']}", border_style="blue")
+    table.add_column("Tema", style="magenta", width=20)
+    table.add_column("Nível", style="cyan", justify="center")
+    table.add_column("Progresso de XP", style="green")
+
+    if not afinidades:
+        console.print(Panel("[yellow]Nenhuma afinidade encontrada.[/yellow]", title="Aviso"))
+    else:
+        for a in afinidades:
+            emoji = EMOJIS_TEMA_ID.get(a['id_tema'], '❓') if EMOJI_SUPPORT else ""
+            
+            # Verifica se o nível é máximo para exibir a mensagem correta
+            if a['nivel'] == 20:
+                # Usa a verificação de suporte para o emoji de brilho
+                max_text = "✨ Maximizado! ✨" if EMOJI_SUPPORT else "Maximizado!"
+                xp_formatado = Text(max_text, style="bold yellow")
+            else:
                 barra = barra_progresso(a['xp_atual'], a['xp_max'])
-                tema_formatado = f"{emoji} {a['nome_tema']}"
-                nivel_formatado = f"{a['nivel']:>5}"
-                xp_formatado = f"[{barra}] {a['xp_atual']}/{a['xp_max']}"
-                print(f"{tema_formatado:<18} {nivel_formatado}  {xp_formatado:<15}")
-        print("\n[0] Voltar")
-        print("[9] Cheat Menu (Alterar Nível)")
-        opcao = input("Escolha uma opção: ").strip()
-        if opcao == '0':
-            break
-        elif opcao == '9':
-            cheat_menu(jogador['id'])
+                xp_formatado = Text.assemble(f"[{barra}] ", (f"{a['xp_atual']}/{a['xp_max']}", "bold white"))
+            
+            table.add_row(f"{emoji} {a['nome_tema']}", str(a['nivel']), xp_formatado)
+        console.print(table)

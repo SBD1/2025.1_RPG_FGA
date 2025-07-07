@@ -102,7 +102,7 @@ def menu_jogador(jogador):
     while True:
         jogador.update(carregar_estudante(jogador['id']))
         verifica_estresse(jogador)
-        input("\nPressione Enter para continuar.")
+        #input("\nPressione Enter para continuar.")
 
         clear_screen()
 
@@ -111,8 +111,10 @@ def menu_jogador(jogador):
         status_text.append(f"{icon_player} {jogador['nome']} | {icon_stress} [", style="bold white")
         status_text.append(barra_estresse(jogador['estresse'])) # Anexa o objeto Text da barra
         status_text.append(f"] {jogador['estresse']}/100\n", style="bold white")
-        status_text.append(f"{icon_money} {jogador['total_dinheiro']}\n")
-        status_text.append(f"{icon_location} {jogador['nome_sala']}")
+        status_text.append(f"{icon_money} ", style="bold white")
+        status_text.append(f"{jogador['total_dinheiro']}\n", style="bold gold1")
+        status_text.append(f"{icon_location} ", style="bold white")
+        status_text.append(f"{jogador['nome_sala']}")
         
         console.print(Panel(status_text, title="[bold cyan]STATUS[/bold cyan]", border_style="green"))
 
@@ -140,17 +142,17 @@ def menu_jogador(jogador):
             clear_screen()
             habilidades = buscar_habilidades_estudante_todas(jogador['id'])
             mostrar_catalogo_habilidades(habilidades)
-            input("\nPressione Enter para voltar ao menu.")
+            console.input("\n[dim]Pressione Enter para voltar...[/dim]")
 
         elif opcao == '2':
             clear_screen()
             mostrar_menu_afinidade(jogador)
-            input("\nPressione Enter para continuar.")
+            console.input("\n[dim]Pressione Enter para voltar...[/dim]")
 
         elif opcao == '3':
             clear_screen()
             menu_inventario(jogador)
-            input("\nPressione Enter para continuar.")
+            console.input("\n[dim]Pressione Enter para voltar...[/dim]")
 
         elif opcao == '4':
             explorar_sala(jogador)
@@ -185,14 +187,14 @@ def menu_jogador(jogador):
 
                 except ValueError:
                     print("\nEntrada inválida. Por favor, digite um número.", style="bold red")
-            input("\nPressione Enter para continuar.")
+            console.input("\n[dim]Pressione Enter para voltar...[/dim]")
 
         elif opcao == '6':
             clear_screen()
             nova_sala = mudar_setor_estudante(jogador['id'])
             if nova_sala:
                 jogador['nome_sala'] = nova_sala
-            input("\nPressione Enter para continuar.")
+            console.input("\n[dim]Pressione Enter para voltar...[/dim]")
 
         elif opcao == '7':
             console.print("Retornando ao menu principal.", style="bold yellow")

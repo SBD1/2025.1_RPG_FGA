@@ -1,4 +1,12 @@
 from jogo.db import get_db_connection
+from rich.console import Console
+from rich.panel import Panel
+from rich.table import Table
+
+# A importação problemática foi removida daqui.
+
+# Inicializa o console da Rich
+console = Console()
 
 def buscar_habilidades_estudante_todas(id_estudante):
     try:
@@ -53,31 +61,48 @@ def buscar_habilidades_estudante_todas(id_estudante):
         return habilidades
         
     except Exception as e:
-        print("Erro ao buscar habilidades:", e)
+        console.print(f"[bold red]Erro ao buscar habilidades: {e}[/bold red]")
         return []
     finally:
-        if cur:
-            cur.close()
         if conn:
+            cur.close()
             conn.close()
 
 def mostrar_catalogo_habilidades(habilidades):
+    """Exibe o catálogo de habilidades do jogador em uma tabela Rich."""
+    
+    # ======== CORREÇÃO DA IMPORTAÇÃO CIRCULAR ========
+    # A importação é feita aqui, dentro da função, para evitar o erro.
+    from .menu import check_emoji_support
+    EMOJI_SUPPORT = check_emoji_support()
+    
+    icon_title = "🧠" if EMOJI_SUPPORT else ""
+    
     if not habilidades:
-        print("\n❌ Nenhuma habilidade encontrada.")
+        console.print(Panel("[yellow]Você ainda não possui nenhuma habilidade.[/yellow]", title="Aviso"))
         return
 
-    print("\n" + "=" * 120)
-    print("🧠 CATÁLOGO DE HABILIDADES 🧠".center(120))
-    print("=" * 120)
-    
+    # Cria a tabela para exibir as habilidades
+    table = Table(title=f"{icon_title} Catálogo de Habilidades", border_style="blue")
+    table.add_column("ID", style="cyan", justify="center")
+    table.add_column("Nome", style="magenta", width=25)
+    table.add_column("Tipo", style="green")
+    table.add_column("Nível", style="yellow", justify="center")
+    table.add_column("CD", style="red", justify="center")
+    table.add_column("Potência", style="bold white", justify="center")
+    table.add_column("Tema", style="blue")
+
+    # Adiciona as habilidades à tabela
     for h in habilidades:
         potencia_str = str(h['potencia']) if h['potencia'] is not None else '-'
-        print(f"ID: {h['id_habilidade']:>3} | "
-              f"Nome: {h['nome']:<20} | "
-              f"Tipo: {h['tipo_habilidade']:<7} | "
-              f"Nível: {h['nivel']:<2} | "
-              f"CD: {h['cooldown']:<2} | "
-              f"Potência: {potencia_str:<3} | "
-              f"Tema: {h['nome_tema']}")
+        table.add_row(
+            str(h['id_habilidade']),
+            h['nome'],
+            h['tipo_habilidade'].capitalize(),
+            str(h['nivel']),
+            str(h['cooldown']),
+            potencia_str,
+            h['nome_tema']
+        )
     
-    print("=" * 120)
+    console.print(table)
