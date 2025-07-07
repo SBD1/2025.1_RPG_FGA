@@ -187,13 +187,6 @@ def listar_detalhes_dungeons():
 
 
 def menu_debug_queries():
-    """Exibe o menu de consultas de debug estilizado com Rich."""
-    icon_dungeon = "🏰" if EMOJI_SUPPORT else ""
-    icon_shop = "🏪" if EMOJI_SUPPORT else ""
-    icon_item = "✨" if EMOJI_SUPPORT else ""
-    icon_player = "📍" if EMOJI_SUPPORT else ""
-    icon_details = "📜" if EMOJI_SUPPORT else ""
-    icon_back = "↩️" if EMOJI_SUPPORT else ""
 
     while True:
         clear_screen()
@@ -202,12 +195,12 @@ def menu_debug_queries():
         menu_table.add_column(style="bold magenta", justify="right")
         menu_table.add_column(justify="left")
 
-        menu_table.add_row("[1]", f" {icon_dungeon} Listar salas com Dungeon")
-        menu_table.add_row("[2]", f" {icon_shop} Listar salas com Loja")
-        menu_table.add_row("[3]", f" {icon_item} Listar salas com Itens no Chão")
-        menu_table.add_row("[4]", f" {icon_player} Mostrar Posição dos Jogadores")
-        menu_table.add_row("[5]", f" {icon_details} Ver Detalhes das Dungeons")
-        menu_table.add_row("[6]", f" {icon_back} Voltar ao Menu Principal")
+        menu_table.add_row("[1]", f" Listar salas com Dungeon")
+        menu_table.add_row("[2]", f" Listar salas com Loja")
+        menu_table.add_row("[3]", f" Listar salas com Itens no Chão")
+        menu_table.add_row("[4]", f" Mostrar Posição dos Jogadores")
+        menu_table.add_row("[5]", f" Ver Detalhes das Dungeons")
+        menu_table.add_row("[6]", f" Voltar ao Menu Principal")
         
         console.print(Panel(menu_table, title="[bold cyan]Menu de Debug[/bold cyan]", border_style="blue"))
         
