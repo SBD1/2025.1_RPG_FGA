@@ -181,6 +181,41 @@ END;
 $$ LANGUAGE plpgsql;
 
 CREATE TRIGGER trg_check_equipado
+
+CREATE OR REPLACE PROCEDURE usar_item_consumivel(p_id_estudante INT, p_id_item INT)
+LANGUAGE plpgsql
+AS $$
+DECLARE
+    v_efeito FLOAT;
+    v_vida_atual INT;
+BEGIN
+    -- Verifica se o item é consumível
+    IF NOT EXISTS (
+        SELECT 1 FROM consumivel WHERE id_item = p_id_item
+    ) THEN
+        RAISE EXCEPTION 'O item % não é consumível ou não existe.', p_id_item;
+    END IF;
+
+    -- Pega o efeito do item
+    SELECT efeito INTO v_efeito FROM consumivel WHERE id_item = p_id_item;
+
+    -- Pega vida atual
+    SELECT vida INTO v_vida_atual FROM estudante WHERE id_estudante = p_id_estudante;
+
+    -- Aplica o efeito (cura)
+    UPDATE estudante
+    SET vida = LEAST(v_vida_atual + v_efeito, 100)
+    WHERE id_estudante = p_id_estudante;
+
+    -- Remove o item consumido
+    DELETE FROM instancia_de_item
+    WHERE id_item = p_id_item AND id_estudante = p_id_estudante
+    LIMIT 1; -- se tiver mais de um item igual, remove só um
+
+    RAISE NOTICE 'Item % usado. % pontos de vida recuperados.', p_id_item, v_efeito;
+END;
+$$;
+
 BEFORE INSERT OR UPDATE ON instancia_de_item
 FOR EACH ROW EXECUTE FUNCTION check_item_equipavel();
 
