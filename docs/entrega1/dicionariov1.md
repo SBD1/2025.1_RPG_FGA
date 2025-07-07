@@ -100,7 +100,7 @@ De acordo com a *UC Merced Library*,
 | nivel | Nível da habilidade | INT |  | - Not Null|      
 | coolDown | Tempo de recarga | INT |  | - Not Null|   
 | danoMitigado | Indica o tanto de dano mitigado possibilitado pela defesa | INT          |         | - Not Null    
-|preco| Custo do defesa|INT||- Not Null|
+|preco| Custo da defesa|INT||- Not Null|
 
 <!-- ludmila alterou -->
 ## Entidade: setor
