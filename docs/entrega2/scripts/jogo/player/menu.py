@@ -91,10 +91,10 @@ def barra_estresse(estresse, max_estresse=100):
 
 def menu_jogador(jogador):
     # --- Lógica de ícones dinâmicos ---
-    icon_player = "🎒" if EMOJI_SUPPORT else "Jogador:"
-    icon_money = "💰" if EMOJI_SUPPORT else "Dinheiro:"
-    icon_location = "📍" if EMOJI_SUPPORT else "Local:"
-    icon_stress = "😰" if EMOJI_SUPPORT else "Estresse:"
+    icon_player = "🎒 Jogador:" if EMOJI_SUPPORT else "Jogador:"
+    icon_money = "💰 Dinheiro:" if EMOJI_SUPPORT else "Dinheiro:"
+    icon_location = "📍 Local:" if EMOJI_SUPPORT else "Local:"
+    icon_stress = "😰 " if EMOJI_SUPPORT else "Estresse:"
     icon_door = "🚪 ID:" if EMOJI_SUPPORT else "ID:"
     
     # Ícones para as opções do menu removidos.
@@ -112,7 +112,7 @@ def menu_jogador(jogador):
         status_text.append(barra_estresse(jogador['estresse'])) # Anexa o objeto Text da barra
         status_text.append(f"] {jogador['estresse']}/100\n", style="bold white")
         status_text.append(f"{icon_money} ", style="bold white")
-        status_text.append(f"{jogador['total_dinheiro']}\n", style="bold gold1")
+        status_text.append(f"$ {jogador['total_dinheiro']}\n", style="bold gold1")
         status_text.append(f"{icon_location} ", style="bold white")
         status_text.append(f"{jogador['nome_sala']}")
         

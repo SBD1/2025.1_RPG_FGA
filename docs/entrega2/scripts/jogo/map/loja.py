@@ -1,12 +1,41 @@
+# jogo/map/loja.py
+
 from jogo.db import get_db_connection, clear_screen
 from psycopg2 import Error
+from rich.console import Console
+from rich.panel import Panel
+from rich.table import Table
+from rich.text import Text
+
+# Inicializa o console e a função de verificação de emoji
+console = Console()
+
+def _check_emoji_support():
+    """Função de verificação de emoji para evitar importação circular."""
+    import os
+    if os.environ.get("WT_SESSION"):
+        return True
+    if os.environ.get("WSL_DISTRO_NAME"):
+        return False
+    if os.name != 'nt':
+        return True
+    return False
+
+EMOJI_SUPPORT = _check_emoji_support()
+
+EMOJIS_TEMA_ID = {
+    1: '📐', 2: '💻', 3: '⚙️', 4: '📚', 5: '🌐',
+}
 
 def exibir_itens_e_habilidades(id_loja, cur):
-    """Exibe os itens e habilidades disponíveis na loja, incluindo o tipo da habilidade."""
-    
-    # Query para buscar consumíveis (sem alterações)
+    """Exibe os itens e habilidades disponíveis na loja em tabelas Rich."""
+    icon_shop = "🏪" if EMOJI_SUPPORT else ""
+    icon_item = "🧪" if EMOJI_SUPPORT else ""
+    icon_skill = "🧠" if EMOJI_SUPPORT else ""
+
+    # Busca consumíveis
     cur.execute("""
-        SELECT i.id_item, c.nome, c.descricao, c.preco
+        SELECT i.id_item, c.nome, c.descricao, c.preco, c.efeito
         FROM loja_item li
         JOIN tipo_item i ON li.id_item = i.id_item
         JOIN consumivel c ON i.id_item = c.id_item
@@ -14,16 +43,11 @@ def exibir_itens_e_habilidades(id_loja, cur):
     """, (id_loja,))
     itens = cur.fetchall()
 
-    # Query de habilidades (sem alterações, pois já buscava o tipo)
+    # Busca habilidades
     cur.execute("""
-        SELECT 
-            th.id_habilidade, 
-            COALESCE(a.nome, c.nome, d.nome) AS nome,
-            th.tipo_habilidade,
-            COALESCE(a.preco, c.preco, d.preco) AS preco,
-            t.nome AS nome_tema,
-            COALESCE(a.nivel, c.nivel, d.nivel) AS nivel_req,
-            t.id_tema
+        SELECT th.id_habilidade, COALESCE(a.nome, c.nome, d.nome) AS nome, th.tipo_habilidade,
+               COALESCE(a.preco, c.preco, d.preco) AS preco, t.nome AS nome_tema,
+               COALESCE(a.nivel, c.nivel, d.nivel) AS nivel_req, t.id_tema
         FROM habilidade_loja hl
         JOIN tipoHabilidade th ON hl.id_habilidade = th.id_habilidade
         LEFT JOIN Ataque a ON hl.id_habilidade = a.id_habilidade
@@ -35,89 +59,89 @@ def exibir_itens_e_habilidades(id_loja, cur):
     habilidades = cur.fetchall()
 
     clear_screen()
-    print("="*90)
-    print("🏪 BEM-VINDO À LOJA! 🏪".center(90))
-    print("="*90)
+    console.print(Panel(f"[bold green]{icon_shop} BEM-VINDO À LOJA! {icon_shop}[/bold green]", border_style="yellow"))
 
     if not itens and not habilidades:
-        print("\nEsta loja está vazia no momento.")
+        console.print(Panel("[yellow]Esta loja está vazia no momento.[/yellow]", title="Aviso"))
         return [], []
 
-    print("\n--- ITENS CONSUMÍVEIS À VENDA ---")
-    if not itens:
-        print("Nenhum item disponível.")
-    else:
-        print(f"{'ID':<5} {'Nome':<30} {'Preço':<10} {'Descrição'}")
-        print("-" * 80)
+    # Tabela de Itens
+    item_table = Table(title=f"{icon_item} Itens à Venda", border_style="green")
+    item_table.add_column("ID", style="cyan")
+    item_table.add_column("Nome", style="magenta")
+    item_table.add_column("Preço", style="yellow")
+    item_table.add_column("Efeito", style="bold green")
+    item_table.add_column("Descrição", style="white")
+    if itens:
         for item in itens:
-            print(f"{item[0]:<5} {item[1].strip():<30} {item[3]:<10} {item[2].strip()}")
+            item_table.add_row(str(item[0]), item[1].strip(), str(item[3]), f"{item[4]} Estresse", item[2].strip())
+        console.print(item_table)
 
-    print("\n--- HABILIDADES À VENDA ---")
-    if not habilidades:
-        print("Nenhuma habilidade disponível.")
-    else:
-        # Header da tabela de habilidades atualizado para incluir "Tipo"
-        print(f"{'ID':<5} {'Nome':<25} {'Tipo':<10} {'Tema':<15} {'Nível Req.':<12} {'Preço'}")
-        print("-" * 90)
+    # Tabela de Habilidades
+    skill_table = Table(title=f"{icon_skill} Habilidades à Venda", border_style="blue")
+    skill_table.add_column("ID", style="cyan")
+    skill_table.add_column("Nome", style="magenta")
+    skill_table.add_column("Tipo", style="green")
+    skill_table.add_column("Tema", style="blue")
+    skill_table.add_column("Nível Req.", style="yellow")
+    skill_table.add_column("Preço", style="yellow")
+    if habilidades:
         for hab in habilidades:
-            # id, nome, tipo, preco, nome_tema, nivel_req, id_tema
             if hab[3] is None: continue
-            # Exibição atualizada para incluir o tipo da habilidade (hab[2])
-            print(f"{hab[0]:<5} {hab[1].strip():<25} {hab[2].strip():<10} {hab[4].strip():<15} {hab[5]:<12} {hab[3]}")
+            skill_table.add_row(str(hab[0]), hab[1].strip(), hab[2].strip().capitalize(), hab[4].strip(), str(hab[5]), str(hab[3]))
+        console.print(skill_table)
 
-    print("="*90)
     return itens, habilidades
 
 def comprar_item(jogador, item, conn, cur):
-    """Realiza a compra de um item."""
+    """Realiza a compra de um item com feedback estilizado."""
+    icon_success = "✅" if EMOJI_SUPPORT else "[v]"
+    icon_error = "❌" if EMOJI_SUPPORT else "[x]"
     id_estudante = jogador['id']
-    id_item, nome_item, _, preco_item = item
+    id_item, nome_item, _, preco_item, _ = item
 
     if jogador['total_dinheiro'] < preco_item:
-        print("❌ Dinheiro insuficiente!")
+        console.print(f"{icon_error} [bold red]Dinheiro insuficiente![/bold red]")
         return
 
     nova_quantia = jogador['total_dinheiro'] - preco_item
     cur.execute("UPDATE estudante SET total_dinheiro = %s WHERE id_estudante = %s", (nova_quantia, id_estudante))
     cur.execute("INSERT INTO instancia_de_item (id_estudante, id_item) VALUES (%s, %s)", (id_estudante, id_item))
-
     conn.commit()
     jogador['total_dinheiro'] = nova_quantia
-    print(f"✅ Você comprou {nome_item.strip()}!")
+    console.print(f"{icon_success} Você comprou '[bold magenta]{nome_item.strip()}[/bold magenta]'!")
 
 def comprar_habilidade(jogador, habilidade, conn, cur):
-    """Realiza a compra de uma habilidade, verificando o nível de afinidade."""
+    """Realiza a compra de uma habilidade com feedback estilizado."""
+    icon_success = "✅" if EMOJI_SUPPORT else "[v]"
+    icon_error = "❌" if EMOJI_SUPPORT else "[x]"
     id_estudante = jogador['id']
     id_habilidade, nome_habilidade, _, preco_habilidade, nome_tema, nivel_req, id_tema = habilidade
 
-    # Validação de nível
     cur.execute("SELECT nivel_atual FROM afinidade WHERE id_estudante = %s AND id_tema = %s", (id_estudante, id_tema))
     resultado_afinidade = cur.fetchone()
-    
     nivel_jogador_no_tema = resultado_afinidade[0] if resultado_afinidade else 0
 
     if nivel_jogador_no_tema < nivel_req:
-        print(f"\n❌ Nível insuficiente no tema '{nome_tema.strip()}'!")
-        print(f"   Nível requerido: {nivel_req} | Seu nível: {nivel_jogador_no_tema}")
+        console.print(f"\n{icon_error} [bold red]Nível insuficiente no tema '{nome_tema.strip()}'![/bold red]")
+        console.print(f"   Nível requerido: {nivel_req} | Seu nível: {nivel_jogador_no_tema}")
         return
 
-    # Lógica de compra
     if jogador['total_dinheiro'] < preco_habilidade:
-        print("❌ Dinheiro insuficiente!")
+        console.print(f"{icon_error} [bold red]Dinheiro insuficiente![/bold red]")
         return
 
     cur.execute("SELECT 1 FROM habilidade_estudante WHERE id_estudante = %s AND id_habilidade = %s", (id_estudante, id_habilidade))
     if cur.fetchone():
-        print("❌ Você já possui esta habilidade.")
+        console.print(f"{icon_error} [bold yellow]Você já possui esta habilidade.[/bold yellow]")
         return
 
     nova_quantia = jogador['total_dinheiro'] - preco_habilidade
     cur.execute("UPDATE estudante SET total_dinheiro = %s WHERE id_estudante = %s", (nova_quantia, id_estudante))
     cur.execute("INSERT INTO habilidade_estudante (id_estudante, id_habilidade) VALUES (%s, %s)", (id_estudante, id_habilidade))
-
     conn.commit()
     jogador['total_dinheiro'] = nova_quantia
-    print(f"✅ Você aprendeu a habilidade {nome_habilidade.strip()}!")
+    console.print(f"{icon_success} Você aprendeu a habilidade '[bold magenta]{nome_habilidade.strip()}[/bold magenta]'!")
 
 def acessar_loja(jogador):
     """Função principal para acessar e interagir com a loja."""
@@ -131,64 +155,91 @@ def acessar_loja(jogador):
         resultado = cur.fetchone()
 
         if not resultado or not resultado[0]:
-            print("\nEsta sala não possui uma loja.")
-            input("\nPressione Enter para voltar.")
+            console.print("\n[yellow]Esta sala não possui uma loja.[/yellow]")
+            console.input("\n[dim]Pressione Enter para voltar...[/dim]")
             return
 
         id_loja = id_sala 
 
         while True:
             itens, habilidades = exibir_itens_e_habilidades(id_loja, cur)
-            print(f"\nSeu dinheiro: {jogador['total_dinheiro']} 💰")
-            print("\nOpções:")
-            print("[I] Comprar Item")
-            print("[H] Comprar Habilidade")
-            print("[S] Sair da Loja")
-            escolha = input("Escolha uma opção: ").strip().upper()
+            
+            # Busca e exibe os níveis de afinidade do jogador
+            cur.execute("SELECT t.id_tema, t.nome, a.nivel_atual FROM afinidade a JOIN tema t ON a.id_tema = t.id_tema WHERE a.id_estudante = %s ORDER BY t.id_tema;", (jogador['id'],))
+            afinidades = cur.fetchall()
+            
+            # CORREÇÃO: Usar Text.assemble para garantir a formatação correta
+            afinidades_parts = []
+            for id_tema, nome_tema, nivel in afinidades:
+                emoji = EMOJIS_TEMA_ID.get(id_tema, " ") if EMOJI_SUPPORT else ""
+                # Adiciona cada parte como uma tupla (texto, estilo) ou apenas texto
+                afinidades_parts.append(f"{emoji} {nome_tema.strip()}: ")
+                afinidades_parts.append((str(nivel), "bold yellow"))
+                afinidades_parts.append(" | ")
+            
+            # Remove o último separador
+            if afinidades_parts:
+                afinidades_parts.pop()
+
+            afinidades_text = Text.assemble(*afinidades_parts, justify="center")
+
+            console.print(Panel(afinidades_text, title="Seus Níveis de Afinidade"))
+
+            icon_money = "💰" if EMOJI_SUPPORT else "$"
+            console.print(f"\nSeu dinheiro: [bold gold1]{icon_money} {jogador['total_dinheiro']}[/bold gold1]")
+            
+            menu_acoes = Table(show_header=False, show_edge=False, box=None)
+            menu_acoes.add_column(style="bold cyan", justify="right")
+            menu_acoes.add_column()
+            menu_acoes.add_row("[I]", "Comprar Item")
+            menu_acoes.add_row("[H]", "Comprar Habilidade")
+            menu_acoes.add_row("[S]", "Sair da Loja")
+            console.print(Panel(menu_acoes, title="Ações"))
+
+            escolha = console.input("[bold]Escolha uma opção: [/bold]").strip().upper()
 
             if escolha == 'S':
-                print("👋 Até mais!")
+                console.print("[yellow]Até mais![/yellow]")
                 break
             
             elif escolha == 'I':
                 if not itens:
-                    print("Não há itens para comprar.")
+                    console.print("[yellow]Não há itens para comprar.[/yellow]")
                 else:
                     try:
-                        id_compra = int(input("Digite o ID do item que deseja comprar: "))
+                        id_compra = int(console.input("[bold]Digite o ID do item que deseja comprar: [/bold]"))
                         item_selecionado = next((item for item in itens if item[0] == id_compra), None)
                         if item_selecionado:
                             comprar_item(jogador, item_selecionado, conn, cur)
                         else:
-                            print("ID de item inválido.")
+                            console.print("[bold red]ID de item inválido.[/bold red]")
                     except ValueError:
-                        print("Entrada inválida.")
-                input("\nPressione Enter para continuar.")
+                        console.print("[bold red]Entrada inválida.[/bold red]")
+                console.input("\n[dim]Pressione Enter para continuar...[/dim]")
 
             elif escolha == 'H':
                 if not habilidades:
-                    print("Não há habilidades para comprar.")
+                    console.print("[yellow]Não há habilidades para comprar.[/yellow]")
                 else:
                     try:
-                        id_compra = int(input("Digite o ID da habilidade que deseja comprar: "))
+                        id_compra = int(console.input("[bold]Digite o ID da habilidade que deseja comprar: [/bold]"))
                         habilidade_selecionada = next((hab for hab in habilidades if hab[0] == id_compra), None)
                         if habilidade_selecionada:
                             comprar_habilidade(jogador, habilidade_selecionada, conn, cur)
                         else:
-                            print("ID de habilidade inválido.")
+                            console.print("[bold red]ID de habilidade inválido.[/bold red]")
                     except ValueError:
-                        print("Entrada inválida.")
-                input("\nPressione Enter para continuar.")
+                        console.print("[bold red]Entrada inválida.[/bold red]")
+                console.input("\n[dim]Pressione Enter para continuar...[/dim]")
                 
             else:
-                print("Opção inválida.")
-                input("\nPressione Enter para tentar novamente.")
+                console.print("[bold red]Opção inválida.[/bold red]")
+                console.input("\n[dim]Pressione Enter para tentar novamente...[/dim]")
 
     except (Exception, Error) as e:
-        if conn:
-            conn.rollback()
-        print(f"❌ Erro ao acessar a loja: {e}")
-        input("\nPressione Enter para voltar.")
+        if conn: conn.rollback()
+        icon_error = "❌" if EMOJI_SUPPORT else "[x]"
+        console.print(f"{icon_error} [bold red]Erro ao acessar a loja: {e}[/bold red]")
+        console.input("\n[dim]Pressione Enter para voltar...[/dim]")
     finally:
-        if conn:
-            conn.close()
+        if conn: conn.close()

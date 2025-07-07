@@ -174,7 +174,7 @@ def _menu_monetarios(jogador):
     """Exibe e gerencia a categoria de itens monetários."""
     from .menu import check_emoji_support
     EMOJI_SUPPORT = check_emoji_support()
-    icon_title = "💰" if EMOJI_SUPPORT else ""
+    icon_title = "💰" if EMOJI_SUPPORT else "$"
     icon_error = "❌" if EMOJI_SUPPORT else "[x]"
     
     clear_screen()
