@@ -1,5 +1,44 @@
 
-# Procedures e Triggers — RPG-FGA
+# Triggers e Procedures no RPG-FGA
+
+Neste sistema de RPG acadêmico, o banco de dados é a parte ativa das **regras de jogo**. Para garantir integridade, automação e lógica de gameplay, usamos **Stored Procedures** e **Triggers**.
+
+---
+
+## Triggers: Regras Automáticas
+
+Triggers são blocos de código que **executam automaticamente** quando certas ações acontecem (INSERT, UPDATE, DELETE). Elas são úteis para:
+
+- **Validar integridade dos dados** (ex: sala deve existir antes de cadastrar um estudante)
+- **Evitar estados inválidos** (ex: uma criatura não pode ser boss e monstro ao mesmo tempo)
+- **Aplicar restrições sem depender do front-end**
+
+### Exemplos:
+- `trg_valida_sala_estudante`: impede cadastrar estudante em sala inexistente
+- `trg_check_criatura_boss`: garante unicidade entre boss e monstro
+- `trg_check_equipado`: impede itens não-equipáveis de serem marcados como "equipado"
+
+---
+
+## Procedures: Ações Complexas
+
+Stored Procedures são **funções armazenadas** que encapsulam lógicas de jogo reutilizáveis, podendo ser chamadas sob demanda.
+
+### Exemplos:
+- `criar_estudante`: cria um novo jogador e inicializa afinidades
+- `registrar_vitoria_monstro`: atualiza XP e moedas ao vencer um monstro
+- `dropar_reliquia_boss`: entrega uma relíquia única ao derrotar um boss
+- `usar_item_consumivel`: aplica efeito de cura e remove o item do inventário
+
+---
+
+## Benefícios no jogo
+
+- **Regras de negócio centralizadas** e seguras no banco
+- **Automação da lógica do jogo** (como XP, níveis, uso de itens)
+- **Redução de código repetido** no backend ou frontend
+- **Facilidade de testes e manutenção**
+
 
 ## Procedure: `criar_estudante`
 
