@@ -42,6 +42,7 @@ nav:
       - DQL: entrega2/dql.md
       - DML: entrega2/dml.md
       - DDL: entrega2/ddl.md
+      - Triggers e Stored Procedures: entrega3/triggers_storedprocedures.md
   
 extra_css:
   - stylesheets/extra.css
