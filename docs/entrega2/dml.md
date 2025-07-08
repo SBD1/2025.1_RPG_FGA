@@ -6,7 +6,7 @@ Neste contexto, o script `DML.sql` foi utilizado para popular o banco de dados c
 
 ## Operações realizadas
 
-### tema 
+## Inserções na tabela **tema**
 
 ```sql
 -- Populando tabela 'tema' 
@@ -18,7 +18,9 @@ INSERT INTO tema (nome) VALUES
 ('Gerais');
 ```
 
-### tipoHabilidade & Ataque 
+---
+
+## Inserções de **tipoHabilidade** e **Ataque**
 
 ```sql
 -- Populando 'tipoHabilidade' e 'Ataque'
@@ -57,7 +59,9 @@ INSERT INTO tipoHabilidade (tipo_habilidade) VALUES ('ataque'); -- ID 14
 INSERT INTO Ataque (id_habilidade, id_tema, nome, nivel, coolDown, danoCausado, preco) VALUES (14, 5, 'Estudo Avançado', 10, 4, 20, 70);
 ```
 
-### tipoHabilidade & Cura 
+---
+
+## Inserções de **tipoHabilidade** e **Cura**
 
 ```sql
 -- Populando 'tipoHabilidade' e 'Cura'
@@ -75,7 +79,9 @@ INSERT INTO tipoHabilidade (tipo_habilidade) VALUES ('cura'); -- ID 20
 INSERT INTO Cura (id_habilidade, id_tema, nome, nivel, coolDown, vidaRecuperada, preco) VALUES (20, 5, 'Pausa para o Café', 7, 2, 15, 50);
 ```
 
-### tipoHabilidade & Defesa 
+---
+
+## Inserções de **tipoHabilidade** e **Defesa**
 
 ```sql
 -- Populando 'tipoHabilidade' e 'Defesa'
@@ -93,7 +99,9 @@ INSERT INTO tipoHabilidade (tipo_habilidade) VALUES ('defesa'); -- ID 26
 INSERT INTO Defesa (id_habilidade, id_tema, nome, nivel, coolDown, danoMitigado, preco) VALUES (26, 5, 'Concentração Total', 11, 3, 14, 69);
 ```
 
-### tipo_item 
+---
+
+## Inserções na tabela **tipo_item**
 
 ```sql
 -- Populando 'tipo_item'
@@ -104,7 +112,9 @@ INSERT INTO tipo_item (item_tipo) VALUES
 ('Monetário'), ('Monetário'); -- IDs 14-15
 ```
 
-### reliquia 
+---
+
+## Inserções na tabela **reliquia**
 
 ```sql
 -- Populando 'reliquia'
@@ -116,7 +126,9 @@ INSERT INTO reliquia (id_reliquia, nome, descricao, tipo_reliquia) VALUES
 (5, 'Conhecimento Geral Abrangente', 'Relíquia do tema Gerais', 'Conhecimento Geral Abrangente');
 ```
 
-### tipo_criatura & monstro_simples 
+---
+
+## Inserções de **tipo_criatura** e **monstro_simples**
 
 ```sql
 -- Populando 'tipo_criatura' e 'monstro_simples'
@@ -142,34 +154,40 @@ INSERT INTO tipo_criatura (tipo_criatura) VALUES ('Monstro'); -- ID 10
 INSERT INTO monstro_simples (id_criatura, nome, descricao, nivel, vida_max, xp_tema, qtd_moedas) VALUES (10, 'Distração Coletiva', 'O inimigo de toda sessão de estudos.', 8, 65, 10, 4);
 ```
 
-### tipo_criatura & boss 
+---
+
+## Inserções de **tipo_criatura** e **boss**
 
 ```sql
 -- Populando 'tipo_criatura' e 'boss'
 INSERT INTO tipo_criatura (tipo_criatura) VALUES ('Boss'); -- ID 11
-INSERT INTO boss (id_criatura, nome, descricao, nivel, vida_max, id_reliquia) VALUES (11, 'Professor Álgebra', 'Um mestre implacável da matemática abstrata.', 20, 200, 1);
+INSERT INTO boss (id_criatura, nome, descricao, nivel, vida_max, id_reliquia) VALUES (11, 'Chicão', 'Gêmeo maligno que nega todas as matriculas.', 20, 200, 1);
 INSERT INTO tipo_criatura (tipo_criatura) VALUES ('Boss'); -- ID 12
-INSERT INTO boss (id_criatura, nome, descricao, nivel, vida_max, id_reliquia) VALUES (12, 'O Último Compilador', 'O guardião supremo da lógica de programação.', 20, 220, 2);
+INSERT INTO boss (id_criatura, nome, descricao, nivel, vida_max, id_reliquia) VALUES (12, 'Frango assado do RU', 'Vai te dar uma intoxicação alimentar, pois está sempre cru.', 20, 250, 2);
 INSERT INTO tipo_criatura (tipo_criatura) VALUES ('Boss'); -- ID 13
-INSERT INTO boss (id_criatura, nome, descricao, nivel, vida_max, id_reliquia) VALUES (13, 'A Burocracia Impiedosa', 'Um sistema complexo que desafia a paciência de todos.', 20, 210, 4);
+INSERT INTO boss (id_criatura, nome, descricao, nivel, vida_max, id_reliquia) VALUES (13, 'Superlotação', 'Esse curso não precisa de mais uma aluno...', 20, 260, 4);
 INSERT INTO tipo_criatura (tipo_criatura) VALUES ('Boss'); -- ID 14
-INSERT INTO boss (id_criatura, nome, descricao, nivel, vida_max, id_reliquia) VALUES (14, 'O Gigante de Concreto', 'Uma estrutura colossal que testa a engenharia.', 20, 230, 3);
+INSERT INTO boss (id_criatura, nome, descricao, nivel, vida_max, id_reliquia) VALUES (14, 'Thinkpad do mocap', 'É um ser ancestral que vai travar quando vc menos esperar.', 20, 230, 3);
 INSERT INTO tipo_criatura (tipo_criatura) VALUES ('Boss'); -- ID 15
-INSERT INTO boss (id_criatura, nome, descricao, nivel, vida_max, id_reliquia) VALUES (15, 'A Crise Existencial', 'A dúvida que assola todo estudante na reta final.', 20, 190, 5);
+INSERT INTO boss (id_criatura, nome, descricao, nivel, vida_max, id_reliquia) VALUES (15, 'Mauricio me dá SS', 'Isso mesmo, esse boss sempre dá SS aos alunos, em troca da sua alma, aceitas?.', 20, 190, 5);
 ```
 
-### campus 
+---
+
+## Inserções na tabela **campus**
 
 ```sql
--- Populando tabela 'campus' (Nenhuma alteração necessária)
+-- Populando tabela 'campus'
 INSERT INTO campus (nome, descricao) VALUES
 ('UnB Campus Gama', 'O coração da jornada acadêmica do RPG-FGA.');
 ```
 
-### setor 
+---
+
+## Inserções e atualizações da tabela **setor**
 
 ```sql
--- Populando tabela 'setor' (Nenhuma alteração necessária)
+-- Populando tabela 'setor'
 INSERT INTO setor (id_campus, nome, descricao) VALUES 
 (1, 'UED', 'Unidade de Ensino à Distância, com laboratórios e salas de professores.'),
 (1, 'Containers', 'Setor de laboratórios específicos, construídos em containers.'),
@@ -178,7 +196,7 @@ INSERT INTO setor (id_campus, nome, descricao) VALUES
 (1, 'Estacionamento', 'Área externa para veículos e um espaço de lazer.'),
 (1, 'LDTEA', 'Laboratório de Desenho Técnico e Expressão Artística.');
 
--- Atualiza id_proxSetor e id_prevSetor (Nenhuma alteração necessária)
+-- Atualiza id_proxSetor e id_prevSetor
 UPDATE setor SET id_proxSetor = 2, id_prevSetor = 6 WHERE id_setor = 1;
 UPDATE setor SET id_proxSetor = 3, id_prevSetor = 1 WHERE id_setor = 2;
 UPDATE setor SET id_proxSetor = 4, id_prevSetor = 2 WHERE id_setor = 3;
@@ -187,7 +205,9 @@ UPDATE setor SET id_proxSetor = 6, id_prevSetor = 4 WHERE id_setor = 5;
 UPDATE setor SET id_proxSetor = 1, id_prevSetor = 5 WHERE id_setor = 6;
 ```
 
-### sala_comum 
+---
+
+## Geração de salas (**sala_comum**) – bloco DO
 
 ```sql
 -- Populando tabela 'sala_comum' com lógica de dungeon corrigida
@@ -223,7 +243,6 @@ BEGIN
                 has_dungeon BOOLEAN := FALSE;
                 current_room_id INT;
             BEGIN
-                -- Lógica para lojas (pode continuar a mesma)
                 IF NOT shop_assigned AND i = 1 THEN
                     has_shop := TRUE;
                     shop_assigned := TRUE;
@@ -231,8 +250,6 @@ BEGIN
                     has_shop := (random() < 0.3);
                 END IF;
 
-                -- Lógica corrigida para dungeons
-                -- A sala recebe uma dungeon apenas se seu setor foi sorteado E se for a sala sorteada dentro do setor
                 IF sector_id = ANY(dungeon_sectors) AND i = dungeon_room_number THEN
                     has_dungeon := TRUE;
                 END IF;
@@ -257,7 +274,6 @@ BEGIN
             END;
         END LOOP;
         
-        -- Conecta a última sala com a primeira para fechar o ciclo
         IF prev_room_id IS NOT NULL THEN
             DECLARE
                 first_room_id INT;
@@ -271,7 +287,9 @@ BEGIN
 END $$;
 ```
 
-### estudante 
+---
+
+## Inserções na tabela **estudante**
 
 ```sql
 -- Populando tabela 'estudante'
@@ -283,10 +301,12 @@ INSERT INTO estudante (nome, vida, estresse, total_dinheiro, id_sala) VALUES
 ('Eduardo G', 20, 20, 10, (SELECT id_sala FROM sala_comum WHERE id_setor = 5 ORDER BY id_sala LIMIT 1));
 ```
 
-### afinidade 
+---
+
+## Inserções na tabela **afinidade**
 
 ```sql
--- Populando tabela 'afinidade' (Nenhuma alteração necessária)
+-- Populando tabela 'afinidade'
 INSERT INTO afinidade (id_estudante, id_tema, xp_atual, nivel_atual) VALUES
 (1, 1, 0, 1), (1, 2, 0, 1), (1, 3, 0, 1), (1, 4, 0, 1), (1, 5, 0, 1),
 (2, 1, 0, 1), (2, 2, 0, 1), (2, 3, 0, 1), (2, 4, 0, 1), (2, 5, 0, 1),
@@ -295,7 +315,9 @@ INSERT INTO afinidade (id_estudante, id_tema, xp_atual, nivel_atual) VALUES
 (5, 1, 0, 1), (5, 2, 0, 1), (5, 3, 0, 1), (5, 4, 0, 1), (5, 5, 0, 1);
 ```
 
-### consumivel 
+---
+
+## Inserções nas tabelas **consumivel**, **equipavel** e **monetario**
 
 ```sql
 -- Populando 'consumivel'
@@ -305,28 +327,22 @@ INSERT INTO consumivel (id_item, nome, descricao, efeito, preco) VALUES
 (8, 'Comprimido Analgésico', 'Alivia dores de cabeça e ajuda a focar.', 7.0, 4.0),
 (9, 'Guaraná Natural', 'Aumenta sua vida por um curto período.', 15.0, 8.0),
 (10, 'Chocolate Acadêmico', 'Melhora o humor e a concentração.', 12.0, 6.0);
-```
 
-### equipavel 
-
-```sql
 -- Populando 'equipavel'
 INSERT INTO equipavel (id_item, nome, descricao, efeito, preco) VALUES
 (11, 'Óculos de Leitura Avançada', 'Aumenta sua vida máxima permanentemente.', 10, 50),
 (12, 'Mochila de Estudo', 'Permite carregar mais itens.', 5, 30),
 (13, 'Tênis Confortável', 'Aumenta sua capacidade de fuga em combate.', 2, 40);
-```
 
-### monetario 
-
-```sql
 -- Populando 'monetario'
 INSERT INTO monetario (id_item, nome, descricao, valor) VALUES
 (14, 'Moeda Acadêmica', 'A moeda corrente do campus.', 1),
 (15, 'Ficha de RU', 'Pode ser trocada por refeições.', 5);
 ```
 
-### dungeon_academica 
+---
+
+## Inserções na tabela **dungeon_academica**
 
 ```sql
 -- Populando tabela 'dungeon_academica'
@@ -343,7 +359,9 @@ INSERT INTO dungeon_academica (id_dungeon, nome, descricao, id_tema) VALUES
 ((SELECT id_sala FROM dungeon_salas WHERE rn = 5), 'O Grande Auditório', 'Um local de conhecimento vasto e diversificado.', 5);
 ```
 
-### instancia_de_criatura 
+---
+
+## Instanciação de criaturas na dungeon – bloco DO
 
 ```sql
 DO $$
@@ -367,7 +385,9 @@ BEGIN
 END $$;
 ```
 
-### loja_item 
+---
+
+## Inserções na tabela **loja_item** – bloco DO
 
 ```sql
 -- Populando tabela 'loja_item'
@@ -384,29 +404,55 @@ BEGIN
 END $$;
 ```
 
-### habilidade_criatura 
+---
+
+## Inserções na tabela **habilidade_criatura**
 
 ```sql
 -- Populando tabela 'habilidade_criatura'
 INSERT INTO habilidade_criatura (id_criatura, id_habilidade) VALUES
--- Erro de Sintaxe (id_criatura=1, Monstro)
+-- Monstros Simples
 ((SELECT id_criatura FROM monstro_simples WHERE nome = 'Erro de Sintaxe'), (SELECT id_habilidade FROM Ataque WHERE nome = 'Bug Report')),
 ((SELECT id_criatura FROM monstro_simples WHERE nome = 'Erro de Sintaxe'), (SELECT id_habilidade FROM Ataque WHERE nome = 'Ataque Básico')),
--- Derivada Confusa (id_criatura=2, Monstro)
 ((SELECT id_criatura FROM monstro_simples WHERE nome = 'Derivada Confusa'), (SELECT id_habilidade FROM Ataque WHERE nome = 'Equação Quadrática')),
 ((SELECT id_criatura FROM monstro_simples WHERE nome = 'Derivada Confusa'), (SELECT id_habilidade FROM Defesa WHERE nome = 'Defesa Numérica')),
--- Plágio Descarado (id_criatura=3, Monstro)
 ((SELECT id_criatura FROM monstro_simples WHERE nome = 'Plágio Descarado'), (SELECT id_habilidade FROM Ataque WHERE nome = 'Retórica Persuasiva')),
 ((SELECT id_criatura FROM monstro_simples WHERE nome = 'Plágio Descarado'), (SELECT id_habilidade FROM Ataque WHERE nome = 'Crítica Social')),
+((SELECT id_criatura FROM monstro_simples WHERE nome = 'Fio Solto'), (SELECT id_habilidade FROM Ataque WHERE nome = 'Desenho Técnico')),
+((SELECT id_criatura FROM monstro_simples WHERE nome = 'Fio Solto'), (SELECT id_habilidade FROM Defesa WHERE nome = 'Material Resistente')),
+((SELECT id_criatura FROM monstro_simples WHERE nome = 'Preguiça Matinal'), (SELECT id_habilidade FROM Ataque WHERE nome = 'Ataque Básico')),
+((SELECT id_criatura FROM monstro_simples WHERE nome = 'Preguiça Matinal'), (SELECT id_habilidade FROM Cura WHERE nome = 'Pausa para o Café')),
+((SELECT id_criatura FROM monstro_simples WHERE nome = 'Loop Infinito'), (SELECT id_habilidade FROM Ataque WHERE nome = 'Debug Rápido')),
+((SELECT id_criatura FROM monstro_simples WHERE nome = 'Loop Infinito'), (SELECT id_habilidade FROM Defesa WHERE nome = 'Firewall Pessoal')),
+((SELECT id_criatura FROM monstro_simples WHERE nome = 'Paradoxo Lógico'), (SELECT id_habilidade FROM Ataque WHERE nome = 'Teorema de Pitágoras')),
+((SELECT id_criatura FROM monstro_simples WHERE nome = 'Paradoxo Lógico'), (SELECT id_habilidade FROM Defesa WHERE nome = 'Defesa Numérica')),
+((SELECT id_criatura FROM monstro_simples WHERE nome = 'Teoria da Conspiração'), (SELECT id_habilidade FROM Ataque WHERE nome = 'Crítica Social')),
+((SELECT id_criatura FROM monstro_simples WHERE nome = 'Teoria da Conspiração'), (SELECT id_habilidade FROM Defesa WHERE nome = 'Escudo Cultural')),
+((SELECT id_criatura FROM monstro_simples WHERE nome = 'Solda Fria'), (SELECT id_habilidade FROM Ataque WHERE nome = 'Análise Estrutural')),
+((SELECT id_criatura FROM monstro_simples WHERE nome = 'Solda Fria'), (SELECT id_habilidade FROM Cura WHERE nome = 'Reparo de Circuito')),
+((SELECT id_criatura FROM monstro_simples WHERE nome = 'Distração Coletiva'), (SELECT id_habilidade FROM Ataque WHERE nome = 'Estudo Avançado')),
+((SELECT id_criatura FROM monstro_simples WHERE nome = 'Distração Coletiva'), (SELECT id_habilidade FROM Cura WHERE nome = 'Sessão de Terapia')),
 -- Bosses
-((SELECT id_criatura FROM boss WHERE nome = 'Professor Álgebra'), (SELECT id_habilidade FROM Ataque WHERE nome = 'Cálculo Integral')),
-((SELECT id_criatura FROM boss WHERE nome = 'O Último Compilador'), (SELECT id_habilidade FROM Ataque WHERE nome = 'Zero Division')),
-((SELECT id_criatura FROM boss WHERE nome = 'A Burocracia Impiedosa'), (SELECT id_habilidade FROM Ataque WHERE nome = 'Argumento Irrefutável')),
-((SELECT id_criatura FROM boss WHERE nome = 'O Gigante de Concreto'), (SELECT id_habilidade FROM Ataque WHERE nome = 'Falha de Projeto')),
-((SELECT id_criatura FROM boss WHERE nome = 'A Crise Existencial'), (SELECT id_habilidade FROM Ataque WHERE nome = 'Estudo Avançado'));
+((SELECT id_criatura FROM boss WHERE nome = 'Chicão'), (SELECT id_habilidade FROM Ataque WHERE nome = 'Cálculo Integral')),
+((SELECT id_criatura FROM boss WHERE nome = 'Chicão'), (SELECT id_habilidade FROM Defesa WHERE nome = 'Defesa Numérica')),
+((SELECT id_criatura FROM boss WHERE nome = 'Chicão'), (SELECT id_habilidade FROM Cura WHERE nome = 'Revisão de Conceitos')),
+((SELECT id_criatura FROM boss WHERE nome = 'Frango assado do RU'), (SELECT id_habilidade FROM Ataque WHERE nome = 'Zero Division')),
+((SELECT id_criatura FROM boss WHERE nome = 'Frango assado do RU'), (SELECT id_habilidade FROM Defesa WHERE nome = 'Firewall Pessoal')),
+((SELECT id_criatura FROM boss WHERE nome = 'Frango assado do RU'), (SELECT id_habilidade FROM Cura WHERE nome = 'Stack Overflow')),
+((SELECT id_criatura FROM boss WHERE nome = 'Superlotação'), (SELECT id_habilidade FROM Ataque WHERE nome = 'Argumento Irrefutável')),
+((SELECT id_criatura FROM boss WHERE nome = 'Superlotação'), (SELECT id_habilidade FROM Defesa WHERE nome = 'Escudo Cultural')),
+((SELECT id_criatura FROM boss WHERE nome = 'Superlotação'), (SELECT id_habilidade FROM Cura WHERE nome = 'Sessão de Terapia')),
+((SELECT id_criatura FROM boss WHERE nome = 'Thinkpad do mocap'), (SELECT id_habilidade FROM Ataque WHERE nome = 'Falha de Projeto')),
+((SELECT id_criatura FROM boss WHERE nome = 'Thinkpad do mocap'), (SELECT id_habilidade FROM Defesa WHERE nome = 'Material Resistente')),
+((SELECT id_criatura FROM boss WHERE nome = 'Thinkpad do mocap'), (SELECT id_habilidade FROM Cura WHERE nome = 'Reparo de Circuito')),
+((SELECT id_criatura FROM boss WHERE nome = 'Mauricio me dá SS'), (SELECT id_habilidade FROM Ataque WHERE nome = 'Estudo Avançado')),
+((SELECT id_criatura FROM boss WHERE nome = 'Mauricio me dá SS'), (SELECT id_habilidade FROM Defesa WHERE nome = 'Concentração Total')),
+((SELECT id_criatura FROM boss WHERE nome = 'Mauricio me dá SS'), (SELECT id_habilidade FROM Cura WHERE nome = 'Pausa para o Café'));
 ```
 
-### habilidade_estudante 
+---
+
+## Inserções na tabela **habilidade_estudante**
 
 ```sql
 -- Populando tabela 'habilidade_estudante'
@@ -428,7 +474,9 @@ INSERT INTO habilidade_estudante (id_estudante, id_habilidade) VALUES
 (5, (SELECT id_habilidade FROM Cura WHERE nome = 'Curativo Simples'));
 ```
 
-### habilidade_loja 
+---
+
+## Inserções na tabela **habilidade_loja** – bloco DO
 
 ```sql
 -- Populando tabela 'habilidade_loja'
@@ -438,7 +486,6 @@ DECLARE
     habilidade_id INT;
 BEGIN
     FOR shop_sala_id IN (SELECT id_sala FROM sala_comum WHERE tem_loja = TRUE) LOOP
-        -- Seleciona um conjunto aleatório de 5 habilidades para cada loja
         FOR habilidade_id IN (SELECT id_habilidade FROM tipoHabilidade ORDER BY random() LIMIT 5) LOOP
             INSERT INTO habilidade_loja (id_loja, id_habilidade) VALUES (shop_sala_id, habilidade_id);
         END LOOP;
@@ -446,11 +493,12 @@ BEGIN
 END $$;
 ```
 
-### instancia_de_item 
+---
+
+## Inserções na tabela **instancia_de_item** – bloco DO + extras
 
 ```sql
 -- Populando tabela 'instancia_de_item'
--- CORREÇÃO: O SELECT busca da tabela 'tipo_item' em vez da antiga 'item'.
 DO $$
 DECLARE
     i INT;
@@ -462,24 +510,20 @@ DECLARE
     equipado_val BOOLEAN;
 BEGIN
     FOR i IN 1..instance_count LOOP
-        -- Sorteia um item aleatório
         SELECT id_item, item_tipo INTO random_item_id, v_item_tipo
         FROM tipo_item
         ORDER BY random()
         LIMIT 1;
 
-        -- Define o valor de "equipado" conforme o tipo do item
         IF v_item_tipo = 'Equipável' THEN
             equipado_val := FALSE;
         ELSE
             equipado_val := NULL;
         END IF;
 
-        -- Sorteia uma sala e um estudante
         SELECT id_sala INTO random_sala_id FROM sala_comum ORDER BY random() LIMIT 1;
         SELECT id_estudante INTO random_estudante_id FROM estudante ORDER BY random() LIMIT 1;
 
-        -- Garante que a instância vá para sala OU estudante (não ambos)
         IF random() > 0.5 THEN
             INSERT INTO instancia_de_item (id_item, id_sala, id_estudante, equipado)
             VALUES (random_item_id, random_sala_id, NULL, equipado_val);
@@ -494,6 +538,7 @@ INSERT INTO instancia_de_item (id_item, id_sala, id_estudante, equipado) VALUES
         (11, NULL, 4, FALSE),
         (12, NULL, 4, TRUE);
 ```
+
 
 
 
