@@ -2,8 +2,59 @@ import sys
 from jogo.player.menu import menu_jogador
 from jogo.db import get_db_connection, clear_screen
 from jogo.reset import reiniciar_banco_de_dados
-from jogo.debug_menu import menu_debug_queries # <<-- IMPORTAR AQUI
+from jogo.debug_menu import menu_debug_queries 
 
+def mostrar_creditos():
+    clear_screen()
+    print("\n" + "="*80)
+    print("🎬  CRÉDITOS DO JOGO  🎬".center(80))
+    print("UNB - FCTE - CAMPUS GAMA - Disciplina de Bancos de Dados 1".center(80))
+    print("="*80 + "\n")
+
+    creditos = {
+        "🗺️  Mapa e Ambiente": [
+            ("🪖", "Rafael Schadt"),
+            ("🎯", "Isaque Camargos"),
+            ("🛠️", "Rodrigo Amaral"),
+            ("🌸", "Ludmila Nunes")
+        ],
+        "🧙‍♂️  Personagem e Progressão": [
+            ("🪖", "Rafael Schadt"),
+            ("🎯", "Isaque Camargos"),
+            ("🎨", "Milena Marques")
+        ],
+        "🛠️  Habilidade e Inventário": [
+            ("🪖", "Rafael Schadt"),
+            ("🌸", "Ludmila Nunes")
+        ],
+        "⚔️  Combate": [
+            ("🚀", "Othavio Bolzan"),
+            ("🪖", "Rafael Schadt")
+        ],
+        "🤖  IA dos Monstros": [
+            ("🚀", "Othavio Bolzan")
+        ],
+        "📜  Scripts e Configurações": [
+            ("🛠️", "Rodrigo Amaral"),
+            ("🚀", "Othavio Bolzan"),
+            ("🎨", "Milena Marques"),
+            ("🌸", "Ludmila Nunes")
+        ],
+    }
+
+    max_nome_len = max(len(nome) for cat in creditos.values() for _, nome in cat)
+
+    for categoria, pessoas in creditos.items():
+        print(categoria)
+        print("-" * len(categoria))
+        for emoji, nome in pessoas:
+            print(f"  {emoji}  {nome.ljust(max_nome_len)}")
+        print()
+
+    print("="*80)
+    print("          🙏 Obrigado por jogar! 🙏".center(80))
+    print("="*80)
+    input("\nPressione Enter para voltar ao menu.")
 def listar_estudantes_disponiveis():
     conn = get_db_connection()
     if not conn:
@@ -91,8 +142,7 @@ def menu_principal():
         
         elif opcao == "2":
             clear_screen()
-            print("\n📜 Créditos: Jogo desenvolvido por Rafael e IA da OpenAI (ChatGPT) 😎")
-            input("\nPressione Enter para voltar ao menu.")
+            mostrar_creditos()
 
         elif opcao == "3":
             clear_screen()

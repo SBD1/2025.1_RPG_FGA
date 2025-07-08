@@ -2,6 +2,7 @@ from jogo.db import get_db_connection, clear_screen
 from jogo.combate.main import iniciar_combate
 from jogo.player.afinidade import carregar_afinidades_estudante
 from jogo.monster.boss import recompensa_boss
+from jogo.player.estresse import penalidade_estresse, penalidade_estresse_fuga
 
 BOSS_POR_TEMA = {
     1: 11,  # Matemática
@@ -135,8 +136,10 @@ def tem_dungeon_interativo(jogador):
                         if resultado == 'vitoria':
                             print("🏆 Você venceu o monstro!")
                         elif resultado == 'derrota':
+                            penalidade_estresse(id_estudante)
                             print("💀 Você foi derrotado pelo monstro!")
                         elif resultado == 'fugiu':
+                            penalidade_estresse_fuga(id_estudante)
                             print("🏃 Você fugiu do combate!")
                         input("\nPressione Enter para continuar.")
                     else:
@@ -158,8 +161,10 @@ def tem_dungeon_interativo(jogador):
                         recompensa_boss(id_boss, id_estudante)
                         print("🏆 Você venceu o BOSS!")
                     elif resultado == 'derrota':
+                        penalidade_estresse(id_estudante)
                         print("💀 Você foi derrotado pelo BOSS!")
                     elif resultado == 'fugiu':
+                        penalidade_estresse_fuga(id_estudante)
                         print("🏃 Você fugiu do combate!")
 
                     input("\nPressione Enter para continuar.")

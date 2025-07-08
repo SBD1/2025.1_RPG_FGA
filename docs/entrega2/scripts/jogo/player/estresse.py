@@ -83,3 +83,41 @@ def _persistir_estudante(id_estudante, novo_dinheiro, novo_estresse):
         print("Erro ao aplicar penalidade no banco:", e)
     finally:
         conn.close()
+
+def penalidade_estresse(id_estudante):
+    try:
+        conn = get_db_connection()
+        cur = conn.cursor()
+        
+        # Atualiza estresse somando +10, mas limita o máximo a 100
+        cur.execute("""
+            UPDATE estudante
+            SET estresse = LEAST(estresse + 10, 100)
+            WHERE id_estudante = %s
+        """, (id_estudante,))
+        
+        conn.commit()
+        cur.close()
+        conn.close()
+        print("⚠️ Estresse aumentado em 10 devido à derrota.")
+    except Exception as e:
+        print(f"Erro ao aplicar penalidade de estresse: {e}")
+
+def penalidade_estresse_fuga(id_estudante):
+    try:
+        conn = get_db_connection()
+        cur = conn.cursor()
+        
+        # Atualiza estresse somando +5, mas limita o máximo a 100
+        cur.execute("""
+            UPDATE estudante
+            SET estresse = LEAST(estresse + 5, 100)
+            WHERE id_estudante = %s
+        """, (id_estudante,))
+        
+        conn.commit()
+        cur.close()
+        conn.close()
+        print("⚠️ Estresse aumentado em 5 devido à fuga.")
+    except Exception as e:
+        print(f"Erro ao aplicar penalidade de estresse: {e}")
