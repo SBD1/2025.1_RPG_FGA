@@ -2,6 +2,7 @@ from jogo.db import get_db_connection, clear_screen
 from jogo.combate.main import iniciar_combate
 from jogo.player.afinidade import carregar_afinidades_estudante
 from jogo.monster.boss import recompensa_boss
+from jogo.monster.monster import recompensa
 from jogo.player.estresse import penalidade_estresse, penalidade_estresse_fuga
 
 BOSS_POR_TEMA = {
@@ -134,6 +135,7 @@ def tem_dungeon_interativo(jogador):
                         resultado, vida_restante = iniciar_combate(id_estudante, id_inst_criatura)
 
                         if resultado == 'vitoria':
+                            recompensa(id_inst_criatura, id_estudante)
                             print("🏆 Você venceu o monstro!")
                         elif resultado == 'derrota':
                             penalidade_estresse(id_estudante)
