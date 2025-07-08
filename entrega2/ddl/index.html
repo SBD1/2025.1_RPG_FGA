@@ -1,0 +1,1570 @@
+
+<!doctype html>
+<html lang="pt" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../dml/">
+      
+      
+        <link rel="next" href="../../entrega3/video3/">
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.15">
+    
+    
+      
+        <title>DDL - RPG FGA</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.342714a4.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#ddl" class="md-skip">
+          Pular para conteúdo
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Cabeçalho">
+    <a href="../.." title="RPG FGA" class="md-header__button md-logo" aria-label="RPG FGA" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            RPG FGA
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              DDL
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to system preference"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to system preference" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Buscar" placeholder="Buscar" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Pesquisar">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Limpar" aria-label="Limpar" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Inicializando busca
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navegação" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="RPG FGA" class="md-nav__button md-logo" aria-label="RPG FGA" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    RPG FGA
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Entrega 1
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Entrega 1
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../entrega1/video1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Vídeo
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../entrega1/derv1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Diagrama Entidade Relacionamento
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../entrega1/mer/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Modelo Entidade Relacionamento
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../entrega1/relacionamentov1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Modelo Relacional
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../entrega1/dicionariov1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Dicionário de Dados
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Entrega 2
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Entrega 2
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../video2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Vídeo
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../historia/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    História
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dql/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    DQL
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dml/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    DML
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    DDL
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    DDL
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Índice">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Índice
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#tema" class="md-nav__link">
+    <span class="md-ellipsis">
+      tema
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tipohabilidade" class="md-nav__link">
+    <span class="md-ellipsis">
+      tipoHabilidade
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tipo_criatura" class="md-nav__link">
+    <span class="md-ellipsis">
+      tipo_criatura
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#campus" class="md-nav__link">
+    <span class="md-ellipsis">
+      campus
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#setor" class="md-nav__link">
+    <span class="md-ellipsis">
+      setor
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sala_comum" class="md-nav__link">
+    <span class="md-ellipsis">
+      sala_comum
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#estudante" class="md-nav__link">
+    <span class="md-ellipsis">
+      estudante
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#afinidade" class="md-nav__link">
+    <span class="md-ellipsis">
+      afinidade
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dungeon_academica" class="md-nav__link">
+    <span class="md-ellipsis">
+      dungeon_academica
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tipo_item" class="md-nav__link">
+    <span class="md-ellipsis">
+      tipo_item
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reliquia" class="md-nav__link">
+    <span class="md-ellipsis">
+      reliquia
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#boss" class="md-nav__link">
+    <span class="md-ellipsis">
+      boss
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#monstro_simples" class="md-nav__link">
+    <span class="md-ellipsis">
+      monstro_simples
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#instancia_de_criatura" class="md-nav__link">
+    <span class="md-ellipsis">
+      instancia_de_criatura
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#consumivel" class="md-nav__link">
+    <span class="md-ellipsis">
+      consumivel
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#equipavel" class="md-nav__link">
+    <span class="md-ellipsis">
+      equipavel
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#monetario" class="md-nav__link">
+    <span class="md-ellipsis">
+      monetario
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#loja_item" class="md-nav__link">
+    <span class="md-ellipsis">
+      loja_item
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#habilidade_criatura" class="md-nav__link">
+    <span class="md-ellipsis">
+      habilidade_criatura
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#habilidade_estudante" class="md-nav__link">
+    <span class="md-ellipsis">
+      habilidade_estudante
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#habilidade_loja" class="md-nav__link">
+    <span class="md-ellipsis">
+      habilidade_loja
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#instancia_de_item" class="md-nav__link">
+    <span class="md-ellipsis">
+      instancia_de_item
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ataque" class="md-nav__link">
+    <span class="md-ellipsis">
+      Ataque
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cura" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cura
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#defesa" class="md-nav__link">
+    <span class="md-ellipsis">
+      Defesa
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Entrega 3
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Entrega 3
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../entrega3/video3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Vídeo
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../entrega3/triggers_storedprocedures/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Triggers e Stored Procedures
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../historia/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    História
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Índice">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Índice
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#tema" class="md-nav__link">
+    <span class="md-ellipsis">
+      tema
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tipohabilidade" class="md-nav__link">
+    <span class="md-ellipsis">
+      tipoHabilidade
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tipo_criatura" class="md-nav__link">
+    <span class="md-ellipsis">
+      tipo_criatura
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#campus" class="md-nav__link">
+    <span class="md-ellipsis">
+      campus
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#setor" class="md-nav__link">
+    <span class="md-ellipsis">
+      setor
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sala_comum" class="md-nav__link">
+    <span class="md-ellipsis">
+      sala_comum
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#estudante" class="md-nav__link">
+    <span class="md-ellipsis">
+      estudante
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#afinidade" class="md-nav__link">
+    <span class="md-ellipsis">
+      afinidade
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dungeon_academica" class="md-nav__link">
+    <span class="md-ellipsis">
+      dungeon_academica
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tipo_item" class="md-nav__link">
+    <span class="md-ellipsis">
+      tipo_item
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reliquia" class="md-nav__link">
+    <span class="md-ellipsis">
+      reliquia
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#boss" class="md-nav__link">
+    <span class="md-ellipsis">
+      boss
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#monstro_simples" class="md-nav__link">
+    <span class="md-ellipsis">
+      monstro_simples
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#instancia_de_criatura" class="md-nav__link">
+    <span class="md-ellipsis">
+      instancia_de_criatura
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#consumivel" class="md-nav__link">
+    <span class="md-ellipsis">
+      consumivel
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#equipavel" class="md-nav__link">
+    <span class="md-ellipsis">
+      equipavel
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#monetario" class="md-nav__link">
+    <span class="md-ellipsis">
+      monetario
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#loja_item" class="md-nav__link">
+    <span class="md-ellipsis">
+      loja_item
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#habilidade_criatura" class="md-nav__link">
+    <span class="md-ellipsis">
+      habilidade_criatura
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#habilidade_estudante" class="md-nav__link">
+    <span class="md-ellipsis">
+      habilidade_estudante
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#habilidade_loja" class="md-nav__link">
+    <span class="md-ellipsis">
+      habilidade_loja
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#instancia_de_item" class="md-nav__link">
+    <span class="md-ellipsis">
+      instancia_de_item
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ataque" class="md-nav__link">
+    <span class="md-ellipsis">
+      Ataque
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cura" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cura
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#defesa" class="md-nav__link">
+    <span class="md-ellipsis">
+      Defesa
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="ddl">DDL</h1>
+<p>DDL (Data Definition Language) é uma parte da linguagem SQL usada para definir e modificar a estrutura dos objetos no banco de dados, como tabelas, índices e restrições. Abaixo estão as definições de tabelas utilizadas no banco de dados.</p>
+<h2 id="tema">tema</h2>
+<pre><code class="language-sql">CREATE TABLE tema (
+    id_tema INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    nome CHAR(100) NOT NULL CHECK(nome IN ('Matemática', 'Programação', 'Engenharias', 'Gerais', 'Humanidades'))
+);
+</code></pre>
+<h2 id="tipohabilidade">tipoHabilidade</h2>
+<pre><code class="language-sql">CREATE TABLE tipoHabilidade (
+    id_habilidade INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    tipo_habilidade CHAR(10) NOT NULL CHECK(tipo_habilidade IN ('ataque', 'cura', 'defesa'))
+
+);
+</code></pre>
+<h2 id="tipo_criatura">tipo_criatura</h2>
+<pre><code class="language-sql">CREATE TABLE tipo_criatura (
+    id_criatura INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    tipo_criatura CHAR(10) NOT NULL CHECK(tipo_criatura IN ('Monstro', 'Boss'))
+
+);
+</code></pre>
+<h2 id="campus">campus</h2>
+<pre><code class="language-sql">CREATE TABLE campus (
+    id_campus INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    nome CHAR(100) NOT NULL,
+    descricao CHAR(255) NOT NULL
+);
+</code></pre>
+<h2 id="setor">setor</h2>
+<pre><code class="language-sql">CREATE TABLE setor (
+    id_setor INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    id_campus INT NOT NULL,
+    nome CHAR(100) NOT NULL,
+    descricao CHAR(255) NOT NULL,
+    id_proxSetor INT,
+    id_prevSetor INT,
+    CONSTRAINT fk_id_campus FOREIGN KEY (id_campus) REFERENCES campus(id_campus),
+    CONSTRAINT fk_id_proxSetor FOREIGN KEY (id_proxSetor) REFERENCES setor(id_setor),
+    CONSTRAINT fk_id_prevSetor FOREIGN KEY (id_prevSetor) REFERENCES setor(id_setor)
+);
+</code></pre>
+<h2 id="sala_comum">sala_comum</h2>
+<pre><code class="language-sql">CREATE TABLE sala_comum (
+    id_sala INT GENERATED ALWAYS AS IDENTITY,
+    id_setor INT NOT NULL,
+    id_prevSala INT,
+    id_proxSala INT,
+    descricao CHAR(255) NOT NULL,
+    nome CHAR(100) NOT NULL,
+    tem_loja BOOLEAN NOT NULL,
+    tem_dungeon BOOLEAN NOT NULL,
+    UNIQUE (id_sala),
+    PRIMARY KEY (id_sala, id_setor),
+    CONSTRAINT fk_id_setor FOREIGN KEY (id_setor) REFERENCES setor(id_setor),
+    CONSTRAINT fk_id_prevSala FOREIGN KEY (id_prevSala) REFERENCES sala_comum(id_sala),
+    CONSTRAINT fk_id_proxSala FOREIGN KEY (id_proxSala) REFERENCES sala_comum(id_sala)
+);
+</code></pre>
+<h2 id="estudante">estudante</h2>
+<pre><code class="language-sql">CREATE TABLE estudante (
+    id_estudante INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    nome CHAR(100) NOT NULL,
+    vida INT NOT NULL,
+    estresse INT NOT NULL,
+    total_dinheiro INT NOT NULL,
+    id_sala INT NOT NULL,
+    CONSTRAINT fk_id_sala FOREIGN KEY (id_sala) REFERENCES sala_comum(id_sala)
+);
+</code></pre>
+<h2 id="afinidade">afinidade</h2>
+<pre><code class="language-sql">CREATE TABLE afinidade (
+    id_estudante INT NOT NULL,
+    id_tema INT NOT NULL,
+    xp_atual INT NOT NULL,
+    nivel_atual INT NOT NULL,
+    PRIMARY KEY (id_estudante, id_tema),
+    CONSTRAINT fk_estudante FOREIGN KEY (id_estudante) REFERENCES estudante(id_estudante),
+    CONSTRAINT fk_tema FOREIGN KEY (id_tema) REFERENCES tema(id_tema)
+);
+</code></pre>
+<h2 id="dungeon_academica">dungeon_academica</h2>
+<pre><code class="language-sql">CREATE TABLE dungeon_academica (
+    id_dungeon INT NOT NULL PRIMARY KEY,
+    nome CHAR(100) NOT NULL,
+    descricao CHAR(255) NOT NULL,
+    id_tema INT NOT NULL,
+    CONSTRAINT fk_id_dungeon FOREIGN KEY (id_dungeon) REFERENCES sala_comum(id_sala),
+    CONSTRAINT fk_id_tema FOREIGN KEY (id_tema) REFERENCES tema(id_tema)
+);
+</code></pre>
+<h2 id="tipo_item">tipo_item</h2>
+<pre><code class="language-sql">CREATE TABLE tipo_item (
+    id_item INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    item_tipo CHAR(10) CHECK (item_tipo IN ('Consumível', 'Equipável', 'Monetário', 'Relíquia'))
+);
+</code></pre>
+<h2 id="reliquia">reliquia</h2>
+<pre><code class="language-sql">CREATE TABLE reliquia (
+    id_reliquia INT NOT NULL PRIMARY KEY,
+    nome CHAR(100) NOT NULL,
+    descricao CHAR(255) NOT NULL,
+    tipo_reliquia CHAR(100) NOT NULL,
+    CONSTRAINT fk_id_reliquia FOREIGN KEY (id_reliquia) REFERENCES tipo_item(id_item)
+);
+</code></pre>
+<h2 id="boss">boss</h2>
+<pre><code class="language-sql">CREATE TABLE boss (
+    id_criatura INT NOT NULL PRIMARY KEY,
+    id_reliquia INT NOT NULL,
+    nome CHAR(100) NOT NULL,
+    descricao CHAR(255) NOT NULL,
+    nivel INT NOT NULL,
+    vida_max INT NOT NULL,
+
+    CONSTRAINT fk_id_criatura FOREIGN KEY (id_criatura) REFERENCES tipo_criatura(id_criatura),
+    CONSTRAINT fk_reliquia FOREIGN KEY (id_reliquia) REFERENCES reliquia(id_reliquia)
+);
+</code></pre>
+<h2 id="monstro_simples">monstro_simples</h2>
+<pre><code class="language-sql">CREATE TABLE monstro_simples (
+    id_criatura INT NOT NULL PRIMARY KEY,
+    nome CHAR(100) NOT NULL,
+    descricao CHAR(255) NOT NULL,
+    nivel INT NOT NULL,
+    vida_max INT NOT NULL,
+    xp_tema INT NOT NULL,
+    qtd_moedas INT NOT NULL CHECK (qtd_moedas &gt;= 0),
+
+    CONSTRAINT fk_id_criatura FOREIGN KEY (id_criatura) REFERENCES tipo_criatura(id_criatura)
+);
+</code></pre>
+<h2 id="instancia_de_criatura">instancia_de_criatura</h2>
+<pre><code class="language-sql">CREATE TABLE instancia_de_criatura (
+    id_instanciaCriatura INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    id_criatura INT NOT NULL,
+    vida_atual INT NOT NULL,
+    id_dungeon INT NOT NULL,
+    CONSTRAINT fk_criatura FOREIGN KEY (id_criatura) REFERENCES tipo_criatura(id_criatura),
+    CONSTRAINT fk_dungeon FOREIGN KEY (id_dungeon) REFERENCES dungeon_academica(id_dungeon)
+);
+</code></pre>
+<h2 id="consumivel">consumivel</h2>
+<pre><code class="language-sql">CREATE TABLE consumivel (
+    id_item INT NOT NULL PRIMARY KEY,
+    nome CHAR(100) NOT NULL,
+    descricao CHAR(255) NOT NULL,
+    efeito FLOAT NOT NULL,
+    preco FLOAT NOT NULL,
+    CONSTRAINT fk_id_item FOREIGN KEY (id_item) REFERENCES tipo_item(id_item)
+);
+</code></pre>
+<h2 id="equipavel">equipavel</h2>
+<pre><code class="language-sql">CREATE TABLE equipavel (
+    id_item INT NOT NULL PRIMARY KEY,
+    nome CHAR(100) NOT NULL,
+    descricao CHAR(255) NOT NULL,
+    efeito INT NOT NULL,
+    preco INT NOT NULL,
+    CONSTRAINT fk_id_item FOREIGN KEY (id_item) REFERENCES tipo_item(id_item)
+);
+</code></pre>
+<h2 id="monetario">monetario</h2>
+<pre><code class="language-sql">CREATE TABLE monetario (
+    id_item INT NOT NULL PRIMARY KEY,
+    nome CHAR(100) NOT NULL,
+    descricao CHAR(255) NOT NULL,
+    valor INT NOT NULL,
+    CONSTRAINT fk_id_item FOREIGN KEY (id_item) REFERENCES tipo_item(id_item)
+);
+</code></pre>
+<h2 id="loja_item">loja_item</h2>
+<pre><code class="language-sql">CREATE TABLE loja_item (
+    id_sala INT NOT NULL,
+    id_item INT NOT NULL,
+    PRIMARY KEY (id_sala, id_item),
+    CONSTRAINT fk_sala FOREIGN KEY (id_sala) REFERENCES sala_comum(id_sala),
+    CONSTRAINT fk_item FOREIGN KEY (id_item) REFERENCES tipo_item(id_item)
+);
+</code></pre>
+<h2 id="habilidade_criatura">habilidade_criatura</h2>
+<pre><code class="language-sql">CREATE TABLE habilidade_criatura (
+    id_criatura INT NOT NULL,
+    id_habilidade INT NOT NULL,
+    PRIMARY KEY (id_criatura, id_habilidade),
+    CONSTRAINT fk_criatura FOREIGN KEY (id_criatura) REFERENCES tipo_criatura(id_criatura),
+    CONSTRAINT fk_habilidade FOREIGN KEY (id_habilidade) REFERENCES tipoHabilidade(id_habilidade)
+);
+</code></pre>
+<h2 id="habilidade_estudante">habilidade_estudante</h2>
+<pre><code class="language-sql">CREATE TABLE habilidade_estudante (
+    id_estudante INT NOT NULL,
+    id_habilidade INT NOT NULL,
+    PRIMARY KEY (id_estudante, id_habilidade),
+    CONSTRAINT fk_estudante FOREIGN KEY (id_estudante) REFERENCES estudante(id_estudante),
+    CONSTRAINT fk_habilidade FOREIGN KEY (id_habilidade) REFERENCES tipoHabilidade(id_habilidade)
+);
+</code></pre>
+<h2 id="habilidade_loja">habilidade_loja</h2>
+<pre><code class="language-sql">CREATE TABLE habilidade_loja (
+    id_loja INT NOT NULL,
+    id_habilidade INT NOT NULL,
+    PRIMARY KEY (id_loja, id_habilidade),
+    CONSTRAINT fk_loja FOREIGN KEY (id_loja) REFERENCES sala_comum(id_sala),
+    CONSTRAINT fk_habilidade FOREIGN KEY (id_habilidade) REFERENCES tipoHabilidade(id_habilidade)
+);
+</code></pre>
+<h2 id="instancia_de_item">instancia_de_item</h2>
+<pre><code class="language-sql">CREATE TABLE instancia_de_item (
+    id_instanciaItem INT GENERATED ALWAYS AS IDENTITY,
+    id_item INT NOT NULL,
+    id_sala INT,
+    id_estudante INT,
+    PRIMARY KEY (id_instanciaItem, id_item),
+    CONSTRAINT fk_id_item FOREIGN KEY (id_item) REFERENCES tipo_item(id_item),
+    CONSTRAINT fk_id_sala FOREIGN KEY (id_sala) REFERENCES sala_comum(id_sala),
+    CONSTRAINT fk_id_estudante FOREIGN KEY (id_estudante) REFERENCES estudante(id_estudante)
+);
+
+ALTER TABLE instancia_de_item
+ADD COLUMN equipado BOOLEAN DEFAULT FALSE;
+</code></pre>
+<h2 id="ataque">Ataque</h2>
+<pre><code class="language-sql">CREATE TABLE Ataque (
+    id_habilidade INT NOT NULL PRIMARY KEY,
+    id_tema INT NOT NULL,
+    nome CHAR(100) NOT NULL,
+    nivel INT NOT NULL,
+    coolDown INT NOT NULL,
+    danoCausado INT NOT NULL,
+    preco INT NOT NULL,  -- &lt;&lt;-- COLUNA ADICIONADA
+    CONSTRAINT fk_habilidade FOREIGN KEY (id_habilidade) REFERENCES tipoHabilidade(id_habilidade),
+    CONSTRAINT fk_id_tema FOREIGN KEY (id_tema) REFERENCES tema(id_tema)
+);
+</code></pre>
+<h2 id="cura">Cura</h2>
+<pre><code class="language-sql">CREATE TABLE Cura (
+    id_habilidade INT NOT NULL PRIMARY KEY,
+    id_tema INT NOT NULL,
+    nome CHAR(100) NOT NULL,
+    nivel INT NOT NULL,
+    coolDown INT NOT NULL,
+    vidaRecuperada INT NOT NULL,
+    preco INT NOT NULL,  -- &lt;&lt;-- COLUNA ADICIONADA
+    CONSTRAINT fk_id_habilidade FOREIGN KEY (id_habilidade) REFERENCES tipoHabilidade(id_habilidade),
+    CONSTRAINT fk_id_tema FOREIGN KEY (id_tema) REFERENCES tema(id_tema)
+);
+</code></pre>
+<h2 id="defesa">Defesa</h2>
+<pre><code class="language-sql">CREATE TABLE Defesa (
+    id_habilidade INT NOT NULL PRIMARY KEY,
+    id_tema INT NOT NULL,
+    nome CHAR(100) NOT NULL,
+    nivel INT NOT NULL,
+    coolDown INT NOT NULL,
+    danoMitigado INT NOT NULL,
+    preco INT NOT NULL,  -- &lt;&lt;-- COLUNA ADICIONADA
+    CONSTRAINT fk_id_habilidade FOREIGN KEY (id_habilidade) REFERENCES tipoHabilidade(id_habilidade),
+    CONSTRAINT fk_id_tema FOREIGN KEY (id_tema) REFERENCES tema(id_tema)
+);
+</code></pre>
+<p><br></p>
+<h1 id="historico-de-versoes">Histórico de Versões</h1>
+<table>
+<thead>
+<tr>
+<th>Versão</th>
+<th>Data</th>
+<th>Descrição</th>
+<th>Autor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1.0</td>
+<td>31/05/2025</td>
+<td>Inclusão das tabelas do banco de dados</td>
+<td>Milena Marques</td>
+</tr>
+<tr>
+<td>2.0</td>
+<td>07/07/2025</td>
+<td>Colocando a versão final das tabelas</td>
+<td>Isaque Camargos</td>
+</tr>
+</tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Voltar para o topo
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.annotate", "content.tabs.link", "header.autohide", "navigation.instant", "navigation.top", "navigation.tracking"], "search": "../../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copiado para \u00e1rea de transfer\u00eancia", "clipboard.copy": "Copiar para \u00e1rea de transfer\u00eancia", "search.result.more.one": "mais 1 nesta p\u00e1gina", "search.result.more.other": "# mais nesta p\u00e1gina", "search.result.none": "Nenhum documento encontrado", "search.result.one": "1 documento encontrado", "search.result.other": "# documentos encontrados", "search.result.placeholder": "Digite para iniciar a busca", "search.result.term.missing": "Ausente", "select.version": "Selecione a vers\u00e3o"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.56ea9cef.min.js"></script>
+      
+    
+  </body>
+</html>
