@@ -37,10 +37,10 @@ O projeto inclui um script de automação (```setup.sh```) que configura o banco
 * Conceder as permissões de superusuário necessárias.
 * Executar os scripts ```DDL.sql``` e ```DML.sql``` para criar e popular as tabelas.
 
-Para executá-lo, navegue até a pasta ```docs/entrega2/scripts/``` e siga os comandos:
+Para executá-lo, navegue até a pasta ```docs/entrega3/scripts/``` e siga os comandos:
 ```bash
 # Navegue até a pasta correta
-cd docs/entrega2/scripts/
+cd docs/entrega3/scripts/
 
 # Torne o script executável (só precisa fazer isso uma vez)
 chmod +x setup.sh
