@@ -176,20 +176,3 @@ JOIN defesa d ON h.id_habilidade = d.id_habilidade
 JOIN tema t ON h.id_tema = t.id_tema
 WHERE hc.id_criatura = %s;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
