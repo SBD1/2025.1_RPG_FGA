@@ -26,8 +26,8 @@ Antes de começar, garanta que você tenha os seguintes softwares instalados em 
 Primeiro, clone o repositório do projeto para a sua máquina local:
 
 ```bash
-git clone <URL_DO_SEU_REPOSITORIO>
-cd <NOME_DA_PASTA_DO_PROJETO>
+git clone https://github.com/SBD1/2025.1_RPG_FGA.git
+cd 2025.1_RPG_FGA
 ```
 
 ### 2. Configure o Banco de Dados
