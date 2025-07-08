@@ -50,7 +50,7 @@ O diagrama de entidade e relacionamento (DER ou ERD) é uma representação visu
 
 ## V7
 
-![mer versão 7](../assets/merv8.png) 
+![mer versão 7](../assets/merv7.png) 
 
 ---
 
